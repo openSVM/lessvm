@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="lessVM Examples - Practical examples and use cases for the lessVM virtual machine">
+    <title>lessVM Examples</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="../" class="logo">less<span class="highlight">VM</span> 1.0.0</a>
+            <div class="nav-links">
+                <a href="../#features">^+F Features</a>
+                <a href="architecture.html">^+D Docs</a>
+                <a href="examples.html">^+E Examples</a>
+                <a href="https://github.com/yourusername/lessvm" target="_blank" rel="noopener">^+G GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container docs-content">
+        <h1>Examples</h1>
+        
+        <section>
+            <h2>Basic Programs</h2>
+            <div class="card">
+                <h3>Simple Addition</h3>
+                <pre><code class="language-rust">// Add two numbers (5 + 3)
+let program = vec![
+    OpCode::Push1 as u8, 5,  // Push 5 onto stack
+    OpCode::Push1 as u8, 3,  // Push 3 onto stack
+    OpCode::Add as u8,       // Add them together
+    OpCode::Log as u8,       // Log result
+    OpCode::Halt as u8       // Stop execution
+];</code></pre>
+                <p>This basic example demonstrates:</p>
+                <ul>
+                    <li>→ Stack manipulation</li>
+                    <li>→ Arithmetic operations</li>
+                    <li>→ Program termination</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Token Operations</h2>
+            <div class="card">
+                <h3>Token Transfer</h3>
+                <pre><code class="language-rust">// Transfer SPL tokens
+let program = vec![
+    // Load accounts
+    OpCode::Push1 as u8, 1,  // Token program
+    OpCode::Push1 as u8, 2,  // Source account
+    OpCode::Push1 as u8, 3,  // Destination account
+    OpCode::Push1 as u8, 4,  // Authority
+    
+    // Amount (50 tokens)
+    OpCode::Push8 as u8, 
+    50, 0, 0, 0, 0, 0, 0, 0,
+    
+    // Execute transfer
+    OpCode::SPLOp as u8,
+    SPLOperation::Transfer as u8,
+    
+    OpCode::Halt as u8
+];</code></pre>
+                <p>This example shows:</p>
+                <ul>
+                    <li>→ SPL token integration</li>
+                    <li>→ Account management</li>
+                    <li>→ Multi-byte operations</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Smart Contracts</h2>
+            <div class="card">
+                <h3>On-Chain Vault</h3>
+                <pre><code class="language-rust">// Simple vault program
+let program = vec![
+    // Initialize vault
+    OpCode::Push1 as u8, 0x01,  // Vault account
+    OpCode::Push1 as u8, 0x00,  // Load init flag
+    OpCode::Load as u8,
+    OpCode::JumpI as u8,        // Skip if initialized
+    
+    // Set initialization flag
+    OpCode::Push1 as u8, 0x01,
+    OpCode::Push1 as u8, 0x00,
+    OpCode::Store as u8,
+    
+    // Handle deposit/withdraw
+    OpCode::Push1 as u8, 0x02,  // Action type
+    OpCode::JumpI as u8,        // Branch on action
+    
+    OpCode::Halt as u8
+];</code></pre>
+                <p>This contract demonstrates:</p>
+                <ul>
+                    <li>→ State management</li>
+                    <li>→ Control flow</li>
+                    <li>→ Memory operations</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Advanced Usage</h2>
+            <div class="card">
+                <h3>Oracle Integration</h3>
+                <pre><code class="language-rust">// Price feed oracle
+let program = vec![
+    // Get latest price
+    OpCode::Push1 as u8, 1,     // Oracle account
+    OpCode::Load as u8,         // Load price data
+    
+    // Validate timestamp
+    OpCode::Push8 as u8,        // Current time
+    0, 0, 0, 0, 0, 0, 0, 0,    // (filled at runtime)
+    OpCode::Sub as u8,
+    
+    // Check staleness
+    OpCode::Push8 as u8,        // Max age
+    60, 0, 0, 0, 0, 0, 0, 0,   // 60 seconds
+    OpCode::GT as u8,
+    OpCode::JumpI as u8,        // Revert if stale
+    
+    // Use price data
+    OpCode::MulDiv as u8,       // Price calculations
+    
+    OpCode::Halt as u8
+];</code></pre>
+                <p>This advanced example shows:</p>
+                <ul>
+                    <li>→ External data integration</li>
+                    <li>→ Time-based validation</li>
+                    <li>→ Complex calculations</li>
+                </ul>
+            </div>
+        </section>
+
+        <nav class="doc-navigation">
+            <a href="solana.html" class="prev-doc">← Solana Integration</a>
+            <a href="../" class="next-doc">Back to Home →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>lessVM</h4>
+                <p>A lightweight virtual machine designed for the Solana blockchain</p>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <nav>
+                    <a href="architecture.html">→ Documentation</a>
+                    <a href="examples.html">→ Examples</a>
+                    <a href="https://github.com/yourusername/lessvm">→ GitHub</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <nav>
+                    <a href="https://discord.gg/yourdiscord">→ Discord</a>
+                    <a href="https://twitter.com/lessvm">→ Twitter</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

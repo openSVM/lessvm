@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="lessVM Architecture - Stack-based virtual machine architecture for Solana blockchain">
+    <title>lessVM Architecture</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="../" class="logo">less<span class="highlight">VM</span> 1.0.0</a>
+            <div class="nav-links">
+                <a href="../#features">^+F Features</a>
+                <a href="architecture.html">^+D Docs</a>
+                <a href="examples.html">^+E Examples</a>
+                <a href="https://github.com/yourusername/lessvm" target="_blank" rel="noopener">^+G GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container docs-content">
+        <h1>Architecture</h1>
+        
+        <section>
+            <h2>Overview</h2>
+            <p>lessVM is a stack-based virtual machine designed specifically for the Solana blockchain. It features a simple instruction set with stack manipulation, arithmetic operations, memory access, control flow, and Solana-specific operations.</p>
+        </section>
+
+        <section>
+            <h2>Core Components</h2>
+            
+            <div class="card">
+                <h3>Stack</h3>
+                <pre><code class="language-rust">#[repr(C, align(64))]
+struct Stack {
+    data: [Value; 32],
+    top: usize,
+}</code></pre>
+                <ul>
+                    <li>→ 32 entries deep</li>
+                    <li>→ 64-bit values</li>
+                    <li>→ LIFO (Last In, First Out)</li>
+                    <li>→ Overflow protection</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Memory</h3>
+                <pre><code class="language-rust">#[repr(C, align(64))]
+struct Memory {
+    data: [u8; 1024],
+    size: usize,
+}</code></pre>
+                <ul>
+                    <li>→ 1024 bytes linear memory</li>
+                    <li>→ Bounds checking</li>
+                    <li>→ Zero-initialized</li>
+                    <li>→ Memory expansion tracking</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Gas Metering</h3>
+                <pre><code class="language-rust">struct GasConfig {
+    base_cost: u64,
+    memory_cost: u64,
+    solana_op_cost: u64,
+    spl_op_cost: u64,
+    cpi_cost: u64,
+    gas_limit: u64,
+}</code></pre>
+                <ul>
+                    <li>→ Operation-based costs</li>
+                    <li>→ Memory expansion costs</li>
+                    <li>→ CPI operation costs</li>
+                    <li>→ Gas limit enforcement</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Program Counter</h3>
+                <pre><code class="language-rust">struct VM {
+    pc: usize,
+    code: &[u8],
+    // ...
+}</code></pre>
+                <ul>
+                    <li>→ Instruction pointer</li>
+                    <li>→ Sequential execution</li>
+                    <li>→ Jump validation</li>
+                    <li>→ Bounds checking</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Security Features</h2>
+            <div class="card">
+                <h3>Memory Safety</h3>
+                <ul>
+                    <li>→ Stack overflow protection</li>
+                    <li>→ Memory bounds checking</li>
+                    <li>→ Zero-initialized memory</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Account Safety</h3>
+                <ul>
+                    <li>→ Account ownership verification</li>
+                    <li>→ Write permission checks</li>
+                    <li>→ Lamport balance checks</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Execution Safety</h3>
+                <ul>
+                    <li>→ Gas metering</li>
+                    <li>→ Jump target validation</li>
+                    <li>→ CPI depth tracking</li>
+                </ul>
+            </div>
+        </section>
+
+        <nav class="doc-navigation">
+            <a href="../" class="prev-doc">← Back to Home</a>
+            <a href="instructions.html" class="next-doc">Next: Instructions →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>lessVM</h4>
+                <p>A lightweight virtual machine designed for the Solana blockchain</p>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <nav>
+                    <a href="architecture.html">→ Documentation</a>
+                    <a href="examples.html">→ Examples</a>
+                    <a href="https://github.com/yourusername/lessvm">→ GitHub</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <nav>
+                    <a href="https://discord.gg/yourdiscord">→ Discord</a>
+                    <a href="https://twitter.com/lessvm">→ Twitter</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

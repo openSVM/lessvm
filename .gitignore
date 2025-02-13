@@ -1,0 +1,62 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+jspm_packages/
+bower_components/
+
+# Build directories
+dist/
+build/
+.next/
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# macOS and Windows system files
+.DS_Store
+Thumbs.db
+
+# Rust/Cargo artifacts
+/target/
+Cargo.lock
+
+# Solana generated files and artifacts
+*.so
+*.d
+validator.pid
+
+# Shell and script generated logs
+INIT.LOG
+perf.log
+hot_reload_results.log
+/lessvm-solana/*.json
+/lessvm-solana/target
+/lessvm-solana/test-ledger
+/test-ledger
+
+# Additional generated files
+test_program_updated.hex
+test_program_updated.bin

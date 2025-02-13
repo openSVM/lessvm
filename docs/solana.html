@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" class="js-focus-visible">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="lessVM Solana Integration - Learn how lessVM integrates with Solana blockchain features and SPL tokens.">
+    <title>lessVM Solana Integration - Blockchain Features</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js" defer></script>
+</head>
+<body>
+    <div id="loading" class="loading" aria-hidden="true"></div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-content">
+            <div class="logo">
+                <a href="../index.html" class="logo-text" aria-label="lessVM Home">
+                    less<span class="highlight">VM</span>
+                </a>
+            </div>
+            <button class="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div id="nav-links" class="nav-links" role="menubar">
+                <a href="../index.html#features" role="menuitem">Features</a>
+                <a href="architecture.html" role="menuitem">Documentation</a>
+                <a href="examples.html" role="menuitem">Examples</a>
+                <a href="https://github.com/yourusername/lessvm" class="github-link" role="menuitem" aria-label="View on GitHub">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content" class="docs-content">
+        <h1>Solana Integration</h1>
+        
+        <p>lessVM provides seamless integration with Solana's native features and SPL token functionality.</p>
+
+        <section class="feature-section">
+            <h2>Account Management</h2>
+            <p>lessVM provides direct access to Solana accounts with built-in safety checks and validations.</p>
+            
+            <div class="code-container">
+                <pre><code class="language-rust">impl<'a> VM<'a> {
+    fn validate_account(&self, index: usize) -> ProgramResult {
+        let account = self.accounts.get(index)?;
+        if !account.is_writable {
+            return Err(VMError::AccountNotWritable.into());
+        }
+        if account.owner != self.program_id {
+            return Err(VMError::InvalidAccountOwner.into());
+        }
+        Ok(())
+    }
+}</code></pre>
+            </div>
+            
+            <div class="implementation-notes">
+                <h3>Key Features</h3>
+                <ul>
+                    <li>Automatic ownership verification</li>
+                    <li>Write permission validation</li>
+                    <li>Rent-exempt status checks</li>
+                    <li>Account size validation</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="feature-section">
+            <h2>SPL Token Operations</h2>
+            <p>Built-in support for SPL token operations with safety checks and optimized gas usage.</p>
+            
+            <div class="code-container">
+                <pre><code class="language-rust">pub struct SPLOperations<'a> {
+    accounts: &'a [AccountInfo<'a>],
+}
+
+impl<'a> SPLOperations<'a> {
+    pub fn execute_spl_op(
+        &self,
+        op: SPLOperation,
+        args: &[u64],
+    ) -> Result<(), ProgramError> {
+        match op {
+            SPLOperation::Transfer => self.token_transfer(args)?,
+            SPLOperation::MintTo => self.token_mint_to(args)?,
+            SPLOperation::Burn => self.token_burn(args)?,
+            _ => return Err(ProgramError::InvalidInstructionData),
+        }
+        Ok(())
+    }
+}</code></pre>
+            </div>
+            
+            <div class="implementation-notes">
+                <h3>Supported Operations</h3>
+                <ul>
+                    <li>Token transfers</li>
+                    <li>Minting new tokens</li>
+                    <li>Burning tokens</li>
+                    <li>Account initialization</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="feature-section">
+            <h2>Cross-Program Invocation</h2>
+            <p>Secure CPI implementation with proper permission handling and error propagation.</p>
+            
+            <div class="code-container">
+                <pre><code class="language-rust">pub struct CPIContext<'a> {
+    program_id: &'a Pubkey,
+    accounts: &'a [AccountInfo<'a>],
+    data: &'a [u8],
+}
+
+impl<'a> VM<'a> {
+    fn execute_cpi(
+        &self,
+        context: CPIContext<'a>,
+    ) -> ProgramResult {
+        // Validate CPI permissions
+        self.validate_cpi_context(&context)?;
+        
+        // Execute the cross-program call
+        solana_program::program::invoke(
+            &Instruction::new_with_bytes(
+                *context.program_id,
+                context.data,
+                context.accounts.to_vec(),
+            ),
+            context.accounts,
+        )
+    }
+}</code></pre>
+            </div>
+            
+            <div class="implementation-notes">
+                <h3>Security Features</h3>
+                <ul>
+                    <li>Permission validation</li>
+                    <li>Recursive depth tracking</li>
+                    <li>Account ownership checks</li>
+                    <li>Data size validation</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="feature-section">
+            <h2>Gas Optimization</h2>
+            <p>Solana-specific gas optimizations for efficient on-chain execution.</p>
+            
+            <div class="code-container">
+                <pre><code class="language-rust">pub struct GasConfig {
+    pub base_cost: u64,
+    pub memory_cost: u64,
+    pub solana_op_cost: u64,
+    pub spl_op_cost: u64,
+    pub cpi_cost: u64,
+}
+
+impl GasMetering {
+    pub fn charge_solana_op(&mut self) -> Result<(), ProgramError> {
+        self.charge_gas(self.config.solana_op_cost)
+    }
+
+    pub fn charge_spl_op(&mut self) -> Result<(), ProgramError> {
+        self.charge_gas(self.config.spl_op_cost)
+    }
+}</code></pre>
+            </div>
+            
+            <div class="implementation-notes">
+                <h3>Optimization Strategies</h3>
+                <ul>
+                    <li>Operation-specific gas costs</li>
+                    <li>Memory expansion tracking</li>
+                    <li>CPI gas accounting</li>
+                    <li>Batch operation optimization</li>
+                </ul>
+            </div>
+        </section>
+
+        <nav class="doc-navigation" aria-label="Documentation navigation">
+            <a href="examples.html" class="prev-doc">← Back to Examples</a>
+        </nav>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>lessVM</h4>
+                <p>A lightweight virtual machine designed for the Solana blockchain</p>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <nav aria-label="Footer resources navigation">
+                    <a href="architecture.html">Documentation</a>
+                    <a href="examples.html">Examples</a>
+                    <a href="https://github.com/yourusername/lessvm">GitHub</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <nav aria-label="Footer community navigation">
+                    <a href="https://discord.gg/yourdiscord">Discord</a>
+                    <a href="https://twitter.com/lessvm">Twitter</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Remove loading screen
+            const loading = document.getElementById('loading');
+            if (loading) {
+                loading.style.display = 'none';
+            }
+
+            // Initialize syntax highlighting
+            hljs.highlightAll();
+            
+            // Mobile menu handling
+            const menuButton = document.querySelector('.mobile-menu-button');
+            const navLinks = document.getElementById('nav-links');
+            
+            menuButton.addEventListener('click', () => {
+                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+                menuButton.setAttribute('aria-expanded', !isExpanded);
+                menuButton.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = isExpanded ? 'auto' : 'hidden';
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (navLinks.classList.contains('active') &&
+                    !navLinks.contains(e.target) &&
+                    !menuButton.contains(e.target)) {
+                    menuButton.click();
+                }
+            });
+
+            // Handle keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (navLinks.classList.contains('active')) {
+                        menuButton.click();
+                    }
+                    document.querySelector('.skip-link').focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

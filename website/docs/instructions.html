@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="lessVM Instructions - Complete instruction set reference for the lessVM virtual machine">
+    <title>lessVM Instructions</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="../" class="logo">less<span class="highlight">VM</span> 1.0.0</a>
+            <div class="nav-links">
+                <a href="../#features">^+F Features</a>
+                <a href="architecture.html">^+D Docs</a>
+                <a href="examples.html">^+E Examples</a>
+                <a href="https://github.com/yourusername/lessvm" target="_blank" rel="noopener">^+G GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container docs-content">
+        <h1>Instruction Set</h1>
+        
+        <section>
+            <h2>Stack Operations (0x0*)</h2>
+            <div class="card">
+                <pre><code class="language-rust">// Stack operation opcodes
+const NOP:    u8 = 0x00;  // No operation
+const PUSH1:  u8 = 0x01;  // Push 1 byte
+const PUSH8:  u8 = 0x02;  // Push 8 bytes
+const POP:    u8 = 0x03;  // Remove top item
+const DUP:    u8 = 0x04;  // Duplicate nth item
+const SWAP:   u8 = 0x05;  // Swap with nth item</code></pre>
+                <table class="instruction-table">
+                    <tr>
+                        <th>Opcode</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Gas</th>
+                    </tr>
+                    <tr>
+                        <td>0x00</td>
+                        <td>NOP</td>
+                        <td>No operation</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>0x01</td>
+                        <td>PUSH1</td>
+                        <td>Push 1-byte value onto stack</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>0x02</td>
+                        <td>PUSH8</td>
+                        <td>Push 8-byte value onto stack</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>0x03</td>
+                        <td>POP</td>
+                        <td>Remove top stack item</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>0x04</td>
+                        <td>DUP</td>
+                        <td>Duplicate nth stack item</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>0x05</td>
+                        <td>SWAP</td>
+                        <td>Swap with nth stack item</td>
+                        <td>2</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>Math Operations (0x1*)</h2>
+            <div class="card">
+                <pre><code class="language-rust">// Math operation opcodes
+const ADD:    u8 = 0x10;  // Add top two items
+const SUB:    u8 = 0x11;  // Subtract
+const MUL:    u8 = 0x12;  // Multiply
+const DIV:    u8 = 0x13;  // Divide
+const MULDIV: u8 = 0x14;  // (a * b) / c
+const MIN:    u8 = 0x15;  // Minimum
+const MAX:    u8 = 0x16;  // Maximum</code></pre>
+                <table class="instruction-table">
+                    <tr>
+                        <th>Opcode</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Gas</th>
+                    </tr>
+                    <tr>
+                        <td>0x10</td>
+                        <td>ADD</td>
+                        <td>Add top two stack items</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>0x11</td>
+                        <td>SUB</td>
+                        <td>Subtract top from second</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>0x12</td>
+                        <td>MUL</td>
+                        <td>Multiply top two items</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>0x13</td>
+                        <td>DIV</td>
+                        <td>Divide second by top</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>0x14</td>
+                        <td>MULDIV</td>
+                        <td>Multiply then divide</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>0x15</td>
+                        <td>MIN</td>
+                        <td>Push minimum value</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>0x16</td>
+                        <td>MAX</td>
+                        <td>Push maximum value</td>
+                        <td>2</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>Memory Operations (0x2*)</h2>
+            <div class="card">
+                <pre><code class="language-rust">// Memory operation opcodes
+const LOAD:   u8 = 0x20;  // Load from memory
+const STORE:  u8 = 0x21;  // Store to memory
+const LOADN:  u8 = 0x22;  // Load n bytes
+const STOREN: u8 = 0x23;  // Store n bytes
+const MSIZE:  u8 = 0x24;  // Get memory size</code></pre>
+                <table class="instruction-table">
+                    <tr>
+                        <th>Opcode</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Gas</th>
+                    </tr>
+                    <tr>
+                        <td>0x20</td>
+                        <td>LOAD</td>
+                        <td>Load 8 bytes from memory</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>0x21</td>
+                        <td>STORE</td>
+                        <td>Store 8 bytes to memory</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>0x22</td>
+                        <td>LOADN</td>
+                        <td>Load n bytes from memory</td>
+                        <td>3+n</td>
+                    </tr>
+                    <tr>
+                        <td>0x23</td>
+                        <td>STOREN</td>
+                        <td>Store n bytes to memory</td>
+                        <td>3+n</td>
+                    </tr>
+                    <tr>
+                        <td>0x24</td>
+                        <td>MSIZE</td>
+                        <td>Push memory size</td>
+                        <td>1</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>Control Flow (0x3*)</h2>
+            <div class="card">
+                <pre><code class="language-rust">// Control flow opcodes
+const JUMP:   u8 = 0x30;  // Jump to address
+const JUMPI:  u8 = 0x31;  // Conditional jump
+const CALL:   u8 = 0x32;  // Call subroutine
+const RETURN: u8 = 0x33;  // Return from call</code></pre>
+                <table class="instruction-table">
+                    <tr>
+                        <th>Opcode</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Gas</th>
+                    </tr>
+                    <tr>
+                        <td>0x30</td>
+                        <td>JUMP</td>
+                        <td>Jump to address</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>0x31</td>
+                        <td>JUMPI</td>
+                        <td>Conditional jump</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>0x32</td>
+                        <td>CALL</td>
+                        <td>Call subroutine</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>0x33</td>
+                        <td>RETURN</td>
+                        <td>Return from call</td>
+                        <td>5</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>Solana Operations (0x4*)</h2>
+            <div class="card">
+                <pre><code class="language-rust">// Solana operation opcodes
+const TRANSFER: u8 = 0x40;  // Transfer SOL
+const SPLOP:    u8 = 0x41;  // SPL token ops
+const CPI:      u8 = 0x42;  // Cross-program
+const LOG:      u8 = 0x43;  // Log to output</code></pre>
+                <table class="instruction-table">
+                    <tr>
+                        <th>Opcode</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Gas</th>
+                    </tr>
+                    <tr>
+                        <td>0x40</td>
+                        <td>TRANSFER</td>
+                        <td>Transfer SOL between accounts</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>0x41</td>
+                        <td>SPLOP</td>
+                        <td>SPL token operations</td>
+                        <td>200</td>
+                    </tr>
+                    <tr>
+                        <td>0x42</td>
+                        <td>CPI</td>
+                        <td>Cross-program invocation</td>
+                        <td>500</td>
+                    </tr>
+                    <tr>
+                        <td>0x43</td>
+                        <td>LOG</td>
+                        <td>Log value to output</td>
+                        <td>5</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <nav class="doc-navigation">
+            <a href="architecture.html" class="prev-doc">← Architecture</a>
+            <a href="solana.html" class="next-doc">Next: Solana Integration →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>lessVM</h4>
+                <p>A lightweight virtual machine designed for the Solana blockchain</p>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <nav>
+                    <a href="architecture.html">→ Documentation</a>
+                    <a href="examples.html">→ Examples</a>
+                    <a href="https://github.com/yourusername/lessvm">→ GitHub</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <nav>
+                    <a href="https://discord.gg/yourdiscord">→ Discord</a>
+                    <a href="https://twitter.com/lessvm">→ Twitter</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

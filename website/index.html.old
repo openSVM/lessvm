@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="lessVM - A lightweight, gas-optimized virtual machine designed specifically for Solana blockchain">
+    <title>lessVM - Lightweight Virtual Machine for Solana</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/" class="logo">less<span class="highlight">VM</span> 1.0.0</a>
+            <div class="nav-links">
+                <a href="#features">⌃+F Features</a>
+                <a href="docs/architecture.html">⌃+D Docs</a>
+                <a href="docs/examples.html">⌃+E Examples</a>
+                <a href="https://github.com/yourusername/lessvm" target="_blank" rel="noopener">⌃+G GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>
+                    <span>Light</span><span>weight Virtual</span><span> Machine</span><br>
+                    <span>for</span><span> Solana</span>
+                </h1>
+                <p class="subtitle">A high-performance, gas-optimized VM designed specifically for Solana blockchain</p>
+                <div class="cta-buttons">
+                    <a href="docs/architecture.html" class="cta-button">⭢ Get Started</a>
+                    <a href="docs/examples.html" class="cta-button">⭢ View Examples</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="container">
+            <h2>▾ KEY FEATURES</h2>
+            <div class="feature-grid">
+                <div class="card">
+                    <h3>⚡ High Performance</h3>
+                    <pre><code class="language-rust">impl VM {
+    fn execute(&mut self) -> ProgramResult {
+        while self.pc < self.code.len() {
+            self.gas_metering.charge_gas(
+                self.config.base_cost
+            )?;
+            // Optimized execution loop
+        }
+        Ok(())
+    }
+}</code></pre>
+                    <ul>
+                        <li>⭢ Sophisticated gas metering</li>
+                        <li>⭢ Efficient memory management</li>
+                        <li>⭢ Optimized instruction set</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🔒 Secure by Design</h3>
+                    <pre><code class="language-rust">impl SecurityChecker {
+    fn validate_account(&self) -> ProgramResult {
+        if !account.is_writable {
+            return Err(VMError::AccountNotWritable);
+        }
+        // Additional security checks
+        Ok(())
+    }
+}</code></pre>
+                    <ul>
+                        <li>⭢ Built-in security checks</li>
+                        <li>⭢ Memory safety guarantees</li>
+                        <li>⭢ Account validation</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🔧 Developer Friendly</h3>
+                    <pre><code class="language-rust">// Simple addition program
+let program = vec![
+    0x01, 0x05,  // PUSH1 5
+    0x01, 0x03,  // PUSH1 3
+    0x10,        // ADD
+    0xFF         // HALT
+];</code></pre>
+                    <ul>
+                        <li>⭢ Simple instruction set</li>
+                        <li>⭢ Comprehensive debugging</li>
+                        <li>⭢ Clear documentation</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🌐 Solana Native</h3>
+                    <pre><code class="language-rust">impl SPLOperations {
+    fn execute_spl_op(&self, op: SPLOperation) {
+        match op {
+            SPLOperation::Transfer => self.token_transfer()?,
+            SPLOperation::MintTo => self.token_mint_to()?,
+            // More SPL operations
+        }
+    }
+}</code></pre>
+                    <ul>
+                        <li>⭢ SPL token support</li>
+                        <li>⭢ Cross-program invocation</li>
+                        <li>⭢ Native account handling</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <h2>▾ QUICK START</h2>
+            <div class="card">
+                <pre><code class="language-rust">// Create a new lessVM instance
+let program = vec![
+    OpCode::Push1 as u8, 5,  // Push 5 onto stack
+    OpCode::Push1 as u8, 3,  // Push 3 onto stack
+    OpCode::Add as u8,       // Add them together
+    OpCode::Log as u8,       // Log result
+    OpCode::Halt as u8       // Stop execution
+];
+
+let mut vm = VM::new(&program, accounts);
+vm.execute()?;</code></pre>
+            </div>
+        </section>
+
+        <section class="container">
+            <h2>▾ DOCUMENTATION</h2>
+            <div class="docs-grid">
+                <a href="docs/architecture.html" class="card">
+                    <h3>Architecture</h3>
+                    <ul>
+                        <li>⭢ Stack-based VM</li>
+                        <li>⭢ 32-slot stack depth</li>
+                        <li>⭢ 1024 bytes memory</li>
+                        <li>⭢ Optimized gas model</li>
+                    </ul>
+                </a>
+
+                <a href="docs/instructions.html" class="card">
+                    <h3>Instructions</h3>
+                    <ul>
+                        <li>⭢ Stack Operations</li>
+                        <li>⭢ Math Operations</li>
+                        <li>⭢ Memory Access</li>
+                        <li>⭢ Control Flow</li>
+                    </ul>
+                </a>
+
+                <a href="docs/solana.html" class="card">
+                    <h3>Solana Integration</h3>
+                    <ul>
+                        <li>⭢ Account Management</li>
+                        <li>⭢ Token Operations</li>
+                        <li>⭢ CPI Support</li>
+                        <li>⭢ Security Model</li>
+                    </ul>
+                </a>
+
+                <a href="docs/examples.html" class="card">
+                    <h3>Examples</h3>
+                    <ul>
+                        <li>⭢ Basic Programs</li>
+                        <li>⭢ Token Transfers</li>
+                        <li>⭢ Smart Contracts</li>
+                        <li>⭢ Advanced Usage</li>
+                    </ul>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>lessVM</h4>
+                <p>A lightweight virtual machine designed for the Solana blockchain</p>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <nav>
+                    <a href="docs/architecture.html">⭢ Documentation</a>
+                    <a href="docs/examples.html">⭢ Examples</a>
+                    <a href="https://github.com/yourusername/lessvm">⭢ GitHub</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <nav>
+                    <a href="https://discord.gg/yourdiscord">⭢ Discord</a>
+                    <a href="https://twitter.com/lessvm">⭢ Twitter</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

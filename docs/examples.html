@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" class="js-focus-visible">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="lessVM Examples - Practical examples and use cases for this lightweight Solana virtual machine.">
+    <title>lessVM Examples - Smart Contract Examples</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js" defer></script>
+</head>
+<body>
+    <div id="loading" class="loading" aria-hidden="true"></div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-content">
+            <div class="logo">
+                <a href="../index.html" class="logo-text" aria-label="lessVM Home">
+                    less<span class="highlight">VM</span>
+                </a>
+            </div>
+            <button class="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div id="nav-links" class="nav-links" role="menubar">
+                <a href="../index.html#features" role="menuitem">Features</a>
+                <a href="architecture.html" role="menuitem">Documentation</a>
+                <a href="examples.html" role="menuitem" aria-current="page">Examples</a>
+                <a href="https://github.com/yourusername/lessvm" class="github-link" role="menuitem" aria-label="View on GitHub">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content" class="docs-content">
+        <h1>lessVM Examples</h1>
+        
+        <p>Explore practical examples of lessVM programs demonstrating various use cases and patterns.</p>
+
+        <section class="example-section">
+            <h2>On-Chain Vault</h2>
+            <p>A secure vault implementation for storing and managing tokens with deposit and withdrawal functionality.</p>
+            
+            <div class="code-container">
+                <pre><code class="language-x86asm">; On-Chain Vault
+; Accounts required:
+; 0: Program account
+; 1: Vault account
+; 2: User account
+; 3: Token account (if SPL)
+
+; Initialize vault
+init_vault:
+    PUSH1 0x01       ; Vault account index
+    PUSH1 0x00       ; Load initialization flag
+    LOAD            ; Load flag from memory
+    JUMPI end       ; If already initialized, end
+    
+    PUSH1 0x01      ; Set initialization flag
+    PUSH1 0x00      ; Store location
+    STORE           ; Store flag
+
+deposit:
+    PUSH1 0x02      ; User account index
+    PUSH1 0x01      ; Vault account index
+    DUP2            ; Amount from stack
+    TRANSFER        ; Transfer to vault
+    PUSH1 0x08      ; Deposit record offset
+    LOAD            ; Load current deposits
+    ADD             ; Add new deposit
+    PUSH1 0x08      ; Store location
+    STORE           ; Update total deposits
+
+withdraw:
+    PUSH1 0x02      ; User account index
+    PUSH1 0x08      ; Load deposit record
+    LOAD            ; Get amount
+    PUSH1 0x01      ; Vault account
+    TRANSFER        ; Transfer back to user
+
+end:
+    HALT</code></pre>
+            </div>
+            
+            <div class="implementation-notes">
+                <h3>Implementation Notes</h3>
+                <ul>
+                    <li>Uses memory location 0x00 for initialization flag</li>
+                    <li>Stores deposit records at offset 0x08</li>
+                    <li>Includes basic access control via account checks</li>
+                    <li>Supports both SOL and SPL token transfers</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="example-section">
+            <h2>On-Chain Oracle</h2>
+            <p>A price oracle implementation supporting multiple data providers and aggregation.</p>
+            
+            <div class="code-container">
+                <pre><code class="language-x86asm">; On-Chain Oracle
+; Memory layout:
+; 0x00: Provider count
+; 0x08: Last update timestamp
+; 0x10: Price data start
+; Each price: 8 bytes price + 8 bytes timestamp + 8 bytes provider
+
+update_price:
+    ; Stack: [price, provider_id]
+    PUSH1 0x00      ; Load provider count
+    LOAD
+    DUP1            ; Copy count
+    PUSH1 0x20      ; Size per entry
+    MUL             ; Calculate offset
+    PUSH1 0x10      ; Base offset
+    ADD             ; Final position
+    
+    DUP1            ; Store price
+    STORE
+    
+    PUSH1 0x08      ; Timestamp offset
+    ADD
+    NOW             ; Get current timestamp
+    STORE           ; Store timestamp
+    
+    PUSH1 0x08      ; Provider offset
+    ADD
+    STORE           ; Store provider ID
+
+get_price:
+    PUSH1 0x00      ; Load provider count
+    LOAD
+    PUSH1 0x00      ; Initialize sum
+    PUSH1 0x00      ; Initialize count
+
+aggregate_loop:
+    DUP1            ; Copy current index
+    PUSH1 0x20      ; Entry size
+    MUL
+    PUSH1 0x10      ; Base offset
+    ADD
+    LOAD            ; Load price
+    ADD             ; Add to sum
+    
+    SWAP1
+    PUSH1 0x01
+    ADD             ; Increment count
+    SWAP1
+    
+    DUP3            ; Check if done
+    DUP2
+    SUB
+    JUMPI aggregate_loop
+    
+    SWAP1           ; Get sum
+    SWAP2           ; Get count
+    DIV             ; Calculate average</code></pre>
+            </div>
+            
+            <div class="implementation-notes">
+                <h3>Implementation Notes</h3>
+                <ul>
+                    <li>Maintains a fixed-size circular buffer of price entries</li>
+                    <li>Each entry includes price, timestamp, and provider ID</li>
+                    <li>Implements simple average for price aggregation</li>
+                    <li>Includes timestamp validation for data freshness</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="example-section">
+            <h2>AMM with Dynamic Fees</h2>
+            <p>An Automated Market Maker implementation with dynamic fee calculation based on volume and volatility.</p>
+            
+            <div class="code-container">
+                <pre><code class="language-x86asm">; AMM with dynamic fees and rewards
+; Memory layout:
+; 0x00: Total volume
+; 0x08: Trader count
+; 0x10: Fee accumulator
+; 0x18: Trader data start
+
+init_pool:
+    PUSH1 0x00      ; Initialize total volume
+    PUSH1 0x00
+    STORE
+    PUSH1 0x00      ; Initialize trader count
+    PUSH1 0x08
+    STORE
+    HALT
+
+trade:
+    ; Update volumes
+    DUP1            ; Trade amount
+    PUSH1 0x00
+    LOAD            ; Load total volume
+    ADD             ; Add new volume
+    PUSH1 0x00
+    STORE           ; Store new total
+
+    ; Update trader stats
+    PUSH1 0x08      ; Load trader count
+    LOAD
+    DUP1            ; Find trader index
+    CALL find_trader
+    
+    ; Update trader's volume and PnL
+    DUP1
+    CALL update_trader_stats
+    
+    ; Calculate and distribute fees
+    CALL distribute_fees</code></pre>
+            </div>
+            
+            <div class="implementation-notes">
+                <h3>Implementation Notes</h3>
+                <ul>
+                    <li>Dynamic fee calculation based on pool utilization</li>
+                    <li>Rewards system for active traders</li>
+                    <li>Volume-based fee tiers</li>
+                    <li>Integrated slippage protection</li>
+                </ul>
+            </div>
+        </section>
+
+        <nav class="doc-navigation" aria-label="Documentation navigation">
+            <a href="solana.html" class="next-doc">Next: Solana Integration →</a>
+        </nav>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>lessVM</h4>
+                <p>A lightweight virtual machine designed for the Solana blockchain</p>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <nav aria-label="Footer resources navigation">
+                    <a href="architecture.html">Documentation</a>
+                    <a href="examples.html">Examples</a>
+                    <a href="https://github.com/yourusername/lessvm">GitHub</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <nav aria-label="Footer community navigation">
+                    <a href="https://discord.gg/yourdiscord">Discord</a>
+                    <a href="https://twitter.com/lessvm">Twitter</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Remove loading screen
+            const loading = document.getElementById('loading');
+            if (loading) {
+                loading.style.display = 'none';
+            }
+
+            // Initialize syntax highlighting
+            hljs.highlightAll();
+            
+            // Mobile menu handling
+            const menuButton = document.querySelector('.mobile-menu-button');
+            const navLinks = document.getElementById('nav-links');
+            
+            menuButton.addEventListener('click', () => {
+                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+                menuButton.setAttribute('aria-expanded', !isExpanded);
+                menuButton.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = isExpanded ? 'auto' : 'hidden';
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (navLinks.classList.contains('active') &&
+                    !navLinks.contains(e.target) &&
+                    !menuButton.contains(e.target)) {
+                    menuButton.click();
+                }
+            });
+
+            // Handle keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (navLinks.classList.contains('active')) {
+                        menuButton.click();
+                    }
+                    document.querySelector('.skip-link').focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

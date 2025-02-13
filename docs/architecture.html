@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" class="js-focus-visible">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="lessVM Architecture - Learn about the core components and design of this lightweight Solana virtual machine.">
+    <title>lessVM Architecture - Core Components and Design</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js" defer></script>
+</head>
+<body>
+    <div id="loading" class="loading" aria-hidden="true"></div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-content">
+            <div class="logo">
+                <a href="../index.html" class="logo-text" aria-label="lessVM Home">
+                    less<span class="highlight">VM</span>
+                </a>
+            </div>
+            <button class="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div id="nav-links" class="nav-links" role="menubar">
+                <a href="../index.html#features" role="menuitem">Features</a>
+                <a href="architecture.html" role="menuitem" aria-current="page">Documentation</a>
+                <a href="examples.html" role="menuitem">Examples</a>
+                <a href="https://github.com/yourusername/lessvm" class="github-link" role="menuitem" aria-label="View on GitHub">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content" class="docs-content">
+        <h1>lessVM Architecture</h1>
+        
+        <p>lessVM is a stack-based virtual machine designed specifically for the Solana blockchain. It provides a lightweight, efficient execution environment for smart contracts and on-chain programs.</p>
+
+        <section class="component-grid">
+            <div class="component-card">
+                <h3>Stack</h3>
+                <ul>
+                    <li>Fixed-size stack with 32 slots</li>
+                    <li>64-bit unsigned integers</li>
+                    <li>Push/Pop operations</li>
+                    <li>Duplicate and swap capabilities</li>
+                    <li>Overflow protection</li>
+                </ul>
+            </div>
+            
+            <div class="component-card">
+                <h3>Memory</h3>
+                <ul>
+                    <li>1024 bytes linear memory space</li>
+                    <li>Byte-addressable</li>
+                    <li>Bounds checking</li>
+                    <li>Zero-initialized</li>
+                </ul>
+            </div>
+            
+            <div class="component-card">
+                <h3>Program Counter</h3>
+                <ul>
+                    <li>Sequential execution</li>
+                    <li>Jump operations</li>
+                    <li>Call/return support</li>
+                </ul>
+            </div>
+            
+            <div class="component-card">
+                <h3>Gas Metering</h3>
+                <ul>
+                    <li>Operation-specific costs</li>
+                    <li>200,000 unit limit</li>
+                    <li>Memory expansion costs</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="specs-table">
+            <h2>Technical Specifications</h2>
+            <table>
+                <tr>
+                    <th>Component</th>
+                    <th>Specification</th>
+                    <th>Details</th>
+                </tr>
+                <tr>
+                    <td>Stack Size</td>
+                    <td>32 slots</td>
+                    <td>Each slot holds a 64-bit value</td>
+                </tr>
+                <tr>
+                    <td>Memory</td>
+                    <td>1024 bytes</td>
+                    <td>Linear, byte-addressable space</td>
+                </tr>
+                <tr>
+                    <td>Gas Limit</td>
+                    <td>200,000 units</td>
+                    <td>Per-transaction limit</td>
+                </tr>
+                <tr>
+                    <td>Value Type</td>
+                    <td>u64</td>
+                    <td>64-bit unsigned integers</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="code-example">
+            <h2>Implementation Example</h2>
+            <div class="code-container">
+                <pre><code class="language-rust">#[repr(C, align(64))]
+pub struct VM {
+    stack: Stack,
+    memory: Memory,
+    accounts: AccountsView,
+    gas: Gas,
+}
+
+impl VM {
+    fn validate_account(&self, index: usize) -> ProgramResult {
+        let account = self.accounts.get(index)?;
+        if !account.is_writable {
+            return Err(VMError::AccountNotWritable.into());
+        }
+        if account.owner != self.program_id {
+            return Err(VMError::InvalidAccountOwner.into());
+        }
+        Ok(())
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <section class="security-features">
+            <h2>Security Features</h2>
+            <ul>
+                <li>Stack overflow and underflow protection</li>
+                <li>Memory bounds checking</li>
+                <li>Gas metering to prevent infinite loops</li>
+                <li>Account ownership verification</li>
+                <li>Proper error propagation</li>
+            </ul>
+        </section>
+
+        <nav class="doc-navigation" aria-label="Documentation navigation">
+            <a href="instructions.html" class="next-doc">Next: Instruction Set →</a>
+        </nav>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>lessVM</h4>
+                <p>A lightweight virtual machine designed for the Solana blockchain</p>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <nav aria-label="Footer resources navigation">
+                    <a href="architecture.html">Documentation</a>
+                    <a href="examples.html">Examples</a>
+                    <a href="https://github.com/yourusername/lessvm">GitHub</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <nav aria-label="Footer community navigation">
+                    <a href="https://discord.gg/yourdiscord">Discord</a>
+                    <a href="https://twitter.com/lessvm">Twitter</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Remove loading screen
+            const loading = document.getElementById('loading');
+            if (loading) {
+                loading.style.display = 'none';
+            }
+
+            // Initialize syntax highlighting
+            hljs.highlightAll();
+            
+            // Mobile menu handling
+            const menuButton = document.querySelector('.mobile-menu-button');
+            const navLinks = document.getElementById('nav-links');
+            
+            menuButton.addEventListener('click', () => {
+                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+                menuButton.setAttribute('aria-expanded', !isExpanded);
+                menuButton.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = isExpanded ? 'auto' : 'hidden';
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (navLinks.classList.contains('active') &&
+                    !navLinks.contains(e.target) &&
+                    !menuButton.contains(e.target)) {
+                    menuButton.click();
+                }
+            });
+
+            // Handle keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (navLinks.classList.contains('active')) {
+                        menuButton.click();
+                    }
+                    document.querySelector('.skip-link').focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

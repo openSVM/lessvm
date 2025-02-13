@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" class="js-focus-visible">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="lessVM Instruction Set - Complete reference for lessVM's instruction set including stack operations, math operations, and Solana-specific features.">
+    <title>lessVM Instruction Set - Complete Reference</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js" defer></script>
+</head>
+<body>
+    <div id="loading" class="loading" aria-hidden="true"></div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-content">
+            <div class="logo">
+                <a href="../index.html" class="logo-text" aria-label="lessVM Home">
+                    less<span class="highlight">VM</span>
+                </a>
+            </div>
+            <button class="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div id="nav-links" class="nav-links" role="menubar">
+                <a href="../index.html#features" role="menuitem">Features</a>
+                <a href="architecture.html" role="menuitem">Documentation</a>
+                <a href="examples.html" role="menuitem">Examples</a>
+                <a href="https://github.com/yourusername/lessvm" class="github-link" role="menuitem" aria-label="View on GitHub">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content" class="docs-content">
+        <h1>Instruction Set</h1>
+        
+        <p>The lessVM instruction set is designed for efficiency and ease of use, with special consideration for Solana blockchain operations.</p>
+
+        <section class="instruction-category">
+            <h2>Stack Operations (0x0*)</h2>
+            <div class="code-container">
+                <pre><code class="language-x86asm">0x00 NOP        ; No operation
+0x01 PUSH1      ; Push 1 byte as u64
+0x02 PUSH2      ; Push 2 bytes as u64
+0x03 PUSH4      ; Push 4 bytes as u64
+0x04 PUSH8      ; Push 8 bytes as u64
+0x05 POP        ; Remove top stack item
+0x06 DUP n      ; Duplicate nth stack item
+0x07 SWAP n     ; Swap top with nth stack item</code></pre>
+            </div>
+            
+            <div class="implementation-notes">
+                <h3>Usage Notes</h3>
+                <ul>
+                    <li>Stack has a fixed size of 32 slots</li>
+                    <li>Each slot holds a 64-bit value</li>
+                    <li>Stack overflow/underflow protection</li>
+                    <li>DUP and SWAP operations validate depth</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="instruction-category">
+            <h2>Math Operations (0x1*)</h2>
+            <div class="code-container">
+                <pre><code class="language-x86asm">0x10 ADD        ; a + b (wrapping)
+0x11 SUB        ; a - b (wrapping)
+0x12 MUL        ; a * b (wrapping)
+0x13 DIV        ; a / b (wrapping)
+0x14 MULDIV     ; (a * b) / c (wrapping)
+0x15 MIN        ; min(a, b)
+0x16 MAX        ; max(a, b)</code></pre>
+            </div>
+            
+            <div class="implementation-notes">
+                <h3>Safety Features</h3>
+                <ul>
+                    <li>All operations use wrapping arithmetic</li>
+                    <li>Division by zero protection</li>
+                    <li>Overflow checks in debug mode</li>
+                    <li>Optimized for common operations</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="instruction-category">
+            <h2>Memory Operations (0x2*)</h2>
+            <div class="code-container">
+                <pre><code class="language-x86asm">0x20 LOAD       ; Load 8 bytes from memory
+0x21 STORE      ; Store 8 bytes to memory
+0x22 LOADN      ; Load n bytes from memory
+0x23 STOREN     ; Store n bytes to memory
+0x24 MSIZE      ; Push current memory size</code></pre>
+            </div>
+            
+            <div class="implementation-notes">
+                <h3>Memory Management</h3>
+                <ul>
+                    <li>1024 bytes linear memory space</li>
+                    <li>Bounds checking on all operations</li>
+                    <li>Zero-initialized memory</li>
+                    <li>Efficient memory expansion</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="instruction-category">
+            <h2>Control Flow (0x3*)</h2>
+            <div class="code-container">
+                <pre><code class="language-x86asm">0x30 JUMP       ; Unconditional jump
+0x31 JUMPI      ; Conditional jump
+0x32 CALL       ; Call subroutine
+0x33 RETURN     ; Return from subroutine</code></pre>
+            </div>
+            
+            <div class="implementation-notes">
+                <h3>Control Flow Safety</h3>
+                <ul>
+                    <li>Jump target validation</li>
+                    <li>Call depth tracking</li>
+                    <li>Return stack protection</li>
+                    <li>Gas metering for loops</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="instruction-category">
+            <h2>Solana Operations (0x4*)</h2>
+            <div class="code-container">
+                <pre><code class="language-x86asm">0x40 TRANSFER   ; Transfer SOL between accounts
+0x41 SPLOP      ; SPL token operations
+0x42 CPI        ; Cross-program invocation
+0x43 LOG        ; Log value to program output</code></pre>
+            </div>
+            
+            <div class="implementation-notes">
+                <h3>Blockchain Integration</h3>
+                <ul>
+                    <li>Account ownership verification</li>
+                    <li>SPL token support</li>
+                    <li>Safe CPI execution</li>
+                    <li>Program logging</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="instruction-category">
+            <h2>System Operations (0xF*)</h2>
+            <div class="code-container">
+                <pre><code class="language-x86asm">0xFF HALT       ; Stop execution</code></pre>
+            </div>
+            
+            <div class="implementation-notes">
+                <h3>System Control</h3>
+                <ul>
+                    <li>Clean program termination</li>
+                    <li>Resource cleanup</li>
+                    <li>State finalization</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="gas-costs">
+            <h2>Gas Costs</h2>
+            <table>
+                <tr>
+                    <th>Operation Type</th>
+                    <th>Base Cost</th>
+                    <th>Additional Costs</th>
+                </tr>
+                <tr>
+                    <td>Stack Operations</td>
+                    <td>1</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Math Operations</td>
+                    <td>2</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Memory Operations</td>
+                    <td>3</td>
+                    <td>+2 per word for expansion</td>
+                </tr>
+                <tr>
+                    <td>Control Flow</td>
+                    <td>5</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Solana Operations</td>
+                    <td>100</td>
+                    <td>Varies by operation</td>
+                </tr>
+                <tr>
+                    <td>SPL Operations</td>
+                    <td>200</td>
+                    <td>Varies by token operation</td>
+                </tr>
+                <tr>
+                    <td>CPI Operations</td>
+                    <td>500</td>
+                    <td>+gas used by called program</td>
+                </tr>
+            </table>
+        </section>
+
+        <nav class="doc-navigation" aria-label="Documentation navigation">
+            <a href="architecture.html" class="prev-doc">← Back to Architecture</a>
+            <a href="examples.html" class="next-doc">Next: Examples →</a>
+        </nav>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>lessVM</h4>
+                <p>A lightweight virtual machine designed for the Solana blockchain</p>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <nav aria-label="Footer resources navigation">
+                    <a href="architecture.html">Documentation</a>
+                    <a href="examples.html">Examples</a>
+                    <a href="https://github.com/yourusername/lessvm">GitHub</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <nav aria-label="Footer community navigation">
+                    <a href="https://discord.gg/yourdiscord">Discord</a>
+                    <a href="https://twitter.com/lessvm">Twitter</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Remove loading screen
+            const loading = document.getElementById('loading');
+            if (loading) {
+                loading.style.display = 'none';
+            }
+
+            // Initialize syntax highlighting
+            hljs.highlightAll();
+            
+            // Mobile menu handling
+            const menuButton = document.querySelector('.mobile-menu-button');
+            const navLinks = document.getElementById('nav-links');
+            
+            menuButton.addEventListener('click', () => {
+                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+                menuButton.setAttribute('aria-expanded', !isExpanded);
+                menuButton.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = isExpanded ? 'auto' : 'hidden';
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (navLinks.classList.contains('active') &&
+                    !navLinks.contains(e.target) &&
+                    !menuButton.contains(e.target)) {
+                    menuButton.click();
+                }
+            });
+
+            // Handle keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (navLinks.classList.contains('active')) {
+                        menuButton.click();
+                    }
+                    document.querySelector('.skip-link').focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

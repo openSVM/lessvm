@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="lessVM Solana Integration - Native Solana blockchain features and SPL token operations">
+    <title>lessVM Solana Integration</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="../" class="logo">less<span class="highlight">VM</span> 1.0.0</a>
+            <div class="nav-links">
+                <a href="../#features">^+F Features</a>
+                <a href="architecture.html">^+D Docs</a>
+                <a href="examples.html">^+E Examples</a>
+                <a href="https://github.com/yourusername/lessvm" target="_blank" rel="noopener">^+G GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container docs-content">
+        <h1>Solana Integration</h1>
+        
+        <section>
+            <h2>Account Management</h2>
+            <div class="card">
+                <h3>Account Operations</h3>
+                <pre><code class="language-rust">impl<'a> VM<'a> {
+    fn validate_account(&self, index: usize) -> ProgramResult {
+        let account = self.accounts.get(index)?;
+        if !account.is_writable {
+            return Err(VMError::AccountNotWritable.into());
+        }
+        if account.owner != self.program_id {
+            return Err(VMError::InvalidAccountOwner.into());
+        }
+        Ok(())
+    }
+}</code></pre>
+                <ul>
+                    <li>→ Account ownership verification</li>
+                    <li>→ Write permission checks</li>
+                    <li>→ Lamport balance validation</li>
+                    <li>→ Account data size management</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>SPL Token Operations</h2>
+            <div class="card">
+                <h3>Token Instructions</h3>
+                <pre><code class="language-rust">pub enum SPLOperation {
+    Transfer,
+    MintTo,
+    Burn,
+    Approve,
+    Revoke,
+    InitializeAccount,
+    CloseAccount,
+}
+
+impl SPLOperations {
+    fn execute_spl_op(&self, op: SPLOperation) -> ProgramResult {
+        match op {
+            SPLOperation::Transfer => self.token_transfer()?,
+            SPLOperation::MintTo => self.token_mint_to()?,
+            // More operations...
+        }
+        Ok(())
+    }
+}</code></pre>
+                <ul>
+                    <li>→ Token transfers</li>
+                    <li>→ Minting operations</li>
+                    <li>→ Account management</li>
+                    <li>→ Authority validation</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Cross-Program Invocation</h2>
+            <div class="card">
+                <h3>CPI Framework</h3>
+                <pre><code class="language-rust">pub struct CPIContext<'a> {
+    program_id: &'a Pubkey,
+    accounts: &'a [AccountInfo<'a>],
+    data: &'a [u8],
+}
+
+impl<'a> VM<'a> {
+    fn execute_cpi(&self, context: CPIContext) -> ProgramResult {
+        solana_program::program::invoke(
+            &Instruction::new_with_bytes(
+                *context.program_id,
+                context.data,
+                context.accounts.to_vec(),
+            ),
+            context.accounts,
+        )
+    }
+}</code></pre>
+                <ul>
+                    <li>→ Safe CPI execution</li>
+                    <li>→ Account privilege preservation</li>
+                    <li>→ Recursive CPI support</li>
+                    <li>→ Error propagation</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Security Model</h2>
+            <div class="card">
+                <h3>Security Checks</h3>
+                <pre><code class="language-rust">impl SecurityChecker {
+    fn check_account_ownership(&self, account_idx: usize) -> ProgramResult {
+        let account = &self.accounts[account_idx];
+        if account.owner != self.program_id {
+            return Err(ProgramError::IllegalOwner);
+        }
+        Ok(())
+    }
+
+    fn check_signer(&self, account_idx: usize) -> ProgramResult {
+        let account = &self.accounts[account_idx];
+        if !account.is_signer {
+            return Err(ProgramError::MissingRequiredSignature);
+        }
+        Ok(())
+    }
+}</code></pre>
+                <ul>
+                    <li>→ Account ownership verification</li>
+                    <li>→ Signer validation</li>
+                    <li>→ Write permission checks</li>
+                    <li>→ Balance validation</li>
+                </ul>
+            </div>
+        </section>
+
+        <nav class="doc-navigation">
+            <a href="instructions.html" class="prev-doc">← Instructions</a>
+            <a href="examples.html" class="next-doc">Next: Examples →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>lessVM</h4>
+                <p>A lightweight virtual machine designed for the Solana blockchain</p>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <nav>
+                    <a href="architecture.html">→ Documentation</a>
+                    <a href="examples.html">→ Examples</a>
+                    <a href="https://github.com/yourusername/lessvm">→ GitHub</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <nav>
+                    <a href="https://discord.gg/yourdiscord">→ Discord</a>
+                    <a href="https://twitter.com/lessvm">→ Twitter</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

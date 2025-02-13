@@ -1,0 +1,160 @@
+/* Update colors and contrast */
+:root {
+    --bg-color: #e8e8e8;
+    --text-color: #000000;
+    --primary-color: #1a1a1a;
+    --secondary-color: #333333;
+    --accent-color: #666666;
+    --card-bg: #f0f0f0;
+    --code-bg: #ffffff;
+    --border-color: #cccccc;
+    --hover-color: #000000;
+}
+
+/* Feature Cards */
+.feature-grid .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-lg);
+    transition: all 0.2s ease;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.feature-grid .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    border-color: var(--secondary-color);
+}
+
+.feature-grid .code-container {
+    background: var(--code-bg);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+    overflow-x: auto;
+    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Enhanced Code Syntax Highlighting */
+.hljs {
+    background: var(--code-bg) !important;
+    color: #1a1a1a !important;
+    padding: 1em !important;
+    border-radius: 4px;
+}
+
+.hljs-keyword {
+    color: #0033cc !important;
+    font-weight: 600 !important;
+}
+
+.hljs-string {
+    color: #006600 !important;
+}
+
+.hljs-number {
+    color: #660066 !important;
+}
+
+.hljs-comment {
+    color: #666666 !important;
+    font-style: italic !important;
+}
+
+.hljs-function {
+    color: #000066 !important;
+    font-weight: 500 !important;
+}
+
+.hljs-title {
+    color: #660000 !important;
+    font-weight: 500 !important;
+}
+
+/* Subtle CRT Effect */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.01) 0px,
+        rgba(0, 0, 0, 0.01) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    animation: scanline 10s linear infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(0, 0, 0, 0.02) 100%
+    );
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color);
+    font-weight: 600;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.subtitle {
+    color: var(--secondary-color);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Navigation */
+.navbar {
+    background: rgba(232, 232, 232, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* CTA Buttons */
+.cta-button {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    background: var(--code-bg);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+}
+
+.cta-button:hover {
+    background: var(--primary-color);
+    color: var(--code-bg);
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Feature List Items */
+.feature-grid li {
+    color: var(--secondary-color);
+    position: relative;
+    padding-left: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.feature-grid li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+}

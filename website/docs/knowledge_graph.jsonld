@@ -1,0 +1,527 @@
+{
+  "@context": {
+    "name": "http://schema.org/name",
+    "description": "http://schema.org/description",
+    "hasComponent": "http://schema.org/hasPart",
+    "partOf": "http://schema.org/isPartOf",
+    "operatesOn": "http://schema.org/operatesOn",
+    "executes": "http://schema.org/executes",
+    "triggers": "http://schema.org/triggers",
+    "category": "http://schema.org/category",
+    "opcode": "http://schema.org/Item",
+    "errorCode": "http://schema.org/Thing",
+    "relationship": "http://schema.org/relationship",
+    "hierarchy": "http://schema.org/hierarchy",
+    "semanticConnection": "http://schema.org/semanticConnection",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/"
+  },
+  "@graph": [
+    {
+      "@id": "VM",
+      "name": "Virtual Machine (VM)",
+      "description": "Executes bytecode on the Solana blockchain.",
+      "hasComponent": [
+        {
+          "@id": "ProgramCounter",
+          "name": "Program Counter (PC)",
+          "description": "Tracks the current instruction index."
+        },
+        {
+          "@id": "GasCounter",
+          "name": "Gas Counter",
+          "description": "Tracks computational costs to enforce gas limits."
+        },
+        {
+          "@id": "Stack",
+          "name": "Stack",
+          "description": "LIFO stack with a depth of 32 entries, each holding a 64-bit unsigned integer (u64)."
+        },
+        {
+          "@id": "Memory",
+          "name": "Memory",
+          "description": "Fixed-size byte array of 1024 bytes, supporting load and store operations."
+        },
+        {
+          "@id": "Code",
+          "name": "Code",
+          "description": "Bytecode program being executed."
+        },
+        {
+          "@id": "Accounts",
+          "name": "Accounts",
+          "description": "References to Solana accounts for blockchain-specific operations."
+        },
+        {
+          "@id": "CurrentAccount",
+          "name": "Current Account",
+          "description": "Active account for Solana operations like transfers."
+        },
+        {
+          "@id": "GasMetering",
+          "name": "GasMetering",
+          "description": "Manages gas consumption for instructions.",
+          "partOf": "VM"
+        },
+        {
+          "@id": "Debugger",
+          "name": "Debugger",
+          "description": "Provides logging for debugging purposes.",
+          "partOf": "VM"
+        },
+        {
+          "@id": "SecurityChecker",
+          "name": "SecurityChecker",
+          "description": "Performs security validations on accounts and instructions.",
+          "partOf": "VM"
+        },
+        {
+          "@id": "SPLOperations",
+          "name": "SPLOperations",
+          "description": "Handles SPL token operations.",
+          "partOf": "VM"
+        }
+      ],
+      "category": "VM Components",
+      "executedBy": ["Opcodes"]
+    },
+    {
+      "@id": "GasMetering",
+      "name": "GasMetering",
+      "description": "Manages gas consumption for instructions.",
+      "properties": {
+        "gas_used": "Current gas consumed.",
+        "config": "Configuration for gas costs per operation.",
+        "prev_memory_size": "Previous memory size for calculating memory expansion costs."
+      },
+      "partOf": "VM"
+    },
+    {
+      "@id": "Debugger",
+      "name": "Debugger",
+      "description": "Provides logging for debugging purposes.",
+      "properties": {
+        "config": "Debugging flags.",
+        "step_count": "Counts execution steps."
+      },
+      "partOf": "VM"
+    },
+    {
+      "@id": "SecurityChecker",
+      "name": "SecurityChecker",
+      "description": "Performs security validations on accounts and instructions.",
+      "properties": {
+        "program_id": "Reference to the program's public key.",
+        "accounts": "List of account information."
+      },
+      "partOf": "VM"
+    },
+    {
+      "@id": "SPLOperations",
+      "name": "SPLOperations",
+      "description": "Handles SPL token operations.",
+      "properties": {
+        "accounts": "References to Solana accounts involved in SPL operations."
+      },
+      "partOf": "VM",
+      "operatesOn": ["SPLTokenTransfers"]
+    },
+    {
+      "@id": "Opcodes",
+      "name": "Opcodes",
+      "description": "Instruction set for the VM.",
+      "category": "Opcode Categories",
+      "executes": ["StackOperations", "MathOperations", "MemoryOperations", "ControlFlow", "SolanaOperations", "SystemOperations"]
+    },
+    {
+      "@id": "StackOperations",
+      "name": "Stack Operations (0x0*)",
+      "description": "Manage data on the stack, such as pushing values, popping values, duplicating, and swapping.",
+      "operatesOn": ["Stack"],
+      "partOf": "Opcodes",
+      "opcode": [
+        {
+          "@id": "Nop",
+          "name": "Nop",
+          "code": "0x00",
+          "description": "No operation."
+        },
+        {
+          "@id": "Push1",
+          "name": "Push1",
+          "code": "0x01",
+          "description": "Pushes a 1-byte value onto the stack."
+        },
+        {
+          "@id": "Push8",
+          "name": "Push8",
+          "code": "0x02",
+          "description": "Pushes an 8-byte value onto the stack."
+        },
+        {
+          "@id": "Pop",
+          "name": "Pop",
+          "code": "0x03",
+          "description": "Removes the top element from the stack."
+        },
+        {
+          "@id": "Dup",
+          "name": "Dup",
+          "code": "0x04",
+          "description": "Duplicates the nth element from the top of the stack."
+        },
+        {
+          "@id": "Swap",
+          "name": "Swap",
+          "code": "0x05",
+          "description": "Swaps the top element with the nth element from the top."
+        }
+      ]
+    },
+    {
+      "@id": "MathOperations",
+      "name": "Math Operations (0x1*)",
+      "description": "Perform arithmetic and comparison operations on stack values.",
+      "operatesOn": ["Stack"],
+      "partOf": "Opcodes",
+      "opcode": [
+        {
+          "@id": "Add",
+          "name": "Add",
+          "code": "0x10",
+          "description": "Adds the top two elements of the stack."
+        },
+        {
+          "@id": "Mul",
+          "name": "Mul",
+          "code": "0x11",
+          "description": "Multiplies the top two elements of the stack."
+        },
+        {
+          "@id": "Div",
+          "name": "Div",
+          "code": "0x12",
+          "description": "Divides the second top element by the top element of the stack."
+        },
+        {
+          "@id": "MulDiv",
+          "name": "MulDiv",
+          "code": "0x14",
+          "description": "Multiplies the top two elements and divides by the third."
+        },
+        {
+          "@id": "Min",
+          "name": "Min",
+          "code": "0x15",
+          "description": "Pushes the minimum of the top two elements."
+        },
+        {
+          "@id": "Max",
+          "name": "Max",
+          "code": "0x16",
+          "description": "Pushes the maximum of the top two elements."
+        }
+      ]
+    },
+    {
+      "@id": "MemoryOperations",
+      "name": "Memory Operations (0x2*)",
+      "description": "Interact with a fixed-size memory array for data storage and retrieval.",
+      "operatesOn": ["Memory"],
+      "partOf": "Opcodes",
+      "opcode": [
+        {
+          "@id": "Load",
+          "name": "Load",
+          "code": "0x20",
+          "description": "Loads 8 bytes from memory."
+        },
+        {
+          "@id": "Store",
+          "name": "Store",
+          "code": "0x21",
+          "description": "Stores 8 bytes to memory."
+        },
+        {
+          "@id": "LoadN",
+          "name": "LoadN",
+          "code": "0x22",
+          "description": "Loads a variable number of bytes from memory."
+        },
+        {
+          "@id": "StoreN",
+          "name": "StoreN",
+          "code": "0x23",
+          "description": "Stores a variable number of bytes to memory."
+        },
+        {
+          "@id": "Msize",
+          "name": "Msize",
+          "code": "0x24",
+          "description": "Pushes the current memory size onto the stack."
+        }
+      ]
+    },
+    {
+      "@id": "ControlFlow",
+      "name": "Control Flow (0x3*)",
+      "description": "Regulate the execution flow using jumps, calls, and returns.",
+      "operatesOn": ["ProgramCounter"],
+      "partOf": "Opcodes",
+      "opcode": [
+        {
+          "@id": "Jump",
+          "name": "Jump",
+          "code": "0x30",
+          "description": "Unconditionally jumps to a specified program counter."
+        },
+        {
+          "@id": "JumpI",
+          "name": "JumpI",
+          "code": "0x31",
+          "description": "Conditionally jumps based on the top stack value."
+        },
+        {
+          "@id": "Call",
+          "name": "Call",
+          "code": "0x32",
+          "description": "Calls a subroutine (not yet implemented)."
+        },
+        {
+          "@id": "Return",
+          "name": "Return",
+          "code": "0x33",
+          "description": "Returns from a subroutine (not yet implemented)."
+        }
+      ]
+    },
+    {
+      "@id": "SolanaOperations",
+      "name": "Solana Operations (0x4*)",
+      "description": "Interact with Solana-specific features like transferring lamports and invoking cross-program instructions.",
+      "operatesOn": ["Accounts"],
+      "partOf": "Opcodes",
+      "opcode": [
+        {
+          "@id": "Transfer",
+          "name": "Transfer",
+          "code": "0x40",
+          "description": "Transfers lamports between accounts."
+        },
+        {
+          "@id": "SPLTransfer",
+          "name": "SPLTransfer",
+          "code": "0x41",
+          "description": "Transfers SPL tokens between accounts."
+        },
+        {
+          "@id": "CheckOwner",
+          "name": "CheckOwner",
+          "code": "0x42",
+          "description": "Checks account ownership."
+        },
+        {
+          "@id": "CheckRent",
+          "name": "CheckRent",
+          "code": "0x43",
+          "description": "Checks if an account is rent-exempt."
+        },
+        {
+          "@id": "Log",
+          "name": "Log",
+          "code": "0x44",
+          "description": "Logs a value to the Solana runtime."
+        }
+      ]
+    },
+    {
+      "@id": "SystemOperations",
+      "name": "System Operations (0xF*)",
+      "description": "Halt program execution.",
+      "operatesOn": ["ProgramCounter"],
+      "partOf": "Opcodes",
+      "opcode": [
+        {
+          "@id": "Halt",
+          "name": "Halt",
+          "code": "0xFF",
+          "description": "Halts program execution."
+        }
+      ]
+    },
+    {
+      "@id": "Errors",
+      "name": "Error Codes",
+      "description": "Defines various error conditions within the VM.",
+      "triggers": ["VM Components"],
+      "errorCode": [
+        { "code": 1, "description": "Stack overflow" },
+        { "code": 2, "description": "Stack underflow" },
+        { "code": 3, "description": "Invalid DUP depth" },
+        { "code": 4, "description": "Invalid SWAP depth" },
+        { "code": 5, "description": "Memory store out of bounds" },
+        { "code": 6, "description": "Memory load out of bounds" },
+        { "code": 7, "description": "Invalid instruction fetch" },
+        { "code": 8, "description": "Invalid byte fetch" },
+        { "code": 9, "description": "Invalid u64 fetch" },
+        { "code": 10, "description": "Invalid JUMP target" },
+        { "code": 11, "description": "Invalid JUMPI target" },
+        { "code": 12, "description": "Invalid opcode" },
+        { "code": 13, "description": "Out of gas" },
+        { "code": 14, "description": "Rent exemption failure" },
+        { "code": 15, "description": "Invalid account ownership" },
+        { "code": 16, "description": "Missing required signature" }
+      ]
+    },
+    {
+      "@id": "SemanticConnections",
+      "name": "Semantic Connections",
+      "description": "Deeper insights into the functionality and architecture of lessVM.",
+      "semanticConnection": [
+        {
+          "description": "Gas Constraints ensure that VM execution does not exceed computational limits, preventing abuse such as infinite loops.",
+          "connects": ["GasCounter", "GasMetering"]
+        },
+        {
+          "description": "Security Checks within SecurityChecker enforce account ownership and rent-exemption, safeguarding against unauthorized modifications and ensuring compliance with Solana's requirements.",
+          "connects": ["SecurityChecker", "Accounts"]
+        },
+        {
+          "description": "SPLOperations integrates SPL token functionalities, enabling seamless token transfers and interactions with Solana's native token programs.",
+          "connects": ["SPLOperations", "SPLTransfer"]
+        },
+        {
+          "description": "Debugger provides visibility into VM execution, facilitating debugging by logging the program counter, gas usage, and stack state when enabled.",
+          "connects": ["Debugger", "VM"]
+        },
+        {
+          "description": "Error Handling mechanisms across VM components ensure that any violations in stack operations, memory access, or opcode execution are gracefully managed and reported back to the Solana runtime.",
+          "connects": ["Errors", "VM Components"]
+        }
+      ]
+    },
+    {
+      "@id": "ProgramStructures",
+      "name": "Program Structures",
+      "description": "Defines the structure and flow of bytecode programs executed by the VM.",
+      "executes": ["Opcodes"]
+    },
+    {
+      "@id": "ExamplePrograms",
+      "name": "Example Programs",
+      "description": "Sample bytecode programs demonstrating various functionalities of lessVM.",
+      "hasComponent": [
+        {
+          "@id": "SimpleAddition",
+          "name": "Simple Addition",
+          "description": "Demonstrates basic stack operations and arithmetic.",
+          "programCode": [
+            "PUSH1 5    // 0x01 0x05",
+            "PUSH1 3    // 0x01 0x03",
+            "ADD        // 0x10",
+            "LOG        // 0x44",
+            "HALT       // 0xFF"
+          ]
+        },
+        {
+          "@id": "LamportTransfer",
+          "name": "Lamport Transfer",
+          "description": "Illustrates interaction with Solana accounts and financial operations.",
+          "programCode": [
+            "PUSH1 1    // 0x01 0x01",
+            "PUSH8 50   // 0x02 0x32 0x00 0x00 0x00 0x00 0x00 0x00 0x00",
+            "TRANSFER    // 0x40",
+            "HALT         // 0xFF"
+          ]
+        }
+      ]
+    },
+    {
+      "@id": "ProgramCounter",
+      "name": "Program Counter (PC)",
+      "description": "Tracked by VM to point to the current instruction.",
+      "partOf": "VM"
+    },
+    {
+      "@id": "Gas",
+      "name": "Gas",
+      "description": "Tracks executed instructions to prevent resource exhaustion.",
+      "partOf": "VM",
+      "properties": {
+        "remaining": "u64",
+        "last_checkpoint": "u64",
+        "checkpoints": "Vec<u64>"
+      }
+    },
+    {
+      "@id": "ErrorHandling",
+      "name": "Error Handling",
+      "description": "Mechanisms to handle various error conditions within the VM.",
+      "triggers": ["VM Components", "Opcodes"],
+      "errorCode": [
+        { "code": 1, "description": "Stack overflow" },
+        { "code": 2, "description": "Stack underflow" },
+        { "code": 3, "description": "Invalid DUP depth" },
+        { "code": 4, "description": "Invalid SWAP depth" },
+        { "code": 5, "description": "Memory store out of bounds" },
+        { "code": 6, "description": "Memory load out of bounds" },
+        { "code": 7, "description": "Invalid instruction fetch" },
+        { "code": 8, "description": "Invalid byte fetch" },
+        { "code": 9, "description": "Invalid u64 fetch" },
+        { "code": 10, "description": "Invalid JUMP target" },
+        { "code": 11, "description": "Invalid JUMPI target" },
+        { "code": 12, "description": "Invalid opcode" },
+        { "code": 13, "description": "Out of gas" },
+        { "code": 14, "description": "Rent exemption failure" },
+        { "code": 15, "description": "Invalid account ownership" },
+        { "code": 16, "description": "Missing required signature" }
+      ]
+    },
+    {
+      "@id": "BytecodeCompilation",
+      "name": "Bytecode Compilation",
+      "description": "Processes for converting high-level code into lessVM bytecode.",
+      "executes": ["ProgramStructures"]
+    },
+    {
+      "@id": "IntegrationWithSolana",
+      "name": "Integration with Solana",
+      "description": "How lessVM interacts with Solana's runtime environment and accounts.",
+      "executes": ["SolanaOperations"]
+    },
+    {
+      "@id": "AccountManagement",
+      "name": "Account Management",
+      "description": "Understanding how accounts are indexed and accessed within the VM.",
+      "connects": ["Accounts", "SecurityChecker"]
+    },
+    {
+      "@id": "BytecodeAnalysis",
+      "name": "Bytecode Analysis",
+      "description": "Tools and techniques for inspecting and debugging bytecode.",
+      "semanticConnection": [
+        {
+          "description": "Debugger facilitates bytecode analysis by logging execution details.",
+          "connects": ["Debugger", "BytecodeCompilation"]
+        }
+      ]
+    },
+    {
+      "@id": "GasModel",
+      "name": "Gas Model",
+      "description": "Defines gas consumption limits and rates for VM operations.",
+      "properties": {
+        "base_cost_per_instruction": 1,
+        "maximum_gas_limit": 200000
+      },
+      "partOf": "GasMetering"
+    },
+    {
+      "@id": "ProgramFormat",
+      "name": "Program Format",
+      "description": "Programs are binary sequences of opcodes and their immediate arguments. Each instruction is at least 1 byte long.",
+      "executes": ["Opcodes"]
+    }
+  ]
+}

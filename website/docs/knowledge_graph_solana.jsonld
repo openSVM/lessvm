@@ -1,0 +1,875 @@
+{
+  "@context": {
+    "name": "http://schema.org/name",
+    "description": "http://schema.org/description",
+    "hasModule": "http://schema.org/hasPart",
+    "partOf": "http://schema.org/isPartOf",
+    "hasEnum": "http://schema.org/hasPart",
+    "hasStruct": "http://schema.org/hasPart",
+    "hasFunction": "http://schema.org/hasPart",
+    "executes": "http://schema.org/executes",
+    "implements": "http://schema.org/implements",
+    "uses": "http://schema.org/uses",
+    "errorCode": "http://schema.org/Thing",
+    "dependency": "http://schema.org/dependency",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/"
+  },
+  "@graph": [
+    {
+      "@id": "lib.rs",
+      "name": "lib.rs",
+      "description": "Main library file for lessvm-solana project.",
+      "hasModule": [
+        {
+          "@id": "test_programs",
+          "name": "test_programs",
+          "description": "Module containing test programs for lessVM."
+        },
+        {
+          "@id": "vm",
+          "name": "vm",
+          "description": "Module implementing the Virtual Machine."
+        },
+        {
+          "@id": "solana",
+          "name": "solana",
+          "description": "Module handling Solana-specific functionalities."
+        }
+      ],
+      "dependency": [
+        {
+          "@id": "borsh",
+          "name": "borsh",
+          "description": "Serialization and deserialization library."
+        },
+        {
+          "@id": "solana_program",
+          "name": "solana-program",
+          "description": "Solana program SDK."
+        },
+        {
+          "@id": "spl_token",
+          "name": "spl-token",
+          "description": "SPL token program instructions."
+        },
+        {
+          "@id": "thiserror",
+          "name": "thiserror",
+          "description": "Error handling library."
+        }
+      ]
+    },
+    {
+      "@id": "Instruction",
+      "name": "Instruction",
+      "description": "Enum representing various VM instructions.",
+      "hasEnum": true,
+      "implements": ["BorshSerialize", "BorshDeserialize"],
+      "hasVariant": [
+        {
+          "@id": "Initialize",
+          "name": "Initialize",
+          "description": "Initialize a new VM instance."
+        },
+        {
+          "@id": "Execute",
+          "name": "Execute",
+          "description": "Execute bytecode.",
+          "properties": {
+            "bytecode": "Vec<u8>"
+          }
+        },
+        {
+          "@id": "TokenOperation",
+          "name": "TokenOperation",
+          "description": "Execute SPL token operations.",
+          "properties": {
+            "instruction_type": "TokenInstructionType",
+            "amount": "u64"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "TokenInstructionType",
+      "name": "TokenInstructionType",
+      "description": "Enum representing types of SPL token operations.",
+      "hasEnum": true,
+      "hasVariant": [
+        {
+          "@id": "Transfer",
+          "name": "Transfer",
+          "description": "Transfer SPL tokens."
+        },
+        {
+          "@id": "Mint",
+          "name": "Mint",
+          "description": "Mint SPL tokens."
+        },
+        {
+          "@id": "Burn",
+          "name": "Burn",
+          "description": "Burn SPL tokens."
+        }
+      ]
+    },
+    {
+      "@id": "ProgramAccountInfo",
+      "name": "ProgramAccountInfo",
+      "description": "Struct representing a Solana program account.",
+      "hasStruct": true,
+      "properties": {
+        "is_signer": "bool",
+        "is_writable": "bool",
+        "key": "Pubkey"
+      }
+    },
+    {
+      "@id": "OpCode",
+      "name": "OpCode",
+      "description": "Enum representing VM opcodes.",
+      "hasEnum": true,
+      "hasVariant": [
+        {
+          "@id": "Nop",
+          "name": "Nop",
+          "code": "0x00",
+          "description": "No operation."
+        },
+        {
+          "@id": "Push1",
+          "name": "Push1",
+          "code": "0x01",
+          "description": "Pushes a 1-byte value onto the stack."
+        },
+        {
+          "@id": "Push8",
+          "name": "Push8",
+          "code": "0x02",
+          "description": "Pushes an 8-byte value onto the stack."
+        },
+        {
+          "@id": "Pop",
+          "name": "Pop",
+          "code": "0x03",
+          "description": "Removes the top element from the stack."
+        },
+        {
+          "@id": "Dup",
+          "name": "Dup",
+          "code": "0x04",
+          "description": "Duplicates the nth element from the top of the stack."
+        },
+        {
+          "@id": "Swap",
+          "name": "Swap",
+          "code": "0x05",
+          "description": "Swaps the top element with the nth element from the top."
+        },
+        {
+          "@id": "Add",
+          "name": "Add",
+          "code": "0x10",
+          "description": "Adds the top two elements of the stack."
+        },
+        {
+          "@id": "Sub",
+          "name": "Sub",
+          "code": "0x11",
+          "description": "Subtracts the top element from the second top element."
+        },
+        {
+          "@id": "Mul",
+          "name": "Mul",
+          "code": "0x12",
+          "description": "Multiplies the top two elements of the stack."
+        },
+        {
+          "@id": "Div",
+          "name": "Div",
+          "code": "0x13",
+          "description": "Divides the second top element by the top element of the stack."
+        },
+        {
+          "@id": "MulDiv",
+          "name": "MulDiv",
+          "code": "0x14",
+          "description": "Multiplies the top two elements and divides by the third."
+        },
+        {
+          "@id": "Transfer",
+          "name": "Transfer",
+          "code": "0x40",
+          "description": "Transfers lamports between accounts."
+        },
+        {
+          "@id": "SPLTransfer",
+          "name": "SPLTransfer",
+          "code": "0x41",
+          "description": "Transfers SPL tokens between accounts."
+        },
+        {
+          "@id": "CPI",
+          "name": "CPI",
+          "code": "0x42",
+          "description": "Cross-program invocation."
+        },
+        {
+          "@id": "Log",
+          "name": "Log",
+          "code": "0x43",
+          "description": "Logs a value to the Solana runtime."
+        },
+        {
+          "@id": "Halt",
+          "name": "Halt",
+          "code": "0xFF",
+          "description": "Halts program execution."
+        }
+      ]
+    },
+    {
+      "@id": "VM",
+      "name": "VM",
+      "description": "Struct representing the Virtual Machine.",
+      "hasStruct": true,
+      "properties": {
+        "pc": "usize",
+        "gas": "Gas",
+        "stack": "Stack",
+        "memory": "Memory",
+        "accounts": "AccountsView<'a>",
+        "program_id": "&'a Pubkey",
+        "reentrancy_guard": "ReentrancyGuard",
+        "tracer": "Box<dyn Tracer>"
+      },
+      "hasFunction": [
+        {
+          "@id": "VM_new",
+          "name": "new",
+          "description": "Initializes a new VM instance."
+        },
+        {
+          "@id": "VM_fetch_opcode",
+          "name": "fetch_opcode",
+          "description": "Fetches the next opcode from the bytecode."
+        },
+        {
+          "@id": "VM_fetch_u64",
+          "name": "fetch_u64",
+          "description": "Fetches a u64 value from the bytecode."
+        },
+        {
+          "@id": "VM_execute",
+          "name": "execute",
+          "description": "Executes the provided bytecode."
+        },
+        {
+          "@id": "VM_consume_gas",
+          "name": "consume_gas",
+          "description": "Consumes gas based on the opcode."
+        },
+        {
+          "@id": "VM_validate_account",
+          "name": "validate_account",
+          "description": "Validates account permissions."
+        },
+        {
+          "@id": "VM_validate_spl_transfer",
+          "name": "validate_spl_transfer",
+          "description": "Validates SPL token transfers."
+        },
+        {
+          "@id": "VM_log_state",
+          "name": "log_state",
+          "description": "Logs the current state of the VM for debugging."
+        }
+      ]
+    },
+    {
+      "@id": "GasMetering",
+      "name": "Gas",
+      "description": "Struct for managing gas consumption.",
+      "hasStruct": true,
+      "properties": {
+        "remaining": "u64",
+        "last_checkpoint": "u64",
+        "checkpoints": "SmallVec<[u64; 16]>"
+      },
+      "hasFunction": [
+        {
+          "@id": "Gas_new",
+          "name": "new",
+          "description": "Creates a new Gas instance with a specified limit."
+        },
+        {
+          "@id": "Gas_consume",
+          "name": "consume",
+          "description": "Consumes a specified amount of gas."
+        },
+        {
+          "@id": "Gas_checkpoint",
+          "name": "checkpoint",
+          "description": "Creates a gas checkpoint."
+        },
+        {
+          "@id": "Gas_revert_to_checkpoint",
+          "name": "revert_to_checkpoint",
+          "description": "Reverts gas consumption to the last checkpoint."
+        },
+        {
+          "@id": "Gas_commit_checkpoint",
+          "name": "commit_checkpoint",
+          "description": "Commits the current gas checkpoint."
+        }
+      ]
+    },
+    {
+      "@id": "AccountsView",
+      "name": "AccountsView",
+      "description": "Struct for viewing and managing Solana accounts within the VM.",
+      "hasStruct": true,
+      "properties": {
+        "accounts": "&'a [AccountInfo<'a>]",
+        "current": "usize"
+      },
+      "hasFunction": [
+        {
+          "@id": "AccountsView_new",
+          "name": "new",
+          "description": "Creates a new AccountsView instance."
+        },
+        {
+          "@id": "AccountsView_get_account",
+          "name": "get_account",
+          "description": "Retrieves an account by index."
+        },
+        {
+          "@id": "AccountsView_get_account_data",
+          "name": "get_account_data",
+          "description": "Returns a reference to account data."
+        },
+        {
+          "@id": "AccountsView_get_account_data_mut",
+          "name": "get_account_data_mut",
+          "description": "Returns a mutable reference to account data."
+        },
+        {
+          "@id": "AccountsView_verify_signer",
+          "name": "verify_signer",
+          "description": "Verifies if an account is a signer."
+        },
+        {
+          "@id": "AccountsView_verify_owner",
+          "name": "verify_owner",
+          "description": "Verifies the ownership of an account."
+        },
+        {
+          "@id": "AccountsView_create_account",
+          "name": "create_account",
+          "description": "Creates a new account."
+        },
+        {
+          "@id": "AccountsView_transfer_lamports",
+          "name": "transfer_lamports",
+          "description": "Transfers lamports between accounts."
+        },
+        {
+          "@id": "AccountsView_verify_rent_exempt",
+          "name": "verify_rent_exempt",
+          "description": "Verifies if an account is rent-exempt."
+        },
+        {
+          "@id": "AccountsView_get_accessed_accounts",
+          "name": "get_accessed_accounts",
+          "description": "Returns a reference to accessed accounts."
+        },
+        {
+          "@id": "AccountsView_clear_access_flags",
+          "name": "clear_access_flags",
+          "description": "Clears access flags for accounts."
+        }
+      ],
+      "partOf": "VM"
+    },
+    {
+      "@id": "Tracer",
+      "name": "Tracer",
+      "description": "Trait for tracing VM execution.",
+      "hasTrait": true,
+      "hasFunction": [
+        {
+          "@id": "Tracer_trace_execution",
+          "name": "trace_execution",
+          "description": "Traces an execution step."
+        },
+        {
+          "@id": "Tracer_trace_error",
+          "name": "trace_error",
+          "description": "Traces an error."
+        },
+        {
+          "@id": "Tracer_trace_log",
+          "name": "trace_log",
+          "description": "Traces a log message."
+        }
+      ]
+    },
+    {
+      "@id": "DefaultTracer",
+      "name": "DefaultTracer",
+      "description": "Default implementation of the Tracer trait.",
+      "implements": "Tracer",
+      "hasFunction": [
+        {
+          "@id": "DefaultTracer_trace_execution",
+          "name": "trace_execution",
+          "description": "Logs execution trace."
+        },
+        {
+          "@id": "DefaultTracer_trace_error",
+          "name": "trace_error",
+          "description": "Logs errors."
+        },
+        {
+          "@id": "DefaultTracer_trace_log",
+          "name": "trace_log",
+          "description": "Logs messages."
+        }
+      ],
+      "partOf": "debug.rs"
+    },
+    {
+      "@id": "ExecutionTrace",
+      "name": "ExecutionTrace",
+      "description": "Struct representing an execution trace.",
+      "hasStruct": true,
+      "properties": {
+        "pc": "usize",
+        "opcode": "OpCode",
+        "gas_used": "u64",
+        "gas_remaining": "u64",
+        "stack_depth": "usize",
+        "memory_size": "usize"
+      }
+    },
+    {
+      "@id": "StackDump",
+      "name": "StackDump",
+      "description": "Struct for displaying stack contents.",
+      "hasStruct": true,
+      "properties": {
+        "stack": "&'a Stack"
+      },
+      "hasFunction": [
+        {
+          "@id": "StackDump_fmt",
+          "name": "fmt",
+          "description": "Formats the stack contents for display."
+        }
+      ]
+    },
+    {
+      "@id": "MemoryDump",
+      "name": "MemoryDump",
+      "description": "Struct for displaying memory contents.",
+      "hasStruct": true,
+      "properties": {
+        "memory": "&'a Memory"
+      },
+      "hasFunction": [
+        {
+          "@id": "MemoryDump_fmt",
+          "name": "fmt",
+          "description": "Formats the memory contents for display."
+        }
+      ]
+    },
+    {
+      "@id": "Function_execute",
+      "name": "execute",
+      "description": "Executes the provided bytecode.",
+      "hasFunction": true,
+      "properties": {
+        "parameters": ["&mut self", "&[u8]"],
+        "returnType": "ProgramResult"
+      },
+      "uses": ["fetch_opcode", "fetch_u64", "consume_gas", "tracer.trace_execution", "tracer.trace_error", "tracer.trace_log"]
+    },
+    {
+      "@id": "Function_process_instruction",
+      "name": "process_instruction",
+      "description": "Entrypoint for processing instructions.",
+      "hasFunction": true,
+      "properties": {
+        "parameters": ["&Pubkey", "&[AccountInfo]", "&[u8]"],
+        "returnType": "ProgramResult"
+      },
+      "uses": ["Instruction::unpack", "AccountManager::new", "VM::new", "VM::execute"]
+    },
+    {
+      "@id": "Function_process_initialize",
+      "name": "process_initialize",
+      "description": "Processes the Initialize instruction.",
+      "hasFunction": true,
+      "properties": {
+        "parameters": ["&Pubkey", "&mut AccountManager"],
+        "returnType": "ProgramResult"
+      },
+      "uses": ["AccountManager::get_account", "AccountManager::verify_owner", "AccountManager::verify_signer", "AccountManager::verify_rent_exempt", "ProgramState::default", "ProgramState::pack_into_slice"]
+    },
+    {
+      "@id": "Function_process_execute",
+      "name": "process_execute",
+      "description": "Processes the Execute instruction.",
+      "hasFunction": true,
+      "properties": {
+        "parameters": ["&Pubkey", "&mut AccountManager", "&[u8]"],
+        "returnType": "ProgramResult"
+      },
+      "uses": ["ProgramState::unpack", "VM::new", "VM::execute", "ProgramState::pack_into_slice"]
+    },
+    {
+      "@id": "Function_process_token_operation",
+      "name": "process_token_operation",
+      "description": "Processes the TokenOperation instruction.",
+      "hasFunction": true,
+      "properties": {
+        "parameters": ["&Pubkey", "&mut AccountManager", "TokenInstructionType", "u64"],
+        "returnType": "ProgramResult"
+      },
+      "uses": ["AccountManager::get_account", "AccountManager::verify_signer", "AccountManager::transfer_lamports", "ProgramError::InvalidInstructionData"]
+    },
+    {
+      "@id": "TestPrograms",
+      "name": "test_programs",
+      "description": "Module containing various test programs for lessVM.",
+      "hasModule": true,
+      "hasFunction": [
+        {
+          "@id": "addition_test",
+          "name": "addition_test",
+          "description": "Test program that adds two numbers and logs the result."
+        },
+        {
+          "@id": "token_transfer_test",
+          "name": "token_transfer_test",
+          "description": "Test program that performs a token transfer."
+        },
+        {
+          "@id": "memory_test",
+          "name": "memory_test",
+          "description": "Test program that demonstrates memory operations."
+        },
+        {
+          "@id": "stack_test",
+          "name": "stack_test",
+          "description": "Test program that demonstrates stack operations."
+        }
+      ]
+    },
+    {
+      "@id": "ExamplePrograms",
+      "name": "Example Programs",
+      "description": "Sample bytecode programs demonstrating various functionalities of lessVM.",
+      "hasComponent": [
+        {
+          "@id": "SimpleAddition",
+          "name": "Simple Addition",
+          "description": "Demonstrates basic stack operations and arithmetic.",
+          "programCode": [
+            "PUSH1 5    // 0x01 0x05",
+            "PUSH1 3    // 0x01 0x03",
+            "ADD        // 0x10",
+            "LOG        // 0x43",
+            "HALT       // 0xFF"
+          ]
+        },
+        {
+          "@id": "LamportTransfer",
+          "name": "Lamport Transfer",
+          "description": "Illustrates interaction with Solana accounts and financial operations.",
+          "programCode": [
+            "PUSH8 100 0 0 0 0 0 0 0  // Amount: 100 tokens",
+            "PUSH1 1                  // Destination account index",
+            "TRANSFER                 // Perform transfer",
+            "LOG                      // Log completion",
+            "HALT                     // Halt execution"
+          ]
+        },
+        {
+          "@id": "MemoryOperationsTest",
+          "name": "Memory Operations Test",
+          "description": "Demonstrates memory operations like store and load.",
+          "programCode": [
+            "// Store value 42 at memory position 0",
+            "PUSH1 42   // 0x01 0x2A",
+            "PUSH1 0    // 0x01 0x00",
+            "STORE      // 0x21",
+            "",
+            "// Load value from memory position 0",
+            "PUSH1 0    // 0x01 0x00",
+            "LOAD       // 0x20",
+            "",
+            "// Log the loaded value",
+            "LOG        // 0x43",
+            "HALT       // 0xFF"
+          ]
+        },
+        {
+          "@id": "StackOperationsTest",
+          "name": "Stack Operations Test",
+          "description": "Demonstrates stack operations like dup and swap.",
+          "programCode": [
+            "PUSH1 1    // 0x01 0x01",
+            "PUSH1 2    // 0x01 0x02",
+            "PUSH1 3    // 0x01 0x03",
+            "Dup 0      // 0x04 0x00",
+            "Swap 1     // 0x05 0x01",
+            "Add        // 0x10",
+            "Log        // 0x43",
+            "HALT       // 0xFF"
+          ]
+        }
+      ]
+    },
+    {
+      "@id": "SolanaModule",
+      "name": "solana",
+      "description": "Module handling Solana-specific functionalities.",
+      "hasModule": true,
+      "hasFunction": []
+    },
+    {
+      "@id": "VMModule",
+      "name": "vm",
+      "description": "Module implementing the Virtual Machine.",
+      "hasModule": true,
+      "hasStruct": ["VM", "Gas", "ReentrancyGuard", "Stack", "Memory", "ProgramAccountInfo", "AccountsView"],
+      "hasEnum": ["OpCode", "VMError"]
+    },
+    {
+      "@id": "AccountManager",
+      "name": "AccountManager",
+      "description": "Struct for managing Solana accounts within the VM.",
+      "hasStruct": true,
+      "hasFunction": [
+        {
+          "@id": "get_account",
+          "name": "get_account",
+          "description": "Retrieves an account by index."
+        },
+        {
+          "@id": "verify_owner",
+          "name": "verify_owner",
+          "description": "Verifies the ownership of an account."
+        },
+        {
+          "@id": "verify_signer",
+          "name": "verify_signer",
+          "description": "Verifies if an account is a signer."
+        },
+        {
+          "@id": "transfer_lamports",
+          "name": "transfer_lamports",
+          "description": "Transfers lamports between accounts."
+        }
+      ]
+    },
+    {
+      "@id": "ProgramState",
+      "name": "ProgramState",
+      "description": "Struct representing the state of the program.",
+      "hasStruct": true,
+      "properties": {
+        "is_initialized": "bool",
+        "authority": "Pubkey",
+        "last_execution_timestamp": "i64",
+        "total_executions": "u64",
+        "total_gas_used": "u64"
+      },
+      "hasFunction": [
+        {
+          "@id": "unpack",
+          "name": "unpack",
+          "description": "Deserializes program state from data."
+        },
+        {
+          "@id": "pack_into_slice",
+          "name": "pack_into_slice",
+          "description": "Serializes program state into a data slice."
+        },
+        {
+          "@id": "default",
+          "name": "default",
+          "description": "Creates a default ProgramState instance."
+        }
+      ]
+    },
+    {
+      "@id": "InstructionProcessing",
+      "name": "Instruction Processing",
+      "description": "Processes various instructions within the VM.",
+      "hasFunction": [
+        {
+          "@id": "process_instruction",
+          "name": "process_instruction",
+          "description": "Entrypoint for processing instructions.",
+          "uses": ["Instruction::unpack", "AccountManager::new", "VM::new", "VM::execute"]
+        },
+        {
+          "@id": "process_initialize",
+          "name": "process_initialize",
+          "description": "Processes the Initialize instruction.",
+          "uses": ["AccountManager::get_account", "AccountManager::verify_owner", "AccountManager::verify_signer", "AccountManager::verify_rent_exempt", "ProgramState::default", "ProgramState::pack_into_slice"]
+        },
+        {
+          "@id": "process_execute",
+          "name": "process_execute",
+          "description": "Processes the Execute instruction.",
+          "uses": ["ProgramState::unpack", "VM::new", "VM::execute", "ProgramState::pack_into_slice"]
+        },
+        {
+          "@id": "process_token_operation",
+          "name": "process_token_operation",
+          "description": "Processes the TokenOperation instruction.",
+          "uses": ["AccountManager::get_account", "AccountManager::verify_signer", "AccountManager::transfer_lamports", "ProgramError::InvalidInstructionData"]
+        }
+      ]
+    },
+    {
+      "@id": "TestModule",
+      "name": "tests",
+      "description": "Module containing tests for the VM.",
+      "hasModule": true,
+      "hasFunction": [
+        {
+          "@id": "test_addition_program",
+          "name": "test_addition_program",
+          "description": "Tests the addition program."
+        },
+        {
+          "@id": "test_token_transfer_program",
+          "name": "test_token_transfer_program",
+          "description": "Tests the token transfer program."
+        },
+        {
+          "@id": "test_memory_operations",
+          "name": "test_memory_operations",
+          "description": "Tests memory operations."
+        },
+        {
+          "@id": "test_stack_operations",
+          "name": "test_stack_operations",
+          "description": "Tests stack operations."
+        }
+      ]
+    },
+    {
+      "@id": "ErrorHandling",
+      "name": "Error Handling",
+      "description": "Enum representing various VM errors.",
+      "hasEnum": true,
+      "hasVariant": [
+        {
+          "@id": "StackOverflow",
+          "name": "StackOverflow",
+          "description": "Occurs when the stack exceeds its maximum capacity."
+        },
+        {
+          "@id": "StackUnderflow",
+          "name": "StackUnderflow",
+          "description": "Occurs when attempting to pop from an empty stack."
+        },
+        {
+          "@id": "InvalidMemoryAccess",
+          "name": "InvalidMemoryAccess",
+          "description": "Occurs when accessing memory out of bounds."
+        },
+        {
+          "@id": "OutOfGas",
+          "name": "OutOfGas",
+          "description": "Occurs when gas consumption exceeds the limit."
+        },
+        {
+          "@id": "InvalidInstruction",
+          "name": "InvalidInstruction",
+          "description": "Occurs when an invalid instruction is encountered."
+        },
+        {
+          "@id": "InvalidAccount",
+          "name": "InvalidAccount",
+          "description": "Occurs when an invalid account is referenced."
+        },
+        {
+          "@id": "ArithmeticOverflow",
+          "name": "ArithmeticOverflow",
+          "description": "Occurs when arithmetic operations overflow."
+        },
+        {
+          "@id": "ReentrancyDetected",
+          "name": "ReentrancyDetected",
+          "description": "Occurs when a reentrancy attack is detected."
+        }
+      ],
+      "implements": ["From<VMError>"]
+    },
+    {
+      "@id": "Function_execute",
+      "name": "execute",
+      "description": "Executes the provided bytecode.",
+      "hasFunction": true,
+      "properties": {
+        "parameters": ["&mut self", "&[u8]"],
+        "returnType": "ProgramResult"
+      },
+      "uses": ["fetch_opcode", "fetch_u64", "consume_gas", "tracer.trace_execution", "tracer.trace_error", "tracer.trace_log"]
+    },
+    {
+      "@id": "Function_process_instruction",
+      "name": "process_instruction",
+      "description": "Entrypoint for processing instructions.",
+      "hasFunction": true,
+      "properties": {
+        "parameters": ["&Pubkey", "&[AccountInfo]", "&[u8]"],
+        "returnType": "ProgramResult"
+      },
+      "uses": ["Instruction::unpack", "AccountManager::new", "VM::new", "VM::execute"]
+    },
+    {
+      "@id": "Function_process_initialize",
+      "name": "process_initialize",
+      "description": "Processes the Initialize instruction.",
+      "hasFunction": true,
+      "properties": {
+        "parameters": ["&Pubkey", "&mut AccountManager"],
+        "returnType": "ProgramResult"
+      },
+      "uses": ["AccountManager::get_account", "AccountManager::verify_owner", "AccountManager::verify_signer", "AccountManager::verify_rent_exempt", "ProgramState::default", "ProgramState::pack_into_slice"]
+    },
+    {
+      "@id": "Function_process_execute",
+      "name": "process_execute",
+      "description": "Processes the Execute instruction.",
+      "hasFunction": true,
+      "properties": {
+        "parameters": ["&Pubkey", "&mut AccountManager", "&[u8]"],
+        "returnType": "ProgramResult"
+      },
+      "uses": ["ProgramState::unpack", "VM::new", "VM::execute", "ProgramState::pack_into_slice"]
+    },
+    {
+      "@id": "Function_process_token_operation",
+      "name": "process_token_operation",
+      "description": "Processes the TokenOperation instruction.",
+      "hasFunction": true,
+      "properties": {
+        "parameters": ["&Pubkey", "&mut AccountManager", "TokenInstructionType", "u64"],
+        "returnType": "ProgramResult"
+      },
+      "uses": ["AccountManager::get_account", "AccountManager::verify_signer", "AccountManager::transfer_lamports", "ProgramError::InvalidInstructionData"]
+    }
+  ]
+}

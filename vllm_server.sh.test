@@ -1,0 +1,82 @@
+➜  ~ cat vllm2.sh 
+#!/bin/bash
+set -euo pipefail
+
+# Set CUDA allocator config to help avoid fragmentation.
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True,max_split_size_mb:128"
+
+# Global environment settings for low-latency, high-throughput inference
+export TOKENIZERS_PARALLELISM=false
+export OMP_NUM_THREADS=182         # Adjust based on your workload and NUMA topology
+export KMP_BLOCKTIME=1
+export KMP_AFFINITY=granularity=fine,compact,1,0
+
+# Assume a single NUMA node (node 0). Adjust if your system has multiple NUMA nodes.
+NUMA_NODE=0
+
+###############################
+# Model: deepseek-ai/DeepSeek-R1-Distill-Qwen-32B
+# Uses 2 GPUs (e.g., GPUs 4 and 5) on port 8000
+###############################
+echo "Launching deepseek-ai/DeepSeek-R1-Distill-Qwen-32B on port 8000..."
+CUDA_VISIBLE_DEVICES=4,5 numactl --cpunodebind=${NUMA_NODE} --membind=${NUMA_NODE} \
+vllm serve deepseek-ai/DeepSeek-R1-Distill-Qwen-32B \
+    --port 8000 \
+    --tensor-parallel-size 2 \
+    --cpu-offload-gb 100 \
+    --swap-space 64 \
+    --gpu-memory-utilization 0.95 \
+    --compilation-config 3 \
+    --enable-prefix-caching \
+    --disable-log-requests \
+    --uvicorn-log-level error \
+    --block-size 32 \
+    > deepseek_qwen32B.log 2>&1 &
+
+###############################
+# Model: mkurman/Qwen2.5-14B-DeepSeek-R1-1M
+# Uses 1 GPU (e.g., GPU 7) on port 8001
+###############################
+
+
+###############################
+# Model: Qwen/Qwen2.5-VL-72B-Instruct
+# Uses 4 GPUs (e.g., GPUs 0,1,2,3) on port 8002
+###############################
+echo "Launching Qwen/Qwen2.5-VL-72B-Instruct on port 8002..."
+CUDA_VISIBLE_DEVICES=0,1,2,3 numactl --cpunodebind=${NUMA_NODE} --membind=${NUMA_NODE} \
+vllm serve Qwen/Qwen2.5-VL-72B-Instruct \
+    --port 8001 \
+    --tensor-parallel-size 4 \
+    --cpu-offload-gb 100 \
+    --swap-space 64 \
+    --gpu-memory-utilization 0.95 \
+    --compilation-config 3 \
+    --enable-prefix-caching \
+    --disable-log-requests \
+    --uvi/Users/lina/Downloads/svmai.svgcorn-log-level error \
+    --block-size 32 \
+    > qwen72B_instruct.log 2>&1 &
+
+###############################
+# Model: v2ray/GPT4chan-24B
+# Uses 1 GPU (e.g., GPU 6) on port 8003
+###############################
+echo "Launching v2ray/GPT4chan-24B on port 8003..."
+CUDA_VISIBLE_DEVICES=6 numactl --cpunodebind=${NUMA_NODE} --membind=${NUMA_NODE} \
+vllm serve v2ray/GPT4chan-24B \
+    --port 8002 \
+    --tensor-parallel-size 1 \
+    --cpu-offload-gb 64 \
+    --swap-space 64 \
+    --gpu-memory-utilization 0.95 \
+    --compilation-config 3 \
+    --enable-prefix-caching \
+    --disable-log-requests \
+    --uvicorn-log-level error \
+    --block-size 32 \
+    > gpt4chan24B.log 2>&1 &
+
+echo "All model servers launched. Process IDs:"
+jobs -p
+➜  ~ 

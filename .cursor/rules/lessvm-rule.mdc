@@ -1,0 +1,29 @@
+---
+description: lessVM programs must be always implemented as a set of lessVM instructions, no other programming language allowed
+globs: *.*
+---
+
+# Your rule content
+
+[lessvm-rule.mdc](mdc:.cursor/rules/lessvm-rule.mdc) 
+
+[lessvm1.spec.md](mdc:lessvm1.spec.md)
+
+[lessvm2.spec.md](mdc:lessvm2.spec.md)
+
+[lessvm3.spec.md](mdc:lessvm3.spec.md)
+
+[lessVM_rs_clauden.spec.md](mdc:lessVM_rs_clauden.spec.md)
+
+[lessVM_rs_qwen.spec.md](mdc:lessVM_rs_qwen.spec.md)
+
+[lessVM_solana.spec.md](mdc:lessVM_solana.spec.md)
+
+[lessVM_solana_qwen.spec.md](mdc:lessVM_solana_qwen.spec.md)
+
+[implementation_plan.md](mdc:implementation_plan.md)
+
+[deploy.sh](mdc:lessvm-solana/scripts/deploy.sh)
+
+
+you must study attached markdown files before doing any work related to lessVM
