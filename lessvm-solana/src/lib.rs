@@ -1,6 +1,9 @@
 pub mod test_programs;
 pub mod vm;
 pub mod solana;
+pub mod compiler;
+
+pub use compiler::{compile, optimize};
 
 use solana_program::{
     account_info::AccountInfo,
@@ -54,6 +57,10 @@ pub fn process_instruction<'a>(
         Instruction::TokenOperation { instruction_type, amount } => {
             msg!("LessVM: Processing token operation");
             process_token_operation(&mut account_manager, instruction_type, amount)
+        }
+        Instruction::GetVersion => {
+            msg!("LessVM: Getting version");
+            process_get_version()
         }
     }
 }
@@ -142,6 +149,11 @@ fn process_token_operation<'a>(
     Ok(())
 }
 
+fn process_get_version() -> ProgramResult {
+    msg!("LessVM Version: {}", VM::get_version());
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -220,5 +232,24 @@ mod tests {
         let state = ProgramState::unpack(&accounts[0].try_borrow_data().unwrap()).unwrap();
         assert_eq!(state.total_executions, 1);
         assert!(state.total_gas_used > 0);
+    }
+
+    #[test]
+    fn test_get_version() {
+        let program_id = Pubkey::new_unique();
+        let account = create_test_account(
+            Pubkey::new_unique(),
+            1000000,
+            ProgramState::LEN,
+            program_id,
+            false,  // Doesn't need to be signer
+            false,  // Doesn't need to be writable
+        );
+
+        let accounts = vec![account];
+        let instruction = Instruction::GetVersion;
+        let instruction_data = instruction.try_to_vec().unwrap();
+
+        assert!(process_instruction(&program_id, &accounts, &instruction_data).is_ok());
     }
 }

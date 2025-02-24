@@ -1,6 +1,6 @@
 use solana_program::{
     account_info::AccountInfo,
-    program_error::ProgramError, 
+    program_error::ProgramError,
     pubkey::Pubkey,
     msg,
 };
@@ -8,6 +8,9 @@ use super::{
     OpCode, Stack, Memory, Gas, Value, VMError,
     debug::{Tracer, DefaultTracer, ExecutionTrace},
 };
+
+/// Current version of the VM runtime
+pub const VERSION: u64 = 2;
 
 #[cfg(target_arch = "x86_64")]
 use std::arch::x86_64::*;
@@ -52,6 +55,11 @@ pub struct VM<'a> {
 }
 
 impl<'a> VM<'a> {
+    /// Returns the current VM version
+    pub fn get_version() -> u64 {
+        VERSION
+    }
+
     pub fn new(
         program_id: &'a Pubkey,
         accounts: &'a [AccountInfo<'a>],

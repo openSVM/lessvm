@@ -17,6 +17,7 @@ test-sbf = []
 [dependencies]
 # Core Solana dependencies
 solana-program = "1.17"
+solana-program-test = "1.17"
 spl-token = { version = "3.5", features = ["no-entrypoint"] }
 spl-associated-token-account = { version = "1.1", features = ["no-entrypoint"] }
 
@@ -28,6 +29,7 @@ bytemuck = { version = "1.13", features = ["derive"] }
 thiserror = "1.0"
 num-traits = "0.2"
 num-derive = "0.4"
+tempfile = "3.8"
 
 # Optimizations
 rayon = "1.7"

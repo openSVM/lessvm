@@ -34,6 +34,8 @@ build/
 *.ntvs*
 *.njsproj
 *.sln
+*.test
+*.sh.test
 
 # macOS and Windows system files
 .DS_Store
@@ -42,7 +44,20 @@ Thumbs.db
 # Rust/Cargo artifacts
 /target/
 Cargo.lock
-
+cli/target/
+cli/test-cli-project/
+cli/test-app/
+cli/my-lessvm-app/
+lessvm-solana/target/ 
+lessvm-solana/test-ledger/
+lessvm-solana/validator.pid
+lessvm-solana/INIT.LOG
+lessvm-solana/perf.log
+lessvm-solana/hot_reload_results.log
+lessvm-solana/test_program_updated.hex
+lessvm-solana/test_program_updated.bin
+lessvm-solana/.validator/ 
+*.json
 # Solana generated files and artifacts
 *.so
 *.d

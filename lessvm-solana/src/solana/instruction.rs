@@ -23,6 +23,9 @@ pub enum Instruction {
         /// Amount of tokens
         amount: u64,
     },
+
+    /// Get VM version
+    GetVersion,
 }
 
 #[derive(BorshSerialize, BorshDeserialize, Debug, Clone)]
@@ -100,6 +103,17 @@ pub fn create_token_operation_instruction(
         instruction_type,
         amount,
     }.to_instruction(program_id, accounts)
+}
+
+pub fn create_get_version_instruction(
+    program_id: &Pubkey,
+    program_account: &Pubkey,
+) -> Result<SolanaInstruction, ProgramError> {
+    let accounts = vec![
+        AccountMeta::new_readonly(*program_account, false),
+    ];
+
+    Instruction::GetVersion.to_instruction(program_id, accounts)
 }
 
 #[cfg(test)]
