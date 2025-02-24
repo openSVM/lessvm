@@ -1,0 +1,108 @@
+# GoReleaser configuration for lessvm-cli
+# This file defines how GoReleaser should build and package the lessvm-cli tool
+
+project_name: lessvm-cli
+
+# Build environment setup
+before:
+  hooks:
+    # Ensure dependencies are up to date
+    - cargo fetch
+    # Clean previous builds
+    - cargo clean
+
+# Build configuration
+builds:
+  - id: lessvm-cli
+    binary: lessvm-cli
+    main: ./
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    builder: go
+    gobinary: "{{ if eq .Env.GOBIN \"\" }}go{{ else }}{{ .Env.GOBIN }}{{ end }}"
+    command: build
+    ldflags:
+      - -s -w
+    buildmode: default
+    mod_timestamp: '{{ .CommitTimestamp }}'
+    hooks:
+      pre: cargo build --release
+      post: |
+        # Copy the built binary to the expected location
+        mkdir -p dist/lessvm-cli_{{ .Os }}_{{ .Arch }}
+        cp target/release/lessvm-cli{{ if eq .Os "windows" }}.exe{{ end }} dist/lessvm-cli_{{ .Os }}_{{ .Arch }}/lessvm-cli{{ if eq .Os "windows" }}.exe{{ end }}
+
+# Archive configuration
+archives:
+  - id: lessvm-cli
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    replacements:
+      darwin: macos
+      linux: linux
+      windows: windows
+      amd64: x86_64
+      arm64: aarch64
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - README.md
+      - LICENSE*
+
+# Checksum configuration
+checksum:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_checksums.txt"
+  algorithm: sha256
+
+# Snapshot configuration
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+# Changelog configuration
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
+      - '^chore:'
+      - Merge pull request
+      - Merge branch
+
+# Homebrew tap configuration
+brews:
+  - name: lessvm-cli
+    tap:
+      owner: openSVM
+      name: homebrew-tap
+      token: "{{ .Env.GITHUB_TOKEN }}"
+    homepage: "https://github.com/openSVM/lessvm"
+    description: "CLI tool for managing LessVM applications on Solana"
+    license: "MIT"
+    folder: Formula
+    install: |
+      bin.install "lessvm-cli"
+    test: |
+      system "#{bin}/lessvm-cli", "--version"
+    dependencies:
+      - name: solana
+    commit_author:
+      name: goreleaserbot
+      email: goreleaser@lessvm.org
+    custom_block: |
+      head do
+        url "https://github.com/openSVM/lessvm.git"
+        depends_on "rust" => :build
+      end
+    custom_require: ""

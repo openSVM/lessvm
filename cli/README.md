@@ -4,6 +4,59 @@ A command-line interface for managing the full lifecycle of LessVM applications 
 
 ## Installation
 
+### One-Line Installer (macOS and Linux)
+
+```bash
+curl -sSL https://raw.githubusercontent.com/openSVM/lessvm/main/cli/.goreleaser.install.sh | bash
+```
+
+### Using Homebrew (macOS and Linux)
+
+```bash
+brew tap openSVM/tap
+brew install lessvm-cli
+```
+
+### Manual Download (macOS, Linux, Windows)
+
+Download the appropriate binary for your platform from the [releases page](https://github.com/openSVM/lessvm/releases).
+
+#### macOS
+
+```bash
+# For Intel Macs
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-cli_macos_x86_64.tar.gz | tar xz
+sudo mv lessvm-cli /usr/local/bin/
+
+# For Apple Silicon (M1/M2) Macs
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-cli_macos_aarch64.tar.gz | tar xz
+sudo mv lessvm-cli /usr/local/bin/
+```
+
+#### Linux
+
+```bash
+# For x86_64 architecture
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-cli_linux_x86_64.tar.gz | tar xz
+sudo mv lessvm-cli /usr/local/bin/
+
+# For ARM64 architecture
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-cli_linux_aarch64.tar.gz | tar xz
+sudo mv lessvm-cli /usr/local/bin/
+```
+
+#### Windows
+
+One-line PowerShell installer:
+
+```powershell
+iwr -useb https://raw.githubusercontent.com/openSVM/lessvm/main/cli/.goreleaser.install.ps1 | iex
+```
+
+Or download the zip file from the [releases page](https://github.com/openSVM/lessvm/releases) and extract it to a location in your PATH.
+
+### From Source
+
 ```bash
 cargo install lessvm-cli
 ```
@@ -106,12 +159,42 @@ optimization_level = "release"
 
 ## Development
 
+### Building from Source
+
 To build the CLI tool from source:
 
 ```bash
-git clone https://github.com/your-org/lessvm-cli
-cd lessvm-cli
+git clone https://github.com/openSVM/lessvm
+cd lessvm/cli
 cargo build --release
+```
+
+### Creating Releases
+
+This project uses [GoReleaser](https://goreleaser.com/) to automate the release process. To create a new release:
+
+1. Install GoReleaser:
+   ```bash
+   # macOS
+   brew install goreleaser
+
+   # Linux
+   curl -sfL https://goreleaser.com/static/run | bash
+   ```
+
+2. Tag a new version:
+   ```bash
+   git tag -a v0.1.1 -m "Release v0.1.1"
+   git push origin v0.1.1
+   ```
+
+3. GitHub Actions will automatically build and publish the release.
+
+To test the release process locally without publishing:
+
+```bash
+cd cli
+goreleaser release --snapshot --clean --skip=publish
 ```
 
 ## License

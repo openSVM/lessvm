@@ -2,6 +2,33 @@
 
 A lightweight virtual machine implementation for Solana blockchain.
 
+## Installation
+
+### CLI Tool
+
+The LessVM CLI tool provides a convenient way to create, build, and deploy LessVM applications.
+
+#### One-Line Installation
+
+**macOS and Linux:**
+```bash
+curl -sSL https://raw.githubusercontent.com/openSVM/lessvm/main/cli/.goreleaser.install.sh | bash
+```
+
+**Windows (PowerShell):**
+```powershell
+iwr -useb https://raw.githubusercontent.com/openSVM/lessvm/main/cli/.goreleaser.install.ps1 | iex
+```
+
+#### Using Homebrew (macOS and Linux)
+
+```bash
+brew tap openSVM/tap
+brew install lessvm-cli
+```
+
+#### For more installation options, see [CLI README](cli/README.md)
+
 ## Project Structure
 
 - `lessvm-solana/` - Core VM implementation in Rust
@@ -10,6 +37,10 @@ A lightweight virtual machine implementation for Solana blockchain.
     - `solana/` - Solana-specific integration code
   - `deployless/` - Deployment utilities
   - `scripts/` - Build and deployment scripts
+
+- `cli/` - Command-line interface for managing LessVM applications
+  - Provides tools for creating, building, and deploying LessVM applications
+  - Cross-platform support (macOS, Linux, Windows)
 
 - `website/` - Documentation website
   - `docs/` - Documentation pages
