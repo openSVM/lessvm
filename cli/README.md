@@ -4,16 +4,22 @@ A command-line interface for managing the full lifecycle of LessVM applications 
 
 ## Installation
 
-### One-Line Installer (macOS and Linux)
+### Using Shell Script (macOS and Linux)
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/openSVM/lessvm/main/cli/.goreleaser.install.sh | bash
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-installer.sh | sh
+```
+
+### Using PowerShell (Windows)
+
+```powershell
+irm https://github.com/openSVM/lessvm/releases/latest/download/lessvm-installer.ps1 | iex
 ```
 
 ### Using Homebrew (macOS and Linux)
 
 ```bash
-brew tap openSVM/tap
+brew tap openSVM/lessvm
 brew install lessvm
 ```
 
@@ -25,11 +31,11 @@ Download the appropriate binary for your platform from the [releases page](https
 
 ```bash
 # For Intel Macs
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm_macos_x86_64.tar.gz | tar xz
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-x86_64-apple-darwin.tar.xz | tar xJ
 sudo mv lessvm /usr/local/bin/
 
 # For Apple Silicon (M1/M2) Macs
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm_macos_aarch64.tar.gz | tar xz
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-aarch64-apple-darwin.tar.xz | tar xJ
 sudo mv lessvm /usr/local/bin/
 ```
 
@@ -37,28 +43,18 @@ sudo mv lessvm /usr/local/bin/
 
 ```bash
 # For x86_64 architecture
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm_linux_x86_64.tar.gz | tar xz
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-x86_64-unknown-linux-gnu.tar.xz | tar xJ
 sudo mv lessvm /usr/local/bin/
 
 # For ARM64 architecture
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm_linux_aarch64.tar.gz | tar xz
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-aarch64-unknown-linux-gnu.tar.xz | tar xJ
 sudo mv lessvm /usr/local/bin/
 ```
-
-#### Windows
-
-One-line PowerShell installer:
-
-```powershell
-iwr -useb https://raw.githubusercontent.com/openSVM/lessvm/main/cli/.goreleaser.install.ps1 | iex
-```
-
-Or download the zip file from the [releases page](https://github.com/openSVM/lessvm/releases) and extract it to a location in your PATH.
 
 ### From Source
 
 ```bash
-cargo install lessvm-cli
+cargo install lessvm
 ```
 
 ## Usage
@@ -171,16 +167,9 @@ cargo build --release
 
 ### Creating Releases
 
-This project uses [GoReleaser](https://goreleaser.com/) to automate the release process. To create a new release:
+This project uses [cargo-dist](https://github.com/axodotdev/cargo-dist) to automate the release process. To create a new release:
 
-1. Install GoReleaser:
-   ```bash
-   # macOS
-   brew install goreleaser
-
-   # Linux
-   curl -sfL https://goreleaser.com/static/run | bash
-   ```
+1. Update version in `Cargo.toml`
 
 2. Tag a new version:
    ```bash
@@ -188,13 +177,18 @@ This project uses [GoReleaser](https://goreleaser.com/) to automate the release 
    git push origin v0.1.1
    ```
 
-3. GitHub Actions will automatically build and publish the release.
+3. GitHub Actions will automatically:
+   - Build binaries for all supported platforms
+   - Create installers (shell script, PowerShell script, Homebrew)
+   - Generate release artifacts
+   - Create a GitHub release
+   - Publish to package managers
 
-To test the release process locally without publishing:
+To test the release process locally:
 
 ```bash
 cd cli
-goreleaser release --snapshot --clean --skip=publish
+cargo dist build --artifacts=all --target=<your-platform>
 ```
 
 ## License

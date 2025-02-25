@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="lessVM CLI - Command line interface for managing lessVM applications">
+    <title>lessVM CLI</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="../" class="logo">less<span class="highlight">VM</span> 1.0.0</a>
+            <div class="nav-links">
+                <a href="../#features">^+F Features</a>
+                <a href="architecture.html">^+D Docs</a>
+                <a href="examples.html">^+E Examples</a>
+                <a href="https://github.com/openSVM/lessvm" target="_blank" rel="noopener">^+G GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container docs-content">
+        <h1>Command Line Interface</h1>
+        
+        <section>
+            <h2>Installation</h2>
+            <div class="card">
+                <h3>Using Shell Script (macOS and Linux)</h3>
+                <pre><code class="language-bash">curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-installer.sh | sh</code></pre>
+
+                <h3>Using PowerShell (Windows)</h3>
+                <pre><code class="language-powershell">irm https://github.com/openSVM/lessvm/releases/latest/download/lessvm-installer.ps1 | iex</code></pre>
+
+                <h3>Using Homebrew (macOS and Linux)</h3>
+                <pre><code class="language-bash">brew tap openSVM/lessvm
+brew install lessvm</code></pre>
+
+                <h3>Manual Download</h3>
+                <p>Download the appropriate binary for your platform from the <a href="https://github.com/openSVM/lessvm/releases">releases page</a>.</p>
+
+                <h4>macOS</h4>
+                <pre><code class="language-bash"># For Intel Macs
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-x86_64-apple-darwin.tar.xz | tar xJ
+sudo mv lessvm /usr/local/bin/
+
+# For Apple Silicon (M1/M2) Macs
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-aarch64-apple-darwin.tar.xz | tar xJ
+sudo mv lessvm /usr/local/bin/</code></pre>
+
+                <h4>Linux</h4>
+                <pre><code class="language-bash"># For x86_64 architecture
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-x86_64-unknown-linux-gnu.tar.xz | tar xJ
+sudo mv lessvm /usr/local/bin/
+
+# For ARM64 architecture
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-aarch64-unknown-linux-gnu.tar.xz | tar xJ
+sudo mv lessvm /usr/local/bin/</code></pre>
+
+                <h3>From Source</h3>
+                <pre><code class="language-bash">cargo install lessvm</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Usage</h2>
+            <div class="card">
+                <pre><code class="language-bash">lessvm [OPTIONS] <COMMAND></code></pre>
+
+                <h3>Global Options</h3>
+                <ul>
+                    <li><code>-v, --verbose</code>: Enable verbose logging</li>
+                    <li><code>-h, --help</code>: Show help information</li>
+                    <li><code>-V, --version</code>: Show version information</li>
+                </ul>
+
+                <h3>Commands</h3>
+
+                <h4>Create a New Project</h4>
+                <pre><code class="language-bash">lessvm new <NAME> [--template <TEMPLATE>]</code></pre>
+                <p>Creates a new lessVM project with the specified name. Optionally specify a template (default: basic).</p>
+
+                <h4>Build Project</h4>
+                <pre><code class="language-bash">lessvm build [--path <PATH>]</code></pre>
+                <p>Builds the lessVM application, compiling and optimizing the code for deployment.</p>
+
+                <h4>Deploy to Solana</h4>
+                <pre><code class="language-bash">lessvm deploy [--path <PATH>] [--cluster <CLUSTER>]</code></pre>
+                <p>Deploys the built application to the specified Solana cluster (default: devnet).</p>
+
+                <h4>Check Status</h4>
+                <pre><code class="language-bash">lessvm status [--path <PATH>]</code></pre>
+                <p>Checks the deployment status of the application.</p>
+
+                <h4>Update Deployment</h4>
+                <pre><code class="language-bash">lessvm update [--path <PATH>] [--hot-reload]</code></pre>
+                <p>Updates the deployed application. Use <code>--hot-reload</code> for hot reloading when possible.</p>
+
+                <h4>View Logs</h4>
+                <pre><code class="language-bash">lessvm logs [--path <PATH>] [--follow]</code></pre>
+                <p>Views application logs. Use <code>--follow</code> to stream logs in real-time.</p>
+            </div>
+        </section>
+
+        <nav class="doc-navigation">
+            <a href="architecture.html" class="prev-doc">← Architecture</a>
+            <a href="examples.html" class="next-doc">Next: Examples →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>lessVM</h4>
+                <p>A lightweight virtual machine designed for the Solana blockchain</p>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <nav>
+                    <a href="architecture.html">→ Documentation</a>
+                    <a href="examples.html">→ Examples</a>
+                    <a href="https://github.com/openSVM/lessvm">→ GitHub</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <nav>
+                    <a href="https://discord.gg/yourdiscord">→ Discord</a>
+                    <a href="https://twitter.com/lessvm">→ Twitter</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+    </script>
+</body>
+</html>

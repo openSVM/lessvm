@@ -1,0 +1,50 @@
+[package]
+name = "lessvm"
+version = "0.1.0"
+
+[dist]
+# Specify the targets we want to build for
+targets = [
+    "x86_64-unknown-linux-gnu",
+    "aarch64-unknown-linux-gnu",
+    "x86_64-apple-darwin",
+    "aarch64-apple-darwin",
+    "x86_64-pc-windows-msvc"
+]
+
+# Configure installers
+[[dist.installers]]
+name = "homebrew"
+tap = "openSVM/homebrew-lessvm"
+publish = true
+
+[[dist.installers]]
+name = "shell"
+methods = ["curl"]
+
+[[dist.installers]]
+name = "powershell"
+methods = ["curl"]
+
+# Configure CI
+[dist.github-custom]
+secret-prefix = "CARGO_DIST"
+deploy = true
+git-tag-version = true
+pr-draft-release = true
+
+# Configure artifacts
+[dist.artifacts]
+format = ["tar.gz", "zip"]
+include = ["README.md", "LICENSE*"]
+
+# Configure signing
+[dist.signing]
+enabled = true
+cmd = "gpg"
+profile = "release"
+
+# Configure publishing
+[dist.publish]
+create-release = true
+auto-tag = true

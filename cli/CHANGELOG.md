@@ -7,8 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.2] - 2025-02-25
-
 ### Changed
 - Moved GitHub Actions workflow to the project's root directory for better visibility and to ensure it's not ignored
 

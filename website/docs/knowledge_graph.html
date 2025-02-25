@@ -1,141 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>lessVM Knowledge Graph Visualization</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lessVM Knowledge Graph</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <style>
-        body { font: 14px sans-serif; }
-        .links line {
-            stroke: #999;
-            stroke-opacity: 0.6;
+        .mermaid {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px 0;
         }
-        .nodes circle {
-            stroke: #fff;
-            stroke-width: 1.5px;
+        .legend {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
         }
-        text {
-            font-size: 12px;
-            pointer-events: none;
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
         }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border: 1px solid #333;
+        }
+        .core { background: #f9f; }
+        .security { background: #ff9; }
+        .external { background: #9f9; }
+        .testing { background: #99f; }
+        .instruction { background: #f99; }
     </style>
 </head>
 <body>
-    <h1>lessVM Knowledge Graph Visualization</h1>
-    <div id="graph"></div>
-    <script>
-        // Fetch JSON-LD file
-        fetch('knowledge_graph.jsonld')
-            .then(response => response.json())
-            .then(data => {
-                const nodes = data["@graph"].map(entity => ({
-                    id: entity["@id"],
-                    label: entity.name,
-                    description: entity.description
-                }));
-                const links = [];
+    <div class="container">
+        <h1>lessVM Knowledge Graph</h1>
+        
+        <div class="legend">
+            <h3>Component Types</h3>
+            <div class="legend-item">
+                <div class="legend-color core"></div>
+                <span>Core Components - Central VM functionality</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color security"></div>
+                <span>Security & Monitoring - Safety and resource tracking</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color external"></div>
+                <span>External Integration - Solana blockchain interface</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color testing"></div>
+                <span>Testing & Development - Validation and debugging</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color instruction"></div>
+                <span>Instructions - Operation categories</span>
+            </div>
+        </div>
 
-                data["@graph"].forEach(entity => {
-                    if (entity.hasComponent) {
-                        entity.hasComponent.forEach(component => {
-                            links.push({ source: entity["@id"], target: component["@id"], type: 'hasComponent' });
-                        });
-                    }
-                    if (entity.partOf) {
-                        links.push({ source: entity["@id"], target: entity.partOf, type: 'partOf' });
-                    }
-                    if (entity.operatesOn) {
-                        entity.operatesOn.forEach(target => {
-                            links.push({ source: entity["@id"], target: target, type: 'operatesOn' });
-                        });
-                    }
-                    if (entity.executes){
-                        entity.executes.forEach(target =>{
-                            links.push({source: entity["@id"], target: target, type: 'executes'});
-                        });
-                    }
-                    if (entity.triggers){
-                        entity.triggers.forEach(target =>{
-                            links.push({source: entity["@id"], target: target, type: 'triggers'});
-                        });
-                    }
-                });
+        <div class="mermaid">
+graph TB
+    %% Core Components
+    VM_Core[VM Core]
+    Stack[Stack]
+    Memory[Memory]
+    GasMetering[Gas Metering]
+    SecurityChecker[Security Checker]
+    AccountOps[Account Operations]
+    ErrorHandler[Error Handler]
+    InstructionSet[Instruction Set]
+    Debugger[Debugger]
+    SolanaRuntime[Solana Runtime]
+    
+    %% Testing & Deployment
+    TestFramework[Test Framework]
+    DeploymentSystem[Deployment System]
 
-                const width = 960;
-                const height = 600;
+    %% Core Dependencies
+    VM_Core --> |manages| Stack
+    VM_Core --> |manages| Memory
+    VM_Core --> |uses| InstructionSet
+    VM_Core --> |monitored by| GasMetering
+    VM_Core --> |validated by| SecurityChecker
 
-                const svg = d3.select("#graph").append("svg")
-                    .attr("width", width)
-                    .attr("height", height);
+    %% Security & Monitoring
+    SecurityChecker --> |validates| Stack
+    SecurityChecker --> |validates| Memory
+    SecurityChecker --> |validates| AccountOps
+    GasMetering --> |monitors| Stack
+    GasMetering --> |monitors| Memory
+    GasMetering --> |monitors| VM_Core
 
-                const simulation = d3.forceSimulation(nodes)
-                    .force("link", d3.forceLink(links).id(d => d.id).distance(200))
-                    .force("charge", d3.forceManyBody().strength(-500))
-                    .force("center", d3.forceCenter(width / 2, height / 2));
+    %% Error Handling
+    ErrorHandler --> |handles errors| VM_Core
+    ErrorHandler --> |handles errors| Stack
+    ErrorHandler --> |handles errors| Memory
+    ErrorHandler --> |handles errors| AccountOps
+    ErrorHandler --> |reports to| SolanaRuntime
 
-                const link = svg.append("g")
-                    .attr("class", "links")
-                    .selectAll("line")
-                    .data(links)
-                    .enter().append("line")
-                    .attr("stroke-width", 2)
-                    .attr("stroke", "#999")
-                    .attr("stroke-opacity", 0.6);
+    %% Solana Integration
+    AccountOps --> |interfaces with| SolanaRuntime
+    DeploymentSystem --> |deploys to| SolanaRuntime
 
-                const node = svg.append("g")
-                    .attr("class", "nodes")
-                    .selectAll("circle")
-                    .data(nodes)
-                    .enter().append("circle")
-                    .attr("r", 10)
-                    .attr("fill", "#69b3a2")
-                    .call(d3.drag()
-                        .on("start", dragstarted)
-                        .on("drag", dragged)
-                        .on("end", dragended));
+    %% Debugging & Testing
+    Debugger --> |monitors| VM_Core
+    Debugger --> |monitors| Stack
+    Debugger --> |monitors| Memory
+    TestFramework --> |tests| VM_Core
+    TestFramework --> |tests| Stack
+    TestFramework --> |tests| Memory
+    TestFramework --> |tests| AccountOps
 
-                const label = svg.append("g")
-                    .attr("class", "labels")
-                    .selectAll("text")
-                    .data(nodes)
-                    .enter().append("text")
-                        .attr("x", 12)
-                        .attr("y", 3)
-                        .text(d => d.label);
+    %% Instruction Categories
+    subgraph Instructions
+        StackOps[Stack Operations]
+        MathOps[Math Operations]
+        MemoryOps[Memory Operations]
+        ControlFlow[Control Flow]
+        SolanaOps[Solana Operations]
+    end
 
-                simulation.on("tick", () => {
-                    link
-                        .attr("x1", d => d.source.x)
-                        .attr("y1", d => d.source.y)
-                        .attr("x2", d => d.target.x)
-                        .attr("y2", d => d.target.y);
+    InstructionSet --> StackOps
+    InstructionSet --> MathOps
+    InstructionSet --> MemoryOps
+    InstructionSet --> ControlFlow
+    InstructionSet --> SolanaOps
 
-                    node
-                        .attr("cx", d => d.x)
-                        .attr("cy", d => d.y);
+    %% Component Types
+    classDef core fill:#f9f,stroke:#333,stroke-width:2px
+    classDef security fill:#ff9,stroke:#333,stroke-width:2px
+    classDef external fill:#9f9,stroke:#333,stroke-width:2px
+    classDef testing fill:#99f,stroke:#333,stroke-width:2px
+    classDef instruction fill:#f99,stroke:#333,stroke-width:2px
 
-                    label
-                        .attr("x", d => d.x)
-                        .attr("y", d => d.y);
-                });
+    class VM_Core,Stack,Memory core
+    class SecurityChecker,GasMetering security
+    class SolanaRuntime external
+    class TestFramework,Debugger testing
+    class StackOps,MathOps,MemoryOps,ControlFlow,SolanaOps instruction
+        </div>
 
-                function dragstarted(event, d) {
-                    if (!event.active) simulation.alphaTarget(0.3).restart();
-                    d.fx = d.x;
-                    d.fy = d.y;
-                }
+        <h2>Component Relationships</h2>
+        <p>The knowledge graph visualizes the key components and relationships in the lessVM system:</p>
 
-                function dragged(event, d) {
-                    d.fx = event.x;
-                    d.fy = event.y;
-                }
+        <h3>1. Core Components</h3>
+        <ul>
+            <li>VM Core acts as the central execution engine</li>
+            <li>Stack provides LIFO data structure with 32 entries</li>
+            <li>Memory manages a fixed 1024-byte array</li>
+            <li>Instruction Set defines all available operations</li>
+        </ul>
 
-                function dragended(event, d) {
-                    if (!event.active) simulation.alphaTarget(0);
-                    d.fx = null;
-                    d.fy = null;
-                }
+        <h3>2. Security & Monitoring</h3>
+        <ul>
+            <li>Security Checker validates all operations</li>
+            <li>Gas Metering tracks and limits resource usage</li>
+            <li>Error Handler manages system-wide error states</li>
+        </ul>
+
+        <h3>3. External Integration</h3>
+        <ul>
+            <li>Account Operations manages Solana account interactions</li>
+            <li>Solana Runtime provides blockchain interface</li>
+            <li>Deployment System handles program lifecycle</li>
+        </ul>
+
+        <h3>4. Testing & Development</h3>
+        <ul>
+            <li>Test Framework validates all components</li>
+            <li>Debugger provides execution tracing</li>
+            <li>Example programs demonstrate functionality</li>
+        </ul>
+
+        <h3>5. Instructions</h3>
+        <ul>
+            <li>Stack Operations: Push, Pop, Dup, Swap</li>
+            <li>Math Operations: Add, Mul, Div, MulDiv</li>
+            <li>Memory Operations: Load, Store, LoadN, StoreN</li>
+            <li>Control Flow: Jump, JumpI, Call, Return</li>
+            <li>Solana Operations: Transfer, SPLTransfer, Log</li>
+        </ul>
+
+        <script>
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'default',
+                securityLevel: 'loose'
             });
-    </script>
+        </script>
+    </div>
 </body>
 </html>

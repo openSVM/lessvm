@@ -1,152 +1,83 @@
-# Release Process for lessvm-cli
+# Release Process
 
-This document describes the release process for the lessvm-cli tool using GoReleaser.
+This document describes the release process for the lessvm-cli tool.
 
 ## Prerequisites
 
-- [GoReleaser](https://goreleaser.com/) installed on your machine
-- GitHub access token with `repo` scope
 - Rust toolchain installed
+- GPG key for signing releases (if using signed releases)
+- GitHub access with permissions to create releases
 
-## Installation
+## Release Steps
 
-### Install GoReleaser
+1. **Update Version**
+   - Update the version in `Cargo.toml`
+   - Update CHANGELOG.md with the new version's changes
+   - Commit these changes
 
-On macOS:
+2. **Create Git Tag**
+   ```bash
+   git tag -a v0.1.0 -m "Release v0.1.0"
+   git push origin v0.1.0
+   ```
+
+3. **Automated Release Process**
+   The GitHub Actions workflow will automatically:
+   - Build the CLI for all supported platforms
+   - Create installers (shell script, PowerShell script, Homebrew)
+   - Generate release artifacts
+   - Create a GitHub release
+   - Publish to package managers
+
+## Supported Platforms
+
+The CLI is automatically built and packaged for:
+- Linux (x86_64, aarch64)
+- macOS (x86_64, aarch64)
+- Windows (x86_64)
+
+## Installation Methods
+
+Users can install the CLI through various methods:
+
+### Using Shell Script (Unix-like systems)
 ```bash
-brew install goreleaser
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-installer.sh | sh
 ```
 
-On Linux:
-```bash
-curl -sfL https://goreleaser.com/static/run | bash
+### Using PowerShell (Windows)
+```powershell
+irm https://github.com/openSVM/lessvm/releases/latest/download/lessvm-installer.ps1 | iex
 ```
 
-### Set up GitHub Token
-
-GoReleaser needs a GitHub token to create releases and upload artifacts. You can create a token at https://github.com/settings/tokens.
-
-Once you have a token, set it as an environment variable:
-
+### Using Homebrew (macOS and Linux)
 ```bash
-export GITHUB_TOKEN=your-github-token
-```
-
-## Release Process
-
-### 1. Update Version
-
-Update the version in `cli/Cargo.toml`:
-
-```toml
-[package]
-name = "lessvm-cli"
-version = "0.1.1"  # Update this line
-```
-
-### 2. Commit Changes
-
-Commit all changes to the repository:
-
-```bash
-git add .
-git commit -m "Prepare release v0.1.1"
-git push origin main
-```
-
-### 3. Create a Tag
-
-Create a new tag for the release:
-
-```bash
-git tag -a v0.1.1 -m "Release v0.1.1"
-git push origin v0.1.1
-```
-
-### 4. Automatic Release
-
-Once the tag is pushed, GitHub Actions will automatically:
-1. Build the binaries for all platforms
-2. Create a GitHub release
-3. Upload the binaries to the release
-4. Update the Homebrew formula
-
-You can monitor the progress in the "Actions" tab of your GitHub repository.
-
-## Testing Locally
-
-To test the release process locally without publishing:
-
-```bash
-cd cli
-goreleaser release --snapshot --clean --skip=publish
-```
-
-This will create a snapshot release in the `dist` directory, which you can inspect to verify that the build process works as expected.
-
-## Release Artifacts
-
-GoReleaser will create the following artifacts:
-
-- Binary files for each supported platform (macOS, Linux, Windows)
-- Archives (tar.gz for macOS/Linux, zip for Windows)
-- Checksums file
-- Homebrew formula
-
-## Homebrew Tap
-
-The Homebrew formula will be published to the `openSVM/homebrew-tap` repository. Users can install the CLI tool using:
-
-```bash
-brew tap openSVM/tap
+brew tap openSVM/lessvm
 brew install lessvm
 ```
 
 ## Troubleshooting
 
-### Common Issues
+If you encounter issues during the release process:
 
-1. **GitHub Token Issues**
+1. Check the GitHub Actions logs for any build failures
+2. Verify that all required secrets are properly set in the repository
+3. Ensure the version numbers are consistent across all files
+4. Check that the GPG signing key is properly configured (if using signed releases)
 
-   If you see authentication errors, make sure your GitHub token is set correctly and has the required permissions.
+## Manual Release (if needed)
 
+If you need to create a release manually:
+
+1. Install cargo-dist:
    ```bash
-   export GITHUB_TOKEN=your-github-token
+   curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/latest/download/cargo-dist-installer.sh | sh
    ```
 
-2. **Build Failures**
+2. Build and package locally:
+   ```bash
+   cd cli
+   cargo dist build --artifacts=all --target=x86_64-unknown-linux-gnu
+   ```
 
-   If the build fails, check the error messages in the GitHub Actions logs. Common issues include:
-   
-   - Missing dependencies
-   - Compilation errors
-   - Test failures
-
-3. **Homebrew Formula Issues**
-
-   If the Homebrew formula fails to publish, check:
-   
-   - The `tap` section in `.goreleaser.yml`
-   - GitHub token permissions
-   - Repository access
-
-### Manual Release
-
-If the automatic release fails, you can perform a manual release:
-
-```bash
-cd cli
-goreleaser release --clean
-```
-
-This will create a release and upload the artifacts to GitHub.
-
-## Release Checklist
-
-- [ ] Update version in `Cargo.toml`
-- [ ] Update CHANGELOG.md (if applicable)
-- [ ] Commit all changes
-- [ ] Create and push a new tag
-- [ ] Verify GitHub Actions workflow completes successfully
-- [ ] Test the released binaries
-- [ ] Verify Homebrew formula works correctly
+3. The packaged artifacts will be available in `target/dist/`
