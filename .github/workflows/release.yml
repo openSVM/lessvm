@@ -134,6 +134,17 @@ jobs:
           pattern: artifacts-*
           path: target/distrib/
           merge-multiple: true
+      - name: Install OpenSSL
+        run: |
+          if [[ "${{ runner.os }}" == "Linux" ]]; then
+            sudo apt-get update
+            sudo apt-get install -y libssl-dev pkg-config
+            echo "OPENSSL_DIR=/usr/lib/ssl" >> $GITHUB_ENV
+          elif [[ "${{ runner.os }}" == "macOS" ]]; then
+            brew install openssl@3
+            echo "OPENSSL_DIR=$(brew --prefix openssl@3)" >> $GITHUB_ENV
+          fi
+      
       - name: Install dependencies
         run: |
           ${{ matrix.packages_install }}
@@ -182,6 +193,13 @@ jobs:
           name: cargo-dist-cache
           path: ~/.cargo/bin/
       - run: chmod +x ~/.cargo/bin/dist
+      
+      - name: Install OpenSSL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libssl-dev pkg-config
+          echo "OPENSSL_DIR=/usr/lib/ssl" >> $GITHUB_ENV
+      
       # Get all the local artifacts for the global tasks to use (for e.g. checksums)
       - name: Fetch local artifacts
         uses: actions/download-artifact@v4
@@ -231,6 +249,13 @@ jobs:
           name: cargo-dist-cache
           path: ~/.cargo/bin/
       - run: chmod +x ~/.cargo/bin/dist
+      
+      - name: Install OpenSSL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libssl-dev pkg-config
+          echo "OPENSSL_DIR=/usr/lib/ssl" >> $GITHUB_ENV
+      
       # Fetch artifacts from scratch-storage
       - name: Fetch artifacts
         uses: actions/download-artifact@v4
