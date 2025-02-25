@@ -135,11 +135,29 @@ jobs:
           path: target/distrib/
           merge-multiple: true
           
-      - name: Set up OpenSSL (macOS)
-        if: runner.os == 'macOS'
+      - name: Set up OpenSSL and cross-compilation environment
         run: |
-          brew install openssl@3
-          echo "OPENSSL_DIR=$(brew --prefix openssl@3)" >> $GITHUB_ENV
+          # Make the cross-compilation setup script executable
+          chmod +x cross-compile-setup.sh
+          
+          # Source the script to set up the environment
+          if [[ "${{ matrix.targets }}" == *"aarch64-unknown-linux-gnu"* ]]; then
+            source ./cross-compile-setup.sh
+            # Export variables to GITHUB_ENV so they persist across steps
+            echo "OPENSSL_DIR=$OPENSSL_DIR" >> $GITHUB_ENV
+            echo "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=$CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER" >> $GITHUB_ENV
+            echo "CC_aarch64_unknown_linux_gnu=$CC_aarch64_unknown_linux_gnu" >> $GITHUB_ENV
+            echo "CXX_aarch64_unknown_linux_gnu=$CXX_aarch64_unknown_linux_gnu" >> $GITHUB_ENV
+            echo "PKG_CONFIG_ALLOW_CROSS=$PKG_CONFIG_ALLOW_CROSS" >> $GITHUB_ENV
+            echo "PKG_CONFIG_PATH=$PKG_CONFIG_PATH" >> $GITHUB_ENV
+            echo "CARGO_BUILD_RUSTFLAGS=$CARGO_BUILD_RUSTFLAGS" >> $GITHUB_ENV
+            if [ -n "$PKG_CONFIG_AARCH64_UNKNOWN_LINUX_GNU_SYSROOT" ]; then
+              echo "PKG_CONFIG_AARCH64_UNKNOWN_LINUX_GNU_SYSROOT=$PKG_CONFIG_AARCH64_UNKNOWN_LINUX_GNU_SYSROOT" >> $GITHUB_ENV
+            fi
+          elif [[ "${{ runner.os }}" == "macOS" ]]; then
+            brew install openssl@3
+            echo "OPENSSL_DIR=$(brew --prefix openssl@3)" >> $GITHUB_ENV
+          fi
           
       - name: Install dependencies
         run: |

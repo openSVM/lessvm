@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-Compilation Knowledge Graph - lessVM</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="architecture.html">Architecture</a>
+            <a href="instructions.html">Instructions</a>
+            <a href="examples.html">Examples</a>
+            <a href="solana.html">Solana</a>
+            <a href="cli.html">CLI</a>
+            <a href="knowledge_graph.html">Knowledge Graph</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Cross-Compilation Knowledge Graph</h1>
+
+        <h2>Cross-Compilation for aarch64-unknown-linux-gnu</h2>
+
+        <h3>Problem</h3>
+        <p>When cross-compiling the LessVM CLI for aarch64-unknown-linux-gnu, OpenSSL cannot be found via pkg-config because pkg-config is not configured for cross-compilation.</p>
+
+        <h3>Solution</h3>
+        <ol>
+            <li>Use the vendored OpenSSL feature in reqwest to avoid the need for pkg-config during cross-compilation.</li>
+            <li>Set up the cross-compilation environment with appropriate environment variables.</li>
+        </ol>
+
+        <h3>Implementation Details</h3>
+
+        <h4>1. Modified Dependencies</h4>
+        <p>Added the <code>native-tls-vendored</code> feature to reqwest in cli/Cargo.toml:</p>
+        <pre><code>reqwest = { version = "0.11", features = ["json", "native-tls-vendored"] }</code></pre>
+
+        <p>This feature makes reqwest use a vendored version of OpenSSL, eliminating the need for pkg-config to find a system-installed version.</p>
+
+        <h4>2. Environment Setup Script</h4>
+        <p>Created a script (<code>cross-compile-setup.sh</code>) that sets up the necessary environment variables for cross-compilation:</p>
+
+        <h5>For macOS:</h5>
+        <ul>
+            <li>Installs required packages: pkg-config, openssl@3</li>
+            <li>Installs cross-compilation toolchain for aarch64-unknown-linux-gnu</li>
+            <li>Sets up environment variables: CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER, CC_aarch64_unknown_linux_gnu, etc.</li>
+            <li>Configures pkg-config for cross-compilation: PKG_CONFIG_ALLOW_CROSS, PKG_CONFIG_PATH</li>
+        </ul>
+
+        <h5>For Linux:</h5>
+        <ul>
+            <li>Installs required packages: pkg-config, libssl-dev, gcc-aarch64-linux-gnu, g++-aarch64-linux-gnu</li>
+            <li>Sets up environment variables for cross-compilation</li>
+            <li>Configures pkg-config for cross-compilation</li>
+        </ul>
+
+        <h3>Usage</h3>
+        <ol>
+            <li>Source the environment setup script before building:
+                <pre><code>source cross-compile-setup.sh</code></pre>
+            </li>
+            <li>Build for the target platform:
+                <pre><code>cargo build --target aarch64-unknown-linux-gnu</code></pre>
+            </li>
+        </ol>
+
+        <h3>Technical Explanation</h3>
+        <p>The issue occurs because pkg-config is not configured to look for libraries in the sysroot for the target platform. When cross-compiling, pkg-config needs to be told where to find libraries for the target architecture.</p>
+
+        <p>The vendored OpenSSL feature in reqwest is the simplest solution as it bundles OpenSSL with the build, avoiding the need for pkg-config to find it. For other dependencies that might require OpenSSL, the environment variables set in the script ensure that pkg-config can find the appropriate libraries.</p>
+
+        <h3>Decision Making Process</h3>
+        <ol>
+            <li>Identified that the issue was related to OpenSSL not being found during cross-compilation</li>
+            <li>Considered two approaches:
+                <ul>
+                    <li>Configure pkg-config for cross-compilation</li>
+                    <li>Use vendored dependencies where possible</li>
+                </ul>
+            </li>
+            <li>Implemented both approaches for maximum compatibility:
+                <ul>
+                    <li>Modified reqwest to use vendored OpenSSL</li>
+                    <li>Created a script to set up the cross-compilation environment</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>References</h3>
+        <ul>
+            <li><a href="https://rust-lang.github.io/rustup/cross-compilation.html">Rust Cross-Compilation Guide</a></li>
+            <li><a href="https://pkg-config.freedesktop.org/pkg-config-guide.html">pkg-config Cross-Compilation Documentation</a></li>
+            <li><a href="https://docs.rs/reqwest/latest/reqwest/">reqwest Documentation</a></li>
+        </ul>
+    </main>
+    <footer>
+        <p>&copy; 2025 lessVM Team</p>
+    </footer>
+</body>
+</html>

@@ -1,5 +1,7 @@
 # lessVM Knowledge Graph
 
+## System Architecture
+
 ```mermaid
 graph TB
     %% Core Components
@@ -120,3 +122,67 @@ This visualization helps understand:
 - Resource monitoring
 - Error handling paths
 - Testing coverage
+
+## Build & Deployment
+
+```mermaid
+graph TB
+    %% Build System
+    BuildSystem[Build System]
+    CrossCompilation[Cross Compilation]
+    ArtifactGeneration[Artifact Generation]
+    ReleaseWorkflow[Release Workflow]
+    
+    %% Dependencies
+    OpenSSL[OpenSSL]
+    PkgConfig[pkg-config]
+    CargoFeatures[Cargo Features]
+    
+    %% Platforms
+    MacOS[macOS]
+    Linux[Linux]
+    ARM64[ARM64]
+    X86_64[x86_64]
+    
+    %% Relationships
+    BuildSystem --> |uses| CrossCompilation
+    BuildSystem --> |produces| ArtifactGeneration
+    BuildSystem --> |integrated with| ReleaseWorkflow
+    
+    CrossCompilation --> |depends on| OpenSSL
+    CrossCompilation --> |configured by| PkgConfig
+    CrossCompilation --> |leverages| CargoFeatures
+    
+    CrossCompilation --> |targets| MacOS
+    CrossCompilation --> |targets| Linux
+    CrossCompilation --> |targets| ARM64
+    CrossCompilation --> |targets| X86_64
+    
+    %% Component Types
+    classDef build fill:#f9f,stroke:#333,stroke-width:2px
+    classDef dependency fill:#ff9,stroke:#333,stroke-width:2px
+    classDef platform fill:#9f9,stroke:#333,stroke-width:2px
+    
+    class BuildSystem,CrossCompilation,ArtifactGeneration,ReleaseWorkflow build
+    class OpenSSL,PkgConfig,CargoFeatures dependency
+    class MacOS,Linux,ARM64,X86_64 platform
+```
+
+The build system diagram shows:
+
+1. Build Components (Pink)
+   - Build System for compiling code
+   - Cross Compilation for multi-platform support
+   - Artifact Generation for creating distributable packages
+   - Release Workflow for automating deployment
+
+2. Dependencies (Yellow)
+   - OpenSSL for secure communications
+   - pkg-config for library detection
+   - Cargo Features for conditional compilation
+
+3. Target Platforms (Green)
+   - Support for multiple operating systems (macOS, Linux)
+   - Support for multiple architectures (ARM64, x86_64)
+
+For detailed information about cross-compilation for aarch64-unknown-linux-gnu, see [Cross-Compilation Knowledge Graph](knowledge_graph_cross_compilation.html).
