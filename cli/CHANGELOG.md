@@ -7,15 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2025-02-25
+
+### Changed
+- Changed binary name from `lessvm-cli` to `lessvm` for a cleaner look
+- Updated all installation scripts and documentation to use the new binary name
+
+## [0.1.0] - 2025-02-25
+
 ### Added
 - GoReleaser integration for automated releases
 - Homebrew formula for easy installation on macOS and Linux
 - Installation scripts for all platforms
 - Cross-platform binary releases
-
-## [0.1.0] - 2025-02-25
-
-### Added
 - Initial release of lessvm-cli
 - Support for creating, building, and deploying LessVM applications
 - Project management features
