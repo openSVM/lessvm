@@ -295,7 +295,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: "openSVM/homebrew-lessvm"
+          repository: "openSVM/lessvm"
           token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
       # So we have access to the formula
       - name: Fetch homebrew formulae
