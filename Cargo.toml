@@ -1,0 +1,20 @@
+[workspace]
+members = [
+    "cli",
+    "lessvm-solana"
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["LessVM Team"]
+license = "MIT"
+repository = "https://github.com/openSVM/lessvm"
+homepage = "https://github.com/openSVM/lessvm"
+
+# The profile that 'cargo dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
+strip = true
+codegen-units = 1
