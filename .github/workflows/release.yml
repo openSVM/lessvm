@@ -146,9 +146,13 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libssl-dev pkg-config
-          echo "OPENSSL_DIR=/usr/lib/ssl" >> $GITHUB_ENV
+          # Set environment variables for OpenSSL
+          echo "OPENSSL_DIR=/usr" >> $GITHUB_ENV
           echo "OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu" >> $GITHUB_ENV
-          echo "OPENSSL_INCLUDE_DIR=/usr/include/openssl" >> $GITHUB_ENV
+          echo "OPENSSL_INCLUDE_DIR=/usr/include" >> $GITHUB_ENV
+          # Verify OpenSSL installation
+          ls -la /usr/include/openssl || true
+          ls -la /usr/lib/x86_64-linux-gnu/libssl* || true
           
       - name: Install dependencies
         run: |
@@ -203,9 +207,13 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libssl-dev pkg-config
-          echo "OPENSSL_DIR=/usr/lib/ssl" >> $GITHUB_ENV
+          # Set environment variables for OpenSSL
+          echo "OPENSSL_DIR=/usr" >> $GITHUB_ENV
           echo "OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu" >> $GITHUB_ENV
-          echo "OPENSSL_INCLUDE_DIR=/usr/include/openssl" >> $GITHUB_ENV
+          echo "OPENSSL_INCLUDE_DIR=/usr/include" >> $GITHUB_ENV
+          # Verify OpenSSL installation
+          ls -la /usr/include/openssl || true
+          ls -la /usr/lib/x86_64-linux-gnu/libssl* || true
       
       # Get all the local artifacts for the global tasks to use (for e.g. checksums)
       - name: Fetch local artifacts
@@ -261,9 +269,13 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libssl-dev pkg-config
-          echo "OPENSSL_DIR=/usr/lib/ssl" >> $GITHUB_ENV
+          # Set environment variables for OpenSSL
+          echo "OPENSSL_DIR=/usr" >> $GITHUB_ENV
           echo "OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu" >> $GITHUB_ENV
-          echo "OPENSSL_INCLUDE_DIR=/usr/include/openssl" >> $GITHUB_ENV
+          echo "OPENSSL_INCLUDE_DIR=/usr/include" >> $GITHUB_ENV
+          # Verify OpenSSL installation
+          ls -la /usr/include/openssl || true
+          ls -la /usr/lib/x86_64-linux-gnu/libssl* || true
       
       # Fetch artifacts from scratch-storage
       - name: Fetch artifacts
