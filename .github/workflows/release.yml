@@ -331,6 +331,8 @@ jobs:
       # This is extra complex because you can make your Formula name not match your app name
       # so we need to find releases with a *.rb file, and publish with that filename.
       - name: Commit formula files
+        env:
+          HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
         run: |
           git config --global user.name "${GITHUB_USER}"
           git config --global user.email "${GITHUB_EMAIL}"
@@ -348,7 +350,8 @@ jobs:
             git add "Formula/${filename}"
             git commit -m "${name} ${version}"
           done
-          git push
+          # Use the token for authentication when pushing
+          git push https://${GITHUB_USER}:${HOMEBREW_TAP_TOKEN}@github.com/openSVM/lessvm.git
 
   announce:
     needs:
