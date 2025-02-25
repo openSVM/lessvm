@@ -1,6 +1,6 @@
 [package]
 name = "lessvm"
-version = "0.1.0-test16"
+version = "0.1.1"
 edition = "2021"
 description = "CLI tool for managing LessVM applications"
 authors = ["LessVM Team"]
@@ -8,6 +8,12 @@ license = "MIT"
 repository = "https://github.com/openSVM/lessvm"
 homepage = "https://github.com/openSVM/lessvm"
 readme = "README.md"
+
+[package.metadata.wix]
+upgrade-guid = "D54932D2-7897-4B2D-A30C-C07C3FD59654"
+path-guid = "90C21E0B-7D55-4F62-9922-35FF6996FCBD"
+license = false
+eula = false
 
 [dependencies]
 clap = { version = "4.4", features = ["derive"] }

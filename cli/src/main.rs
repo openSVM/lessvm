@@ -16,7 +16,7 @@ use crate::deploy::{deploy_project, update_project, check_status};
 #[derive(Parser)]
 #[command(name = "lessvm")]
 #[command(author = "LessVM Team")]
-#[command(version = "0.1.0")]
+#[command(version = "0.1.1")]
 #[command(about = "CLI tool for managing LessVM applications", long_about = None)]
 struct Cli {
     /// Enable verbose logging

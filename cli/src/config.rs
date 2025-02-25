@@ -35,7 +35,7 @@ impl Config {
         Config {
             project: ProjectConfig {
                 name: name.to_string(),
-                version: "0.1.0".to_string(),
+                version: "0.1.1".to_string(),
                 template: template.to_string(),
             },
             solana: SolanaConfig {
