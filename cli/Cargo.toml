@@ -9,16 +9,6 @@ repository = "https://github.com/openSVM/lessvm"
 homepage = "https://github.com/openSVM/lessvm"
 readme = "README.md"
 
-[package.metadata.dist]
-targets = [
-    "x86_64-unknown-linux-gnu",
-    "aarch64-unknown-linux-gnu",
-    "x86_64-apple-darwin",
-    "aarch64-apple-darwin",
-    "x86_64-pc-windows-msvc"
-]
-installers = ["shell", "powershell", "homebrew"]
-
 [dependencies]
 clap = { version = "4.4", features = ["derive"] }
 solana-sdk = "1.17"
