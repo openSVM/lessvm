@@ -146,10 +146,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libssl-dev pkg-config
+          
+          # Install cross-compilation tools for aarch64
+          sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+          
           # Set environment variables for OpenSSL
           echo "OPENSSL_DIR=/usr" >> $GITHUB_ENV
           echo "OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu" >> $GITHUB_ENV
           echo "OPENSSL_INCLUDE_DIR=/usr/include" >> $GITHUB_ENV
+          
+          # Set cross-compilation environment variables
+          echo "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc" >> $GITHUB_ENV
+          
           # Verify OpenSSL installation
           ls -la /usr/include/openssl || true
           ls -la /usr/lib/x86_64-linux-gnu/libssl* || true
@@ -207,10 +215,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libssl-dev pkg-config
+          
+          # Install cross-compilation tools for aarch64
+          sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+          
           # Set environment variables for OpenSSL
           echo "OPENSSL_DIR=/usr" >> $GITHUB_ENV
           echo "OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu" >> $GITHUB_ENV
           echo "OPENSSL_INCLUDE_DIR=/usr/include" >> $GITHUB_ENV
+          
+          # Set cross-compilation environment variables
+          echo "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc" >> $GITHUB_ENV
+          
           # Verify OpenSSL installation
           ls -la /usr/include/openssl || true
           ls -la /usr/lib/x86_64-linux-gnu/libssl* || true
@@ -269,10 +285,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libssl-dev pkg-config
+          
+          # Install cross-compilation tools for aarch64
+          sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+          
           # Set environment variables for OpenSSL
           echo "OPENSSL_DIR=/usr" >> $GITHUB_ENV
           echo "OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu" >> $GITHUB_ENV
           echo "OPENSSL_INCLUDE_DIR=/usr/include" >> $GITHUB_ENV
+          
+          # Set cross-compilation environment variables
+          echo "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc" >> $GITHUB_ENV
+          
           # Verify OpenSSL installation
           ls -la /usr/include/openssl || true
           ls -la /usr/lib/x86_64-linux-gnu/libssl* || true
