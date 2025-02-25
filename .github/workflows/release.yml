@@ -76,7 +76,7 @@ jobs:
       # but also really annoying to build CI around when it needs secrets to work right.)
       - id: plan
         run: |
-          dist ${{ (!github.event.pull_request && format('host --steps=create --tag={0} --target=x86_64-unknown-linux-gnu', github.ref_name)) || 'plan --target=x86_64-unknown-linux-gnu' }} --output-format=json > plan-dist-manifest.json
+          dist ${{ (!github.event.pull_request && format('host --steps=create --tag={0}', github.ref_name)) || 'plan' }} --output-format=json > plan-dist-manifest.json
           echo "dist ran successfully"
           cat plan-dist-manifest.json
           echo "manifest=$(jq -c "." plan-dist-manifest.json)" >> "$GITHUB_OUTPUT"
@@ -288,7 +288,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: "openSVM/lessvm"
+          repository: "openSVM/homebrew-lessvm"
           token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
       # So we have access to the formula
       - name: Fetch homebrew formulae
