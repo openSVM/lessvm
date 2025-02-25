@@ -40,7 +40,7 @@ Write-Host "Latest version: $version" -ForegroundColor Green
 Write-Host ""
 
 # Set download URL
-$downloadUrl = "https://github.com/openSVM/lessvm/releases/download/v$version/lessvm-cli_windows_$arch.zip"
+$downloadUrl = "https://github.com/openSVM/lessvm/releases/download/v$version/lessvm_windows_$arch.zip"
 
 # Set install directory
 $installDir = "$env:USERPROFILE\bin"
@@ -50,18 +50,18 @@ if (-not (Test-Path $installDir)) {
 }
 
 # Download and install
-Write-Host "Downloading lessvm-cli..." -ForegroundColor Blue
+Write-Host "Downloading lessvm..." -ForegroundColor Blue
 $tempDir = [System.IO.Path]::GetTempPath() + [System.Guid]::NewGuid().ToString()
 New-Item -ItemType Directory -Path $tempDir | Out-Null
 
-$zipPath = "$tempDir\lessvm-cli.zip"
+$zipPath = "$tempDir\lessvm.zip"
 Invoke-WebRequest -Uri $downloadUrl -OutFile $zipPath
 
 Write-Host "Extracting files..." -ForegroundColor Blue
 Expand-Archive -Path $zipPath -DestinationPath $tempDir
 
 # Copy to install directory
-Copy-Item -Path "$tempDir\lessvm-cli.exe" -Destination "$installDir\lessvm-cli.exe" -Force
+Copy-Item -Path "$tempDir\lessvm.exe" -Destination "$installDir\lessvm.exe" -Force
 
 # Clean up
 Remove-Item -Path $tempDir -Recurse -Force
@@ -79,10 +79,10 @@ if ($path -notlike "*$installDir*") {
     Write-Host ""
 }
 
-Write-Host "lessvm-cli is now installed at: $installDir\lessvm-cli.exe" -ForegroundColor Green
+Write-Host "lessvm is now installed at: $installDir\lessvm.exe" -ForegroundColor Green
 Write-Host ""
 Write-Host "To get started, run:" -ForegroundColor Blue
-Write-Host "  lessvm-cli --help"
+Write-Host "  lessvm --help"
 Write-Host ""
 Write-Host "For more information, visit:" -ForegroundColor Blue
 Write-Host "  https://github.com/openSVM/lessvm"

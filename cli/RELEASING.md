@@ -99,7 +99,7 @@ The Homebrew formula will be published to the `openSVM/homebrew-tap` repository.
 
 ```bash
 brew tap openSVM/tap
-brew install lessvm-cli
+brew install lessvm
 ```
 
 ## Troubleshooting

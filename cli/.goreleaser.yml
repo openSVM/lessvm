@@ -1,7 +1,7 @@
 # GoReleaser configuration for lessvm-cli
 # This file defines how GoReleaser should build and package the lessvm-cli tool
 
-project_name: lessvm-cli
+project_name: lessvm
 
 # Build environment setup
 before:
@@ -13,8 +13,8 @@ before:
 
 # Build configuration
 builds:
-  - id: lessvm-cli
-    binary: lessvm-cli
+  - id: lessvm
+    binary: lessvm
     main: ./
     env:
       - CGO_ENABLED=0
@@ -39,12 +39,12 @@ builds:
       pre: cargo build --release
       post: |
         # Copy the built binary to the expected location
-        mkdir -p dist/lessvm-cli_{{ .Os }}_{{ .Arch }}
-        cp target/release/lessvm-cli{{ if eq .Os "windows" }}.exe{{ end }} dist/lessvm-cli_{{ .Os }}_{{ .Arch }}/lessvm-cli{{ if eq .Os "windows" }}.exe{{ end }}
+        mkdir -p dist/lessvm_{{ .Os }}_{{ .Arch }}
+        cp target/release/lessvm-cli{{ if eq .Os "windows" }}.exe{{ end }} dist/lessvm_{{ .Os }}_{{ .Arch }}/lessvm{{ if eq .Os "windows" }}.exe{{ end }}
 
 # Archive configuration
 archives:
-  - id: lessvm-cli
+  - id: lessvm
     name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     replacements:
       darwin: macos
@@ -82,7 +82,7 @@ changelog:
 
 # Homebrew tap configuration
 brews:
-  - name: lessvm-cli
+  - name: lessvm
     tap:
       owner: openSVM
       name: homebrew-tap
@@ -92,9 +92,9 @@ brews:
     license: "MIT"
     folder: Formula
     install: |
-      bin.install "lessvm-cli"
+      bin.install "lessvm"
     test: |
-      system "#{bin}/lessvm-cli", "--version"
+      system "#{bin}/lessvm", "--version"
     dependencies:
       - name: solana
     commit_author:

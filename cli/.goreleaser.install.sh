@@ -58,9 +58,9 @@ echo -e "${GREEN}Latest version: ${VERSION}${NC}"
 echo ""
 
 # Set download URL
-DOWNLOAD_URL="https://github.com/openSVM/lessvm/releases/download/v${VERSION}/lessvm-cli_${OS}_${ARCH}.tar.gz"
+DOWNLOAD_URL="https://github.com/openSVM/lessvm/releases/download/v${VERSION}/lessvm_${OS}_${ARCH}.tar.gz"
 if [ "$OS" = "windows" ]; then
-    DOWNLOAD_URL="https://github.com/openSVM/lessvm/releases/download/v${VERSION}/lessvm-cli_${OS}_${ARCH}.zip"
+    DOWNLOAD_URL="https://github.com/openSVM/lessvm/releases/download/v${VERSION}/lessvm_${OS}_${ARCH}.zip"
 fi
 
 # Set install directory
@@ -71,18 +71,18 @@ if [ "$OS" = "windows" ]; then
 fi
 
 # Download and install
-echo -e "${BLUE}Downloading lessvm-cli...${NC}"
+echo -e "${BLUE}Downloading lessvm...${NC}"
 TMP_DIR=$(mktemp -d)
 cd "$TMP_DIR"
 
 if [ "$OS" = "windows" ]; then
-    curl -L -o lessvm-cli.zip "$DOWNLOAD_URL"
-    unzip lessvm-cli.zip
-    mv lessvm-cli.exe "$INSTALL_DIR/"
+    curl -L -o lessvm.zip "$DOWNLOAD_URL"
+    unzip lessvm.zip
+    mv lessvm.exe "$INSTALL_DIR/"
 else
     curl -L "$DOWNLOAD_URL" | tar xz
-    sudo mv lessvm-cli "$INSTALL_DIR/"
-    sudo chmod +x "$INSTALL_DIR/lessvm-cli"
+    sudo mv lessvm "$INSTALL_DIR/"
+    sudo chmod +x "$INSTALL_DIR/lessvm"
 fi
 
 # Clean up
@@ -93,21 +93,21 @@ echo -e "${GREEN}Installation complete!${NC}"
 echo ""
 
 # Verify installation
-if command -v lessvm-cli >/dev/null 2>&1; then
-    echo -e "${GREEN}lessvm-cli is now installed and available in your PATH.${NC}"
-    echo -e "Version: $(lessvm-cli --version)"
+if command -v lessvm >/dev/null 2>&1; then
+    echo -e "${GREEN}lessvm is now installed and available in your PATH.${NC}"
+    echo -e "Version: $(lessvm --version)"
 else
-    echo -e "${YELLOW}lessvm-cli is installed but not in your PATH.${NC}"
-    echo -e "You can run it using: ${BLUE}$INSTALL_DIR/lessvm-cli${NC}"
+    echo -e "${YELLOW}lessvm is installed but not in your PATH.${NC}"
+    echo -e "You can run it using: ${BLUE}$INSTALL_DIR/lessvm${NC}"
     
     if [ "$OS" = "windows" ]; then
-        echo -e "${YELLOW}Add $INSTALL_DIR to your PATH to use lessvm-cli from any location.${NC}"
+        echo -e "${YELLOW}Add $INSTALL_DIR to your PATH to use lessvm from any location.${NC}"
     fi
 fi
 
 echo ""
 echo -e "${BLUE}To get started, run:${NC}"
-echo -e "  lessvm-cli --help"
+echo -e "  lessvm --help"
 echo ""
 echo -e "${BLUE}For more information, visit:${NC}"
 echo -e "  https://github.com/openSVM/lessvm"

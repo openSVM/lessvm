@@ -14,7 +14,7 @@ curl -sSL https://raw.githubusercontent.com/openSVM/lessvm/main/cli/.goreleaser.
 
 ```bash
 brew tap openSVM/tap
-brew install lessvm-cli
+brew install lessvm
 ```
 
 ### Manual Download (macOS, Linux, Windows)
@@ -25,24 +25,24 @@ Download the appropriate binary for your platform from the [releases page](https
 
 ```bash
 # For Intel Macs
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-cli_macos_x86_64.tar.gz | tar xz
-sudo mv lessvm-cli /usr/local/bin/
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm_macos_x86_64.tar.gz | tar xz
+sudo mv lessvm /usr/local/bin/
 
 # For Apple Silicon (M1/M2) Macs
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-cli_macos_aarch64.tar.gz | tar xz
-sudo mv lessvm-cli /usr/local/bin/
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm_macos_aarch64.tar.gz | tar xz
+sudo mv lessvm /usr/local/bin/
 ```
 
 #### Linux
 
 ```bash
 # For x86_64 architecture
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-cli_linux_x86_64.tar.gz | tar xz
-sudo mv lessvm-cli /usr/local/bin/
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm_linux_x86_64.tar.gz | tar xz
+sudo mv lessvm /usr/local/bin/
 
 # For ARM64 architecture
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-cli_linux_aarch64.tar.gz | tar xz
-sudo mv lessvm-cli /usr/local/bin/
+curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm_linux_aarch64.tar.gz | tar xz
+sudo mv lessvm /usr/local/bin/
 ```
 
 #### Windows

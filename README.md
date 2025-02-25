@@ -24,7 +24,7 @@ iwr -useb https://raw.githubusercontent.com/openSVM/lessvm/main/cli/.goreleaser.
 
 ```bash
 brew tap openSVM/tap
-brew install lessvm-cli
+brew install lessvm
 ```
 
 #### For more installation options, see [CLI README](cli/README.md)
