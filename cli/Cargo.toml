@@ -1,6 +1,6 @@
 [package]
 name = "lessvm"
-version = "0.1.0"
+version = "0.1.0-test15"
 edition = "2021"
 description = "CLI tool for managing LessVM applications"
 authors = ["LessVM Team"]
