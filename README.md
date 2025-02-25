@@ -1,4 +1,4 @@
-# lessVM
+# lessVM [![Release](https://github.com/openSVM/lessvm/actions/workflows/release.yml/badge.svg)](https://github.com/openSVM/lessvm/actions/workflows/release.yml)
 
 A lightweight virtual machine implementation for Solana blockchain.
 
