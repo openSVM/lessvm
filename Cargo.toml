@@ -5,7 +5,7 @@ members = [
 ]
 
 [workspace.package]
-version = "0.1.4"
+version = "0.1.6"
 edition = "2021"
 authors = ["LessVM Team"]
 license = "MIT"
