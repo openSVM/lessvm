@@ -17,7 +17,7 @@ pub fn compile(source: &str) -> Result<Vec<u8>, ProgramError> {
     let cargo_toml = format!(r#"
 [package]
 name = "lessvm-program"
-version = "0.1.1"
+version = "0.1.7"
 edition = "2021"
 
 [lib]
