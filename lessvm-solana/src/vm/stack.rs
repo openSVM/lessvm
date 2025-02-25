@@ -153,4 +153,36 @@ impl Stack {
         self.top = frame_start;
         Ok(())
     }
-} 
+
+    /// Returns a pointer to the last 8 elements for SIMD reading
+    ///
+    /// # Safety
+    /// Caller must ensure:
+    /// - At least 8 elements are on the stack
+    /// - Pointer is only used for reading
+    #[inline(always)]
+    pub fn as_simd_ptr(&self) -> Result<*const Value, VMError> {
+        if self.depth() < 8 {
+            return Err(VMError::StackUnderflow);
+        }
+        unsafe {
+            Ok(self.data.as_ptr().add(self.depth() - 8))
+        }
+    }
+
+    /// Returns a mutable pointer to the last 8 elements for SIMD writing
+    ///
+    /// # Safety
+    /// Caller must ensure:
+    /// - At least 8 elements are on the stack
+    /// - Pointer is only used for writing valid Values
+    #[inline(always)]
+    pub fn as_simd_mut_ptr(&mut self) -> Result<*mut Value, VMError> {
+        if self.depth() < 8 {
+            return Err(VMError::StackUnderflow);
+        }
+        unsafe {
+            Ok(self.data.as_mut_ptr().add(self.depth() - 8))
+        }
+    }
+}

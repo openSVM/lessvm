@@ -119,9 +119,9 @@ impl<'a> VM<'a> {
             return Err(VMError::StackUnderflow);
         }
 
-        let values = _mm256_loadu_si256(self.stack.data.as_ptr().add(self.stack.depth() - 8) as *const __m256i);
+        let values = _mm256_loadu_si256(self.stack.as_simd_ptr()? as *const __m256i);
         let result = _mm256_add_epi64(values, values); 
-        _mm256_storeu_si256(self.stack.data.as_mut_ptr().add(self.stack.depth() - 8) as *mut __m256i, result);
+        _mm256_storeu_si256(self.stack.as_simd_mut_ptr()? as *mut __m256i, result);
         Ok(())
     }
 
