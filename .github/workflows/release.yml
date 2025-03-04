@@ -350,7 +350,8 @@ jobs:
             git add "Formula/${filename}"
             git commit -m "${name} ${version}"
           done
-          # Use the token for authentication when pushing
+          # Configure git to use the token with the git credential helper
+          git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n "x-access-token:${HOMEBREW_TAP_TOKEN}" | base64)"
           git push origin HEAD:main
 
   announce:

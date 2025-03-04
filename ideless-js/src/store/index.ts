@@ -9,11 +9,12 @@ import debuggerReducer from './slices/debuggerSlice';
 import simulatorReducer from './slices/simulatorSlice';
 import projectReducer from './slices/projectSlice';
 import uiReducer from './slices/uiSlice';
+import agentReducer from './slices/agentSlice';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['editor', 'project', 'ui'], // Only persist these reducers
+  whitelist: ['editor', 'project', 'ui', 'agent'], // Only persist these reducers
 };
 
 const rootReducer = combineReducers({
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   simulator: simulatorReducer,
   project: projectReducer,
   ui: uiReducer,
+  agent: agentReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

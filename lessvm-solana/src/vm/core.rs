@@ -6,6 +6,15 @@ use solana_program::{
 };
 use super::{
     OpCode, Stack, Memory, Gas, Value, VMError,
+    data_structures::{
+        BTreeMapDS,
+        TrieDS,
+        GraphDS,
+        OHLCVDS,
+        HypergraphDS,
+        DataStructureType,
+        OHLCVEntry
+    },
     debug::{Tracer, DefaultTracer, ExecutionTrace},
 };
 
@@ -43,6 +52,15 @@ impl ReentrancyGuard {
 }
 
 #[repr(C, align(64))]
+struct DataStructureStore {
+    btrees: Vec<Option<BTreeMapDS>>,
+    tries: Vec<Option<TrieDS>>,
+    graphs: Vec<Option<GraphDS>>,
+    ohlcvs: Vec<Option<OHLCVDS>>,
+    hypergraphs: Vec<Option<HypergraphDS>>,
+}
+
+#[repr(C, align(64))]
 pub struct VM<'a> {
     pc: usize,
     gas: Gas,
@@ -50,6 +68,7 @@ pub struct VM<'a> {
     memory: Memory,
     accounts: AccountsView<'a>,
     program_id: &'a Pubkey,
+    data_structures: DataStructureStore,
     reentrancy_guard: ReentrancyGuard,
     tracer: Box<dyn Tracer>,
 }
@@ -65,6 +84,13 @@ impl<'a> VM<'a> {
         accounts: &'a [AccountInfo<'a>],
         _instruction_data: &'a [u8],
     ) -> Self {
+        let data_structures = DataStructureStore {
+            btrees: vec![None; 8],
+            tries: vec![None; 8],
+            graphs: vec![None; 8],
+            ohlcvs: vec![None; 8],
+            hypergraphs: vec![None; 8],
+        };
         Self {
             pc: 0,
             gas: Gas::new(200_000),
@@ -72,6 +98,7 @@ impl<'a> VM<'a> {
             memory: Memory::new(),
             accounts: AccountsView { accounts, current: 0 },
             program_id,
+            data_structures,
             reentrancy_guard: ReentrancyGuard::new(),
             tracer: Box::new(DefaultTracer),
         }
@@ -307,6 +334,280 @@ impl<'a> VM<'a> {
                 OpCode::Log => {
                     let value = self.stack.pop()?;
                     msg!("VM Log: {}", value.0);
+                },
+                
+                // Data Structure Operations - BTreeMap
+                OpCode::BTreeCreate => {
+                    let id = self.stack.pop()?.0 as usize;
+                    if id >= self.data_structures.btrees.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    self.data_structures.btrees[id] = Some(BTreeMapDS::new());
+                },
+                OpCode::BTreeInsert => {
+                    let value = self.stack.pop()?.0;
+                    let key = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.btrees.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(btree) = &mut self.data_structures.btrees[id] {
+                        let old_value = btree.insert(key, value);
+                        self.stack.push(Value(old_value.unwrap_or(0)))?;
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::BTreeGet => {
+                    let key = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.btrees.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(btree) = &self.data_structures.btrees[id] {
+                        match btree.get(key) {
+                            Some(value) => self.stack.push(Value(value))?,
+                            None => self.stack.push(Value(0))?, // Return 0 if key not found
+                        }
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::BTreeRemove => {
+                    let key = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.btrees.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(btree) = &mut self.data_structures.btrees[id] {
+                        let old_value = btree.remove(key);
+                        self.stack.push(Value(old_value.unwrap_or(0)))?;
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::BTreeContains => {
+                    let key = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.btrees.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(btree) = &self.data_structures.btrees[id] {
+                        self.stack.push(Value(if btree.contains_key(key) { 1 } else { 0 }))?;
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::BTreeLen => {
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.btrees.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(btree) = &self.data_structures.btrees[id] {
+                        self.stack.push(Value(btree.len() as u64))?;
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::BTreeFirstKey => {
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.btrees.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(btree) = &self.data_structures.btrees[id] {
+                        match btree.first_key() {
+                            Some(key) => self.stack.push(Value(key))?,
+                            None => self.stack.push(Value(0))?, // Return 0 if empty
+                        }
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::BTreeLastKey => {
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.btrees.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(btree) = &self.data_structures.btrees[id] {
+                        match btree.last_key() {
+                            Some(key) => self.stack.push(Value(key))?,
+                            None => self.stack.push(Value(0))?, // Return 0 if empty
+                        }
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::BTreeClear => {
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.btrees.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(btree) = &mut self.data_structures.btrees[id] {
+                        btree.clear();
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                
+                // Trie operations
+                OpCode::TrieCreate => {
+                    let id = self.stack.pop()?.0 as usize;
+                    if id >= self.data_structures.tries.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    self.data_structures.tries[id] = Some(TrieDS::new());
+                },
+                OpCode::TrieInsert => {
+                    // Stack: [id, key_ptr, key_len, value]
+                    let value = self.stack.pop()?;
+                    let key_len = self.stack.pop()?.0 as usize;
+                    let key_ptr = self.stack.pop()?.0 as usize;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.tries.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    // Read key from memory
+                    let key = self.memory.load(key_ptr, key_len)?;
+                    
+                    if let Some(trie) = &mut self.data_structures.tries[id] {
+                        trie.insert(key, value)?;
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::TrieGet => {
+                    // Stack: [id, key_ptr, key_len]
+                    let key_len = self.stack.pop()?.0 as usize;
+                    let key_ptr = self.stack.pop()?.0 as usize;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    // Validate key length
+                    if key_len == 0 {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if id >= self.data_structures.tries.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    // Read key from memory with bounds check
+                    let key = match self.memory.load(key_ptr, key_len) {
+                        Ok(k) => k,
+                        Err(_) => return Err(VMError::InvalidDataStructureOperation.into()),
+                    };
+                    
+                    if let Some(trie) = &self.data_structures.tries[id] {
+                        match trie.get(key) {
+                            Some(value) => self.stack.push(value)?, // value is already a Value type
+                            None => self.stack.push(Value(0))?, // Return 0 if key not found
+                        }
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::TrieContains => {
+                    // Stack: [id, key_ptr, key_len]
+                    let key_len = self.stack.pop()?.0 as usize;
+                    let key_ptr = self.stack.pop()?.0 as usize;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    // Validate key length
+                    if key_len == 0 {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if id >= self.data_structures.tries.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    // Read key from memory with bounds check
+                    let key = match self.memory.load(key_ptr, key_len) {
+                        Ok(k) => k,
+                        Err(_) => return Err(VMError::InvalidDataStructureOperation.into()),
+                    };
+                    
+                    if let Some(trie) = &self.data_structures.tries[id] {
+                        // Consistently return Value(1) for true and Value(0) for false
+                        self.stack.push(Value(if trie.contains(key) { 1 } else { 0 }))?;
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::TrieClear => {
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.tries.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(trie) = &mut self.data_structures.tries[id] {
+                        trie.clear();
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                
+                // Graph operations - implementing basic ones
+                OpCode::GraphCreate => {
+                    let id = self.stack.pop()?.0 as usize;
+                    if id >= self.data_structures.graphs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    self.data_structures.graphs[id] = Some(GraphDS::new());
+                },
+                OpCode::GraphAddNode => {
+                    let value = self.stack.pop()?.0;
+                    let node_id = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.graphs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(graph) = &mut self.data_structures.graphs[id] {
+                        graph.add_node(node_id, value)?;
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                
+                // The remaining graph, OHLCV, and hypergraph operations can be 
+                // implemented similarly as needed
+
+                // OHLCV operations 
+                OpCode::OhlcvCreate => {
+                    let id = self.stack.pop()?.0 as usize;
+                    if id >= self.data_structures.ohlcvs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    self.data_structures.ohlcvs[id] = Some(OHLCVDS::new());
+                },
+
+                // Hypergraph operations
+                OpCode::HyperCreate => {
+                    let id = self.stack.pop()?.0 as usize;
+                    if id >= self.data_structures.hypergraphs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    self.data_structures.hypergraphs[id] = Some(HypergraphDS::new());
                 },
 
                 OpCode::Halt => {

@@ -1,7 +1,8 @@
 [workspace]
 members = [
     "cli",
-    "lessvm-solana"
+    "lessvm-solana",
+    "ideless"
 ]
 
 [workspace.package]

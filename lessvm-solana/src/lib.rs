@@ -5,9 +5,9 @@ pub mod compiler;
 
 pub use compiler::{compile, optimize};
 
-use solana_program::{
+pub use solana_program::{
     account_info::AccountInfo,
-    clock::Clock,
+    clock::Clock,    
     entrypoint,
     entrypoint::ProgramResult,
     msg,
@@ -18,6 +18,7 @@ use solana_program::{
 };
 
 use vm::VM;
+pub use vm::data_structures::*;
 use solana::{
     account::AccountManager,
     instruction::{Instruction, TokenInstructionType},
@@ -156,6 +157,7 @@ fn process_get_version() -> ProgramResult {
 
 #[cfg(test)]
 mod tests {
+    use borsh::BorshSerialize;
     use super::*;
     use solana_program::clock::Epoch;
 

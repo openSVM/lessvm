@@ -4,12 +4,15 @@ pub mod memory;
 pub mod stack;
 pub mod gas;
 pub mod debug;
+pub mod data_structures;
+pub mod tests;
 
 pub use core::VM;
 pub use opcodes::OpCode;
 pub use memory::Memory;
 pub use stack::{Stack, Value};
 pub use gas::Gas;
+pub use data_structures::{BTreeMapDS, TrieDS, GraphDS, OHLCVDS, HypergraphDS};
 
 use thiserror::Error;
 use solana_program::program_error::ProgramError;
@@ -32,6 +35,8 @@ pub enum VMError {
     ArithmeticOverflow,
     #[error("Reentrancy detected")]
     ReentrancyDetected,
+    #[error("Invalid data structure operation")]
+    InvalidDataStructureOperation,
 }
 
 impl From<VMError> for ProgramError {
@@ -41,4 +46,4 @@ impl From<VMError> for ProgramError {
 }
 
 // Re-export common types
-pub type VMResult<T> = Result<T, VMError>; 
+pub type VMResult<T> = Result<T, VMError>;

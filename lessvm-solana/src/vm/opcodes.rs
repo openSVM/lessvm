@@ -55,6 +55,47 @@ pub enum OpCode {
     IsWritable = 0x46,
     IsSigner = 0x47,
 
+    // Data Structure Operations (0x5*)
+    // BTreeMap operations
+    BTreeCreate = 0x50,
+    BTreeInsert = 0x51,
+    BTreeGet = 0x52,
+    BTreeRemove = 0x53,
+    BTreeContains = 0x54,
+    BTreeLen = 0x55,
+    BTreeFirstKey = 0x56,
+    BTreeLastKey = 0x57,
+    BTreeClear = 0x58,
+
+    // Trie operations
+    TrieCreate = 0x59,
+    TrieInsert = 0x5A,
+    TrieGet = 0x5B,
+    TrieContains = 0x5C,
+    TrieClear = 0x5D,
+
+    // Graph operations
+    GraphCreate = 0x60,
+    GraphAddNode = 0x61,
+    GraphAddEdge = 0x62,
+    GraphGetNode = 0x63,
+    GraphSetNode = 0x64,
+    GraphGetNeighbors = 0x65,
+    GraphBfs = 0x66,
+    GraphClear = 0x67,
+
+    // OHLCV operations
+    OhlcvCreate = 0x68,
+    OhlcvAddBar = 0x69,
+    OhlcvGetBar = 0x6A,
+    OhlcvSma = 0x6B,
+
+    // Hypergraph operations
+    HyperCreate = 0x6C,
+    HyperAddNode = 0x6D,
+    HyperAddEdge = 0x6E,
+    HyperAddNodeToEdge = 0x6F,
+
     // System Operations (0xF*)
     Halt = 0xFF,
 }
@@ -101,6 +142,20 @@ impl OpCode {
             OpCode::GetBalance | OpCode::GetOwner => 20,
             OpCode::IsWritable | OpCode::IsSigner => 5,
 
+            // Data Structure operations - gas costs reflect complexity
+            OpCode::BTreeCreate | OpCode::TrieCreate | OpCode::GraphCreate | 
+            OpCode::OhlcvCreate | OpCode::HyperCreate => 5,
+            OpCode::BTreeInsert | OpCode::BTreeGet | OpCode::BTreeRemove | 
+            OpCode::BTreeContains | OpCode::BTreeFirstKey | OpCode::BTreeLastKey => 15,
+            OpCode::TrieInsert | OpCode::TrieGet | OpCode::TrieContains => 20, 
+            OpCode::GraphAddNode | OpCode::GraphGetNode | OpCode::GraphSetNode => 10,
+            OpCode::GraphAddEdge | OpCode::GraphGetNeighbors => 15,
+            OpCode::GraphBfs => 50,
+            OpCode::OhlcvAddBar | OpCode::OhlcvGetBar => 8,
+            OpCode::OhlcvSma => 30,
+            OpCode::HyperAddNode | OpCode::HyperAddEdge | OpCode::HyperAddNodeToEdge => 20,
+            OpCode::BTreeLen | OpCode::BTreeClear | OpCode::TrieClear | OpCode::GraphClear => 5,
+
             // System operations
             OpCode::Halt => 0,
         }
@@ -114,6 +169,8 @@ impl OpCode {
             0x20..=0x26 | // Memory ops
             0x30..=0x34 | // Control flow
             0x40..=0x47 | // Solana ops
+            0x50..=0x5D | // BTreeMap and Trie ops
+            0x60..=0x6F | // Graph, OHLCV, and Hypergraph ops
             0xFF => unsafe { Some(transmute(byte)) }, // Safe because we check valid ranges
             _ => None
         }

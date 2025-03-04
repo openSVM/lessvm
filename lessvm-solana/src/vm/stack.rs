@@ -3,7 +3,7 @@ use super::VMError;
 use smallvec::{SmallVec, smallvec};
 
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Value(pub u64);
 
 impl Value {
