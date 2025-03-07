@@ -16,7 +16,7 @@ use tui::{
     backend::{Backend, CrosstermBackend},
     layout::{Constraint, Direction, Layout, Rect},
     style::{Color, Modifier, Style},
-    text::{Span, Spans},
+    text::{Line, Span},
     widgets::{Block, Borders, List, ListItem, Paragraph, Tabs},
     Frame, Terminal,
 };
@@ -231,7 +231,7 @@ fn render_loop<B: Backend>(terminal: &mut Terminal<B>, app: &mut App) -> Result<
 }
 
 /// Rendering UI
-fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
+fn ui(f: &mut Frame, app: &mut App) {
     let size = f.size();
     
     // Create main layout
@@ -248,7 +248,7 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
     // Render tab bar
     let tab_titles = vec!["VM", "Memory", "Stack"];
     let tabs = Tabs::new(
-        tab_titles.iter().map(|t| Spans::from(Span::raw(*t))).collect()
+        tab_titles.iter().map(|t| Line::from(Span::raw(*t))).collect()
     )
     .block(Block::default().borders(Borders::ALL).title("LessVM Debugger"))
     .highlight_style(Style::default().fg(Color::Yellow).add_modifier(Modifier::BOLD))
@@ -295,7 +295,7 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
 }
 
 /// Render VM tab
-fn render_vm_tab<B: Backend>(f: &mut Frame<B>, vm: &VMRender, area: Rect) {
+fn render_vm_tab(f: &mut Frame, vm: &VMRender, area: Rect) {
     let vm_layout = Layout::default()
         .direction(Direction::Horizontal)
         .constraints([
@@ -312,7 +312,7 @@ fn render_vm_tab<B: Backend>(f: &mut Frame<B>, vm: &VMRender, area: Rect) {
     
     let registers_items: Vec<ListItem> = registers
         .iter()
-        .map(|r| ListItem::new(vec![Spans::from(Span::raw(r))]))
+        .map(|r| ListItem::new(Line::from(Span::raw(r))))
         .collect();
     
     let registers_list = List::new(registers_items)
@@ -337,7 +337,7 @@ fn render_vm_tab<B: Backend>(f: &mut Frame<B>, vm: &VMRender, area: Rect) {
 }
 
 /// Render memory tab
-fn render_memory_tab<B: Backend>(f: &mut Frame<B>, vm: &VMRender, area: Rect) {
+fn render_memory_tab(f: &mut Frame, vm: &VMRender, area: Rect) {
     // Calculate visible memory range
     let pc = vm.pc;
     let start_addr = pc.saturating_sub(64);
@@ -384,12 +384,12 @@ fn render_memory_tab<B: Backend>(f: &mut Frame<B>, vm: &VMRender, area: Rect) {
         .enumerate()
         .map(|(i, line)| {
             if i == pc_index {
-                ListItem::new(vec![Spans::from(Span::styled(
+                ListItem::new(Line::from(Span::styled(
                     line,
                     Style::default().fg(Color::Yellow).add_modifier(Modifier::BOLD),
-                ))])
+                )))
             } else {
-                ListItem::new(vec![Spans::from(Span::raw(line))])
+                ListItem::new(Line::from(Span::raw(line)))
             }
         })
         .collect();
@@ -402,7 +402,7 @@ fn render_memory_tab<B: Backend>(f: &mut Frame<B>, vm: &VMRender, area: Rect) {
 }
 
 /// Render stack tab
-fn render_stack_tab<B: Backend>(f: &mut Frame<B>, vm: &VMRender, area: Rect) {
+fn render_stack_tab(f: &mut Frame, vm: &VMRender, area: Rect) {
     let mut stack_items = Vec::new();
     
     // Display stack from top to bottom
@@ -412,7 +412,7 @@ fn render_stack_tab<B: Backend>(f: &mut Frame<B>, vm: &VMRender, area: Rect) {
     
     let stack_list_items: Vec<ListItem> = stack_items
         .iter()
-        .map(|s| ListItem::new(vec![Spans::from(Span::raw(s))]))
+        .map(|s| ListItem::new(Line::from(Span::raw(s))))
         .collect();
     
     let stack_list = List::new(stack_list_items)

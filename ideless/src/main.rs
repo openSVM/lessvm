@@ -4,6 +4,7 @@ mod render;
 mod run;
 mod dbg;
 mod lessvm;
+mod tui;
 
 use std::{fs, path::PathBuf, process::ExitCode};
 
@@ -33,9 +34,9 @@ fn main() -> ExitCode {
 
 fn execute_command(command: CliCommand) -> Result<()> {
     match command {
-        CliCommand::Check { path, log, kind: _ } => {
+        CliCommand::Check { path, log } => {
             if let Some(log_level) = log {
-                tui_logger::set_level_for_target("ideless", log_level.to_level_filter());
+                tui_logger::set_level_for_target("lessvm", log_level.to_level_filter());
             }
             
             let bytecode = fs::read(&path)
@@ -56,9 +57,9 @@ fn execute_command(command: CliCommand) -> Result<()> {
             Ok(())
         },
         
-        CliCommand::Dasm { path, log, kind: _ } => {
+        CliCommand::Dasm { path, log } => {
             if let Some(log_level) = log {
-                tui_logger::set_level_for_target("ideless", log_level.to_level_filter());
+                tui_logger::set_level_for_target("lessvm", log_level.to_level_filter());
             }
             
             let bytecode = fs::read(&path)
@@ -72,9 +73,9 @@ fn execute_command(command: CliCommand) -> Result<()> {
             Ok(())
         },
         
-        CliCommand::Run { path, debug, cpf, hz, log, kind: _, rpc_url: _, network: _ } => {
+        CliCommand::Run { path, debug, cpf, hz, log, rpc_url: _, network: _ } => {
             if let Some(log_level) = log {
-                tui_logger::set_level_for_target("ideless", log_level.to_level_filter());
+                tui_logger::set_level_for_target("lessvm", log_level.to_level_filter());
             }
             
             let bytecode = fs::read(&path)
@@ -172,7 +173,7 @@ fn execute_command(command: CliCommand) -> Result<()> {
         
         CliCommand::Analyze { path, detailed, log } => {
             if let Some(log_level) = log {
-                tui_logger::set_level_for_target("ideless", log_level.to_level_filter());
+                tui_logger::set_level_for_target("lessvm", log_level.to_level_filter());
             }
             
             let bytecode = fs::read(&path)
@@ -201,11 +202,28 @@ fn execute_command(command: CliCommand) -> Result<()> {
         
         CliCommand::Assist { path, model: _, log } => {
             if let Some(log_level) = log {
-                tui_logger::set_level_for_target("ideless", log_level.to_level_filter());
+                tui_logger::set_level_for_target("lessvm", log_level.to_level_filter());
             }
             
             println!("Starting AI-assisted development session");
             println!("AI assistance is not yet implemented");
+            Ok(())
+        }
+        
+        CliCommand::Tui { path, log } => {
+            if let Some(log_level) = log {
+                tui_logger::init_logger(log_level.to_level_filter()).unwrap();
+                tui_logger::set_level_for_target("ideless", log_level.to_level_filter());
+            }
+            
+            println!("Starting TUI IDE for lessVM development");
+            
+            // Run the TUI application with or without a file
+            match path {
+                Some(file_path) => tui::run_with_file(file_path)?,
+                None => tui::run()?,
+            }
+            
             Ok(())
         },
     }

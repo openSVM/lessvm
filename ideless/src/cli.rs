@@ -41,14 +41,14 @@ pub struct Cli {
 
 #[derive(Subcommand, Debug)]
 pub enum CliCommand {
-    /// Check a ROM file
+    /// Check a LessVM program file
     #[command(alias = "validate")]
     Check {
         /// Path to LessVM program file
         #[arg(value_name = "FILE")]
         path: PathBuf,
 
-/// Set logging level
+        /// Set logging level
         #[arg(short, long, value_enum)]
         log: Option<LogLevel>,
         
@@ -88,7 +88,7 @@ pub enum CliCommand {
         /// Set logging level
         #[arg(short, long, value_enum)]
         log: Option<LogLevel>,
-        
+                
         /// RPC URL (for Solana mode)
         #[arg(short = 'u', long, default_value = "https://api.devnet.solana.com")]
         rpc_url: String,
@@ -165,9 +165,21 @@ pub enum CliCommand {
         #[arg(value_name = "DIR")]
         path: PathBuf,
 
-/// AI model to use (default: gpt-4o)
+        /// AI model to use (default: gpt-4o)
         #[arg(short, long, default_value = "gpt-4o")]
         model: String,
+        
+        /// Set logging level
+        #[arg(short, long, value_enum)]
+        log: Option<LogLevel>,
+    },
+    
+    /// Start the TUI IDE for lessVM development
+    #[command(alias = "ide")]
+    Tui {
+        /// Path to project directory or file
+        #[arg(value_name = "PATH")]
+        path: Option<PathBuf>,
         
         /// Set logging level
         #[arg(short, long, value_enum)]

@@ -164,6 +164,35 @@ impl VM {
         self.gas_limit
     }
     
+    /// Get the program counter
+    pub fn get_program_counter(&self) -> usize {
+        self.pc
+    }
+    
+    /// Get a reference to the memory
+    pub fn get_memory(&self) -> &[u8] {
+        &self.memory
+    }
+    
+    /// Get a reference to the registers
+    pub fn get_registers(&self) -> &[u32; 16] {
+        &self.registers
+    }
+    
+    /// Get a reference to the stack
+    pub fn get_stack(&self) -> &[u32] {
+        &self.stack
+    }
+    
+    /// Check if the VM is terminated (halted or error)
+    pub fn is_terminated(&self) -> bool {
+        match self.state {
+            VMState::Halted => true,
+            VMState::Error(_) => true,
+            _ => false
+        }
+    }
+    
     /// Run the VM for a specified number of cycles
     pub fn run(&mut self, max_cycles: u32) -> Result<()> {
         self.state = VMState::Running;

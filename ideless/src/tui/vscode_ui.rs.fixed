@@ -1,0 +1,1003 @@
+//! VS Code-like UI renderer
+//!
+//! This module renders a VS Code-like interface in the terminal using Ratatui.
+
+use std::collections::HashMap;
+use tui::{
+    backend::Backend,
+    layout::{Constraint, Direction, Layout, Rect},
+    style::{Color, Modifier, Style},
+    symbols::border,
+    text::{Span, Spans},
+    widgets::{Block, Borders, List, ListItem, Paragraph, Tabs, Widget, Wrap, ListState},
+    Frame,
+};
+
+use crate::tui::app::{App, AppMode, PanelTab, Tab, VMStatus};
+use crate::tui::vscode::activity_bar::ActivityView;
+use crate::tui::vscode;
+
+
+
+/// Colors matching VS Code's "Dark+" theme
+pub struct VscodeTheme;
+
+impl VscodeTheme {
+    /// Background color
+    pub const BACKGROUND: Color = Color::Rgb(30, 30, 30);
+    /// Activity bar background
+    pub const ACTIVITY_BAR_BACKGROUND: Color = Color::Rgb(51, 51, 51);
+    /// Sidebar background
+    pub const SIDEBAR_BACKGROUND: Color = Color::Rgb(37, 37, 38);
+    /// Editor background
+    pub const EDITOR_BACKGROUND: Color = Color::Rgb(30, 30, 30);
+    /// Panel background
+    pub const PANEL_BACKGROUND: Color = Color::Rgb(37, 37, 38);
+    /// Status bar background
+    pub const STATUS_BAR_BACKGROUND: Color = Color::Rgb(0, 122, 204);
+    /// Active tab background
+    pub const ACTIVE_TAB_BACKGROUND: Color = Color::Rgb(37, 37, 38);
+    /// Inactive tab background
+    pub const INACTIVE_TAB_BACKGROUND: Color = Color::Rgb(45, 45, 45);
+    /// Border color
+    pub const BORDER: Color = Color::Rgb(60, 60, 60);
+    /// Text color
+    pub const TEXT: Color = Color::Rgb(212, 212, 212);
+    /// Comment color
+    pub const COMMENT: Color = Color::Rgb(106, 153, 85);
+    /// String color
+    pub const STRING: Color = Color::Rgb(206, 145, 120);
+    /// Keyword color
+    pub const KEYWORD: Color = Color::Rgb(86, 156, 214);
+    /// Function color
+    pub const FUNCTION: Color = Color::Rgb(220, 220, 170);
+    /// Number color
+    pub const NUMBER: Color = Color::Rgb(181, 206, 168);
+    /// Type color
+    pub const TYPE: Color = Color::Rgb(78, 201, 176);
+    /// Error color
+    pub const ERROR: Color = Color::Rgb(244, 71, 71);
+    /// Warning color
+    pub const WARNING: Color = Color::Rgb(255, 213, 0);
+    /// Info color
+    pub const INFO: Color = Color::Rgb(23, 184, 239);
+    /// Git added color
+    pub const GIT_ADDED: Color = Color::Rgb(127, 186, 0);
+    /// Git modified color
+    pub const GIT_MODIFIED: Color = Color::Rgb(0, 122, 204);
+    /// Git deleted color
+    pub const GIT_DELETED: Color = Color::Rgb(244, 71, 71);
+    /// Selected item background
+    pub const SELECTED_BACKGROUND: Color = Color::Rgb(37, 37, 38);
+    /// Selected item text color
+    pub const SELECTED_TEXT: Color = Color::White;
+}
+
+/// Render VS Code-like UI
+pub fn render<B: Backend>(app: &App, f: &mut Frame<B>) {
+    // Define main layout areas - activity bar, sidebar, main content, status bar
+    let main_layout = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Min(1),      // Main area
+            Constraint::Length(1),   // Status bar
+        ])
+        .split(f.size());
+    
+    // Main area with activity bar, sidebar, and editor area
+    let main_area = main_layout[0];
+    let status_bar_area = main_layout[1];
+    
+    // Determine sidebar width
+    let sidebar_width = if app.sidebar_visible { 30 } else { 0 };
+    
+    // Determine panel height
+    let panel_height = if app.panel_visible { 10 } else { 0 };
+    
+    // Split main area horizontally: activity bar, sidebar, editor/panel area
+    let horizontal_split = Layout::default()
+        .direction(Direction::Horizontal)
+        .constraints([
+            Constraint::Length(3),                     // Activity bar
+            Constraint::Length(sidebar_width),         // Sidebar (if visible)
+            Constraint::Min(10),                       // Editor area
+        ])
+        .split(main_area);
+    
+    // Activity bar
+    let activity_bar_area = horizontal_split[0];
+    let sidebar_area = if app.sidebar_visible { horizontal_split[1] } else { Rect::default() };
+    let content_area = horizontal_split[2];
+    
+    // Split content area vertically for editor and panel
+    let editor_panel_split = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Min(5),                        // Editor area
+            Constraint::Length(panel_height),          // Panel area (if visible)
+        ])
+        .split(content_area);
+    
+    let editor_area = editor_panel_split[0];
+    let panel_area = if app.panel_visible { editor_panel_split[1] } else { Rect::default() };
+    
+    // Render components
+    vscode::activity_bar::render_activity_bar(app, f, activity_bar_area);
+    
+    if app.sidebar_visible {
+        render_sidebar(app, f, sidebar_area);
+    }
+    
+    render_editor_area(app, f, editor_area);
+    
+    if app.panel_visible {
+        render_panel_area(app, f, panel_area);
+    }
+    
+    render_status_bar(app, f, status_bar_area);
+    
+    // Command palette overlay (if visible)
+    if app.command_palette_visible {
+        render_command_palette(app, f);
+    }
+    
+    // Render dialog if present
+    if app.dialog.is_some() {
+        render_dialog(app, f);
+    }
+}
+
+/// Render activity bar
+fn render_activity_bar<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    let activity_items = vec![
+        ("📁", "Explorer", ActivityView::Explorer),
+        ("🔍", "Search", ActivityView::Search),
+        ("🔀", "Source Control", ActivityView::SourceControl),
+        ("▶", "Debug", ActivityView::Debug),
+        ("⚙", "Extensions", ActivityView::Extensions),
+    ];
+    
+    let block = Block::default()
+        .borders(Borders::RIGHT)
+        .border_style(Style::default().fg(VscodeTheme::BORDER))
+        .style(Style::default().bg(VscodeTheme::ACTIVITY_BAR_BACKGROUND));
+    
+    f.render_widget(block, area);
+    
+    let inner_area = Rect::new(area.x, area.y, area.width, area.height);
+    
+    let activity_spans: Vec<ListItem> = activity_items
+        .iter()
+        .map(|(icon, _label, view)| {
+            let selected = app.active_view.map_or(false, |active| active == *view);
+            let style = if selected {
+                Style::default()
+                    .fg(VscodeTheme::SELECTED_TEXT)
+                    .bg(VscodeTheme::ACTIVITY_BAR_BACKGROUND)
+                    .add_modifier(Modifier::BOLD)
+            } else {
+                Style::default()
+                    .fg(VscodeTheme::TEXT)
+                    .bg(VscodeTheme::ACTIVITY_BAR_BACKGROUND)
+            };
+            
+            let text = if selected {
+                format!(" {} ", icon)
+            } else {
+                format!(" {} ", icon)
+            };
+            
+            ListItem::new(text).style(style)
+        })
+        .collect();
+    
+    let list = List::new(activity_spans)
+        .block(Block::default().style(Style::default().bg(VscodeTheme::ACTIVITY_BAR_BACKGROUND)))
+        .highlight_style(
+            Style::default()
+                .bg(VscodeTheme::SELECTED_BACKGROUND)
+                .add_modifier(Modifier::BOLD),
+        );
+    
+    f.render_widget(list, inner_area);
+}
+
+/// Render sidebar with content based on active view
+fn render_sidebar<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    let block = Block::default()
+        .borders(Borders::RIGHT)
+        .border_style(Style::default().fg(VscodeTheme::BORDER))
+        .style(Style::default().bg(VscodeTheme::SIDEBAR_BACKGROUND));
+    
+    f.render_widget(block, area);
+    
+    // Layout for sidebar title and content
+    let sidebar_layout = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Length(2),      // Title
+            Constraint::Min(3),         // Content
+        ])
+        .split(area.inner(&Rect::new(0, 0, 1, 0))); // Remove right border from area
+    
+    // Render title based on active view
+    let title = match app.active_view {
+        Some(ActivityView::Explorer) => "EXPLORER",
+        Some(ActivityView::Search) => "SEARCH",
+        Some(ActivityView::SourceControl) => "SOURCE CONTROL",
+        Some(ActivityView::Debug) => "DEBUG",
+        Some(ActivityView::Extensions) => "EXTENSIONS",
+        None => "EXPLORER",
+    };
+    
+    let title_paragraph = Paragraph::new(title)
+        .style(Style::default()
+            .fg(VscodeTheme::TEXT)
+            .bg(VscodeTheme::SIDEBAR_BACKGROUND))
+        .block(Block::default().style(Style::default().bg(VscodeTheme::SIDEBAR_BACKGROUND)));
+    
+    f.render_widget(title_paragraph, sidebar_layout[0]);
+    
+    // Render content based on active view
+    match app.active_view {
+        Some(ActivityView::Explorer) => render_explorer_view(app, f, sidebar_layout[1]),
+        Some(ActivityView::Search) => render_search_view(app, f, sidebar_layout[1]),
+        Some(ActivityView::SourceControl) => render_source_control_view(app, f, sidebar_layout[1]),
+        Some(ActivityView::Debug) => render_debug_view(app, f, sidebar_layout[1]),
+        Some(ActivityView::Extensions) => render_extensions_view(app, f, sidebar_layout[1]),
+        None => render_explorer_view(app, f, sidebar_layout[1]),
+    }
+}
+
+/// Render explorer view in sidebar
+fn render_explorer_view<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    // Workspace title
+    let workspace_name = app.current_workspace_name
+        .as_ref()
+        .unwrap_or(&"LESSVM PROJECT".to_string());
+    
+    let workspace_title = format!("{} ▾", workspace_name);
+    
+    let title_paragraph = Paragraph::new(workspace_title)
+        .style(Style::default()
+            .fg(VscodeTheme::TEXT)
+            .bg(VscodeTheme::SIDEBAR_BACKGROUND));
+    
+    let inner_layout = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Length(1),      // Workspace title
+            Constraint::Min(3),         // File tree
+        ])
+        .split(area);
+    
+    f.render_widget(title_paragraph, inner_layout[0]);
+    
+    // File explorer tree
+    let mut file_items = Vec::new();
+    
+    // Recursively build file tree items
+    for (i, entry) in app.file_explorer.iter().enumerate() {
+        let selected = app.selected_file_idx.map_or(false, |idx| idx == i);
+        
+        let style = if selected {
+            Style::default()
+                .fg(VscodeTheme::SELECTED_TEXT)
+                .bg(VscodeTheme::SELECTED_BACKGROUND)
+        } else {
+            Style::default().fg(VscodeTheme::TEXT)
+        };
+        
+        let icon = if entry.is_dir { "📁 " } else { "📄 " };
+        let entry_text = format!("{}{}", icon, entry.name);
+        
+        file_items.push(ListItem::new(entry_text).style(style));
+        
+        // Add children if this is a directory
+        if entry.is_dir && entry.children.is_some() {
+            for child in entry.children.as_ref().unwrap() {
+                let child_icon = if child.is_dir { "📁 " } else { "📄 " };
+                let child_text = format!("  {}{}", child_icon, child.name);
+                file_items.push(ListItem::new(child_text).style(Style::default().fg(VscodeTheme::TEXT)));
+            }
+        }
+    }
+    
+    let file_list = List::new(file_items)
+        .block(Block::default().style(Style::default().bg(VscodeTheme::SIDEBAR_BACKGROUND)))
+        .highlight_style(
+            Style::default()
+                .bg(VscodeTheme::SELECTED_BACKGROUND)
+                .add_modifier(Modifier::BOLD),
+        );
+    
+    f.render_widget(file_list, inner_layout[1]);
+}
+
+/// Render search view in sidebar
+fn render_search_view<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    let search_text = Paragraph::new("Search (press Ctrl+F to search)")
+        .style(Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::SIDEBAR_BACKGROUND));
+    
+    f.render_widget(search_text, area);
+}
+
+/// Render source control view in sidebar
+fn render_source_control_view<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    let git_branch = app.git_branch.as_ref().unwrap_or(&"main".to_string());
+    let branch_text = format!("Branch: {}", git_branch);
+    
+    let source_control_text = Paragraph::new(vec![
+        Spans::from(branch_text),
+        Spans::from(""),
+        Spans::from("Changes:"),
+        Spans::from(" M ideless/src/tui/mod.rs"),
+        Spans::from(" M ideless/src/tui/app.rs"),
+        Spans::from(" A ideless/src/tui/vscode/mod.rs"),
+        Spans::from(" A ideless/src/tui/vscode_ui.rs"),
+    ])
+    .style(Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::SIDEBAR_BACKGROUND))
+    .wrap(Wrap { trim: false });
+    
+    f.render_widget(source_control_text, area);
+}
+
+/// Render debug view in sidebar
+fn render_debug_view<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    let debug_status = match app.vm_status {
+        VMStatus::Running => "Running",
+        VMStatus::Paused => "Paused",
+        VMStatus::Stopped => "Stopped",
+    };
+    
+    let debug_text = Paragraph::new(vec![
+        Spans::from("VARIABLES"),
+        Spans::from(""),
+        Spans::from(format!("VM Status: {}", debug_status)),
+        Spans::from("PC: 0x00"),
+        Spans::from(""),
+        Spans::from("BREAKPOINTS"),
+        Spans::from(""),
+    ])
+    .style(Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::SIDEBAR_BACKGROUND))
+    .wrap(Wrap { trim: false });
+    
+    f.render_widget(debug_text, area);
+}
+
+/// Render extensions view in sidebar
+fn render_extensions_view<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    let extensions_text = Paragraph::new(vec![
+        Spans::from("Installed Extensions:"),
+        Spans::from(""),
+        Spans::from("Rust Analyzer"),
+        Spans::from("LessVM Debugger"),
+        Spans::from("Git Integration"),
+        Spans::from("Syntax Highlighter"),
+    ])
+    .style(Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::SIDEBAR_BACKGROUND))
+    .wrap(Wrap { trim: false });
+    
+    f.render_widget(extensions_text, area);
+}
+
+/// Render editor area with tabs and content
+fn render_editor_area<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    let editor_block = Block::default()
+        .style(Style::default().bg(VscodeTheme::EDITOR_BACKGROUND));
+    
+    f.render_widget(editor_block, area);
+    
+    // Split area for tabs and content
+    let editor_layout = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Length(2),      // Tabs
+            Constraint::Min(3),         // Content
+        ])
+        .split(area);
+    
+    let tabs_area = editor_layout[0];
+    let content_area = editor_layout[1];
+    
+    // Render editor tabs
+    render_editor_tabs(app, f, tabs_area);
+    
+    // Render file content
+    if !app.file_contents.is_empty() {
+        render_file_content(app, f, content_area);
+    } else {
+        let welcome_text = Paragraph::new(vec![
+            Spans::from(""),
+            Spans::from("Welcome to ideless - VS Code-like TUI for lessVM development"),
+            Spans::from(""),
+            Spans::from("Press Ctrl+O to open a file or Ctrl+N to create a new file"),
+            Spans::from("Press F1 or Ctrl+Shift+P for command palette"),
+            Spans::from(""),
+            Spans::from("Press Ctrl+B to toggle sidebar"),
+            Spans::from("Press Ctrl+J to toggle panel"),
+            Spans::from(""),
+        ])
+        .style(Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::EDITOR_BACKGROUND))
+        .alignment(tui::layout::Alignment::Center)
+        .wrap(Wrap { trim: false });
+        
+        f.render_widget(welcome_text, content_area);
+    }
+}
+
+/// Render editor tabs
+fn render_editor_tabs<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    let tab_titles: Vec<Spans> = if app.open_files.is_empty() {
+        vec![Spans::from("untitled")]
+    } else {
+        app.open_files
+            .iter()
+            .map(|file| {
+                let mut title = file.name.clone();
+                if file.path == app.current_file.as_ref().unwrap_or(&std::path::PathBuf::new()) && app.modified {
+                    title.push('*');
+                }
+                Spans::from(title)
+            })
+            .collect()
+    };
+    
+    let tabs = Tabs::new(tab_titles)
+        .select(app.active_tab_index)
+        .style(Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::INACTIVE_TAB_BACKGROUND))
+        .highlight_style(
+            Style::default()
+                .fg(VscodeTheme::TEXT)
+                .bg(VscodeTheme::ACTIVE_TAB_BACKGROUND)
+                .add_modifier(Modifier::BOLD)
+        )
+        .divider("│");
+    
+    f.render_widget(tabs, area);
+}
+
+/// Render file content with syntax highlighting
+fn render_file_content<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    // Use the syntax highlighter for more accurate VS Code-like highlighting
+    let syntax_style = if let Some(path) = &app.current_file {
+        app.syntax_highlighter.highlight_lines(&app.file_contents, Some(path))
+    } else {
+        // Fallback to basic styling if no file path is available
+        crate::tui::syntax::get_default_syntax_styles(&app.file_contents)
+    };
+    
+    let display_offset = app.editor_scroll_offset;
+    
+    // Calculate visible range
+    let start_line = display_offset.min(app.file_contents.len().saturating_sub(1));
+    let visible_height = area.height as usize;
+    let end_line = (start_line + visible_height).min(app.file_contents.len());
+    
+    // Build spans for each visible line
+    let mut line_spans = Vec::new();
+    
+    for i in start_line..end_line {
+        let line_content = &app.file_contents[i];
+        let is_current_line = app.code_view_state.selected_line.map_or(false, |line| line == i);
+        let is_breakpoint = app.breakpoints.contains_key(&i);
+        
+        let line_num_style = if is_current_line {
+            Style::default().fg(VscodeTheme::SELECTED_TEXT).bg(VscodeTheme::SELECTED_BACKGROUND)
+        } else {
+            Style::default().fg(Color::DarkGray)
+        };
+        
+        let line_style = if is_current_line {
+            Style::default().bg(Color::Rgb(45, 45, 45))
+        } else {
+            Style::default()
+        };
+        
+        // Line number
+        let line_number = Span::styled(format!("{:4} ", i + 1), line_num_style);
+        
+        // Breakpoint indicator
+        let breakpoint_indicator = if is_breakpoint {
+            Span::styled("● ", Style::default().fg(VscodeTheme::ERROR))
+        } else {
+            Span::styled("  ", Style::default())
+        };
+        
+        // Apply syntax highlighting if available
+        let line_content_span = if let Some(style) = syntax_style.get(&i) {
+            Span::styled(line_content, *style)
+        } else {
+            Span::styled(line_content, Style::default().fg(VscodeTheme::TEXT))
+        };
+        
+        // Build full line span
+        let mut spans = vec![line_number, breakpoint_indicator, line_content_span];
+        
+        // Insert cursor if this is the current line and we're in edit mode
+        if is_current_line && app.mode == AppMode::Edit {
+            // Extract line up to cursor
+            if let Some(pos) = app.code_view_state.cursor_position.checked_sub(1) {
+                if pos < line_content.len() {
+                    spans = vec![
+                        line_number,
+                        breakpoint_indicator,
+                        Span::styled(&line_content[..pos], Style::default().fg(VscodeTheme::TEXT)),
+                        Span::styled(&line_content[pos..=pos], Style::default().fg(VscodeTheme::TEXT).bg(Color::White)),
+                        Span::styled(&line_content[pos+1..], Style::default().fg(VscodeTheme::TEXT))
+                    ];
+                }
+            }
+        }
+        
+        line_spans.push(Spans::from(spans));
+    }
+    
+    let file_content = Paragraph::new(line_spans)
+        .style(Style::default().bg(VscodeTheme::EDITOR_BACKGROUND))
+        .wrap(Wrap { trim: false });
+    
+    f.render_widget(file_content, area);
+}
+
+/// Render panel area with panel tabs and content
+fn render_panel_area<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    let panel_block = Block::default()
+        .borders(Borders::TOP)
+        .border_style(Style::default().fg(VscodeTheme::BORDER))
+        .style(Style::default().bg(VscodeTheme::PANEL_BACKGROUND));
+    
+    f.render_widget(panel_block, area);
+    
+    // Split panel area for tabs and content
+    let panel_inner = area.inner(&Rect::new(0, 1, 0, 0));
+    let panel_layout = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Length(1),      // Panel tabs
+            Constraint::Min(1),         // Panel content
+        ])
+        .split(panel_inner);
+    
+    let tabs_area = panel_layout[0];
+    let content_area = panel_layout[1];
+    
+    // Panel tabs
+    let tab_titles = vec![
+        Spans::from("TERMINAL"),
+        Spans::from("OUTPUT"),
+        Spans::from("PROBLEMS"),
+        Spans::from("DEBUG CONSOLE"),
+    ];
+    
+    let selected_idx = match app.selected_panel_tab {
+        PanelTab::Terminal => 0,
+        PanelTab::Output => 1,
+        PanelTab::Problems => 2,
+        PanelTab::DebugConsole => 3,
+        PanelTab::Custom(idx) => 4 + idx,
+    };
+    
+    let tabs = Tabs::new(tab_titles)
+        .select(selected_idx)
+        .style(Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::PANEL_BACKGROUND))
+        .highlight_style(
+            Style::default()
+                .fg(VscodeTheme::TEXT)
+                .bg(VscodeTheme::ACTIVE_TAB_BACKGROUND)
+                .add_modifier(Modifier::BOLD)
+        )
+        .divider("│");
+    
+    f.render_widget(tabs, tabs_area);
+    
+    // Panel content based on selected tab
+    match app.selected_panel_tab {
+        PanelTab::Terminal => render_terminal_panel(app, f, content_area),
+        PanelTab::Output => render_output_panel(app, f, content_area),
+        PanelTab::Problems => render_problems_panel(app, f, content_area),
+        PanelTab::DebugConsole => render_debug_console_panel(app, f, content_area),
+        PanelTab::Custom(idx) => {
+            if idx < app.custom_panel_tabs.len() && idx < app.custom_panel_contents.len() {
+                render_custom_panel(app, f, content_area, idx);
+            }
+        }
+    }
+}
+
+/// Render terminal panel
+fn render_terminal_panel<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    // Split area to show terminal output and input
+    let terminal_layout = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Min(1),          // Terminal output
+            Constraint::Length(1),       // Terminal input
+        ])
+        .split(area);
+    
+    let output_area = terminal_layout[0];
+    let input_area = terminal_layout[1];
+    
+    // Terminal output - most recent at the bottom
+    let visible_height = output_area.height as usize;
+    let output_start = app.terminal_output.len().saturating_sub(visible_height);
+    let visible_output: Vec<_> = app.terminal_output
+        .iter()
+        .skip(output_start)
+        .map(|line| Spans::from(line.clone()))
+        .collect();
+    
+    let terminal_output = Paragraph::new(visible_output)
+        .style(Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::PANEL_BACKGROUND));
+    
+    f.render_widget(terminal_output, output_area);
+    
+    // Terminal input
+    let input_prefix = "$ ";
+    let input_text = if app.terminal_input_active {
+        format!("{}{}", input_prefix, app.terminal_input)
+    } else {
+        format!("{}{}", input_prefix, app.terminal_input)
+    };
+    
+    let input_style = if app.terminal_input_active {
+        Style::default().fg(VscodeTheme::TEXT).bg(Color::Rgb(45, 45, 45))
+    } else {
+        Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::PANEL_BACKGROUND)
+    };
+    
+    let terminal_input = Paragraph::new(input_text)
+        .style(input_style);
+    
+    f.render_widget(terminal_input, input_area);
+}
+
+/// Render output panel
+fn render_output_panel<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    let output_content = Paragraph::new(
+        app.output_content
+            .iter()
+            .map(|line| Spans::from(line.clone()))
+            .collect::<Vec<_>>()
+    )
+    .style(Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::PANEL_BACKGROUND))
+    .wrap(Wrap { trim: false });
+    
+    f.render_widget(output_content, area);
+}
+
+/// Render problems panel
+fn render_problems_panel<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    let problems_content = if app.problems.is_empty() {
+        Paragraph::new("No problems detected in workspace")
+            .style(Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::PANEL_BACKGROUND))
+    } else {
+        let problem_items: Vec<_> = app.problems
+            .iter()
+            .map(|problem| {
+                let severity_style = match problem.severity.as_str() {
+                    "error" => Style::default().fg(VscodeTheme::ERROR),
+                    "warning" => Style::default().fg(VscodeTheme::WARNING),
+                    _ => Style::default().fg(VscodeTheme::INFO),
+                };
+                
+                let severity_icon = match problem.severity.as_str() {
+                    "error" => "❌",
+                    "warning" => "⚠️",
+                    _ => "ℹ️",
+                };
+                
+                let severity = Span::styled(format!("{} ", severity_icon), severity_style);
+                let location = Span::styled(
+                    format!("{}:{}:{} ", problem.file, problem.line, problem.column), 
+                    Style::default().fg(VscodeTheme::TEXT)
+                );
+                let message = Span::styled(
+                    problem.message.clone(),
+                    Style::default().fg(VscodeTheme::TEXT)
+                );
+                
+                Spans::from(vec![severity, location, message])
+            })
+            .collect();
+        
+        Paragraph::new(problem_items)
+            .style(Style::default().bg(VscodeTheme::PANEL_BACKGROUND))
+            .wrap(Wrap { trim: false })
+    };
+    
+    f.render_widget(problems_content, area);
+}
+
+/// Render debug console panel
+fn render_debug_console_panel<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    // Split area to show console output and input
+    let console_layout = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Min(1),          // Console output
+            Constraint::Length(1),       // Console input
+        ])
+        .split(area);
+    
+    let output_area = console_layout[0];
+    let input_area = console_layout[1];
+    
+    // Debug console output
+    let debug_output = Paragraph::new(
+        app.debug_console_output
+            .iter()
+            .map(|line| Spans::from(line.clone()))
+            .collect::<Vec<_>>()
+    )
+    .style(Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::PANEL_BACKGROUND))
+    .wrap(Wrap { trim: false });
+    
+    f.render_widget(debug_output, output_area);
+    
+    // Debug console input
+    let input_prefix = "> ";
+    let input_text = if app.debug_console_input_active {
+        format!("{}{}", input_prefix, app.debug_console_input)
+    } else {
+        format!("{}{}", input_prefix, app.debug_console_input)
+    };
+    
+    let input_style = if app.debug_console_input_active {
+        Style::default().fg(VscodeTheme::TEXT).bg(Color::Rgb(45, 45, 45))
+    } else {
+        Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::PANEL_BACKGROUND)
+    };
+    
+    let debug_input = Paragraph::new(input_text)
+        .style(input_style);
+    
+    f.render_widget(debug_input, input_area);
+}
+
+/// Render custom panel
+fn render_custom_panel<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect, idx: usize) {
+    let panel_content = Paragraph::new(
+        app.custom_panel_contents[idx]
+            .iter()
+            .map(|line| Spans::from(line.clone()))
+            .collect::<Vec<_>>()
+    )
+    .style(Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::PANEL_BACKGROUND))
+    .wrap(Wrap { trim: false });
+    
+    f.render_widget(panel_content, area);
+}
+
+/// Render command palette as an overlay
+fn render_command_palette<B: Backend>(app: &App, f: &mut Frame<B>) {
+    let area = f.size();
+    
+    // Create a centered box for the command palette
+    let width = 60u16.min(area.width.saturating_sub(4));
+    let height = 15u16.min(area.height.saturating_sub(4));
+    
+    let h_padding = (area.width - width) / 2;
+    let v_padding = (area.height - height) / 3;  // Position it toward the top third
+    
+    let palette_area = Rect::new(
+        area.x + h_padding,
+        area.y + v_padding,
+        width,
+        height,
+    );
+    
+    // Draw a block with border for the command palette
+    let block = Block::default()
+        .borders(Borders::ALL)
+        .border_style(Style::default().fg(VscodeTheme::BORDER))
+        .style(Style::default().bg(VscodeTheme::SIDEBAR_BACKGROUND));
+    
+    f.render_widget(block, palette_area);
+    
+    // Split inner area for input and results
+    let inner_area = palette_area.inner(&Rect::new(1, 1, 1, 1));
+    let palette_layout = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Length(1),      // Input
+            Constraint::Length(1),      // Separator
+            Constraint::Min(1),         // Results
+        ])
+        .split(inner_area);
+    
+    // Render command input
+    let input_paragraph = Paragraph::new(app.command_palette_input.clone())
+        .style(Style::default().fg(VscodeTheme::TEXT).bg(VscodeTheme::ACTIVE_TAB_BACKGROUND));
+    
+    f.render_widget(input_paragraph, palette_layout[0]);
+    
+    // Render list of filtered commands
+    let commands = app.commands.iter()
+        .map(|cmd| {
+            let key_span = if let Some(kb) = &cmd.keybinding {
+                Span::styled(
+                    format!(" ({})", kb),
+                    Style::default().fg(Color::DarkGray)
+                )
+            } else {
+                Span::raw("")
+            };
+            
+            let category_span = Span::styled(
+                format!(" - {}", cmd.category),
+                Style::default().fg(Color::DarkGray)
+            );
+            
+            ListItem::new(Spans::from(vec![
+                Span::raw(&cmd.name),
+                key_span,
+                category_span,
+            ]))
+        })
+        .collect::<Vec<_>>();
+    
+    let commands_list = List::new(commands)
+        .style(Style::default().bg(VscodeTheme::SIDEBAR_BACKGROUND))
+        .highlight_style(
+            Style::default()
+                .bg(VscodeTheme::SELECTED_BACKGROUND)
+                .add_modifier(Modifier::BOLD)
+        )
+        .highlight_symbol("> ");
+    
+    if let Some(idx) = app.command_palette_selection {
+        let mut list_state = ListState::default();
+        list_state.select(Some(idx));
+        f.render_stateful_widget(commands_list, palette_layout[2], &mut list_state);
+    } else {
+        f.render_widget(commands_list, palette_layout[2]);
+    }
+}
+
+/// Render dialog overlay
+fn render_dialog<B: Backend>(app: &App, f: &mut Frame<B>) {
+    if let Some(dialog) = &app.dialog {
+        let area = f.size();
+        
+        // Create a centered box for the dialog
+        let width = 50u16.min(area.width.saturating_sub(4));
+        let height = 5u16.min(area.height.saturating_sub(4));
+        
+        let h_padding = (area.width - width) / 2;
+        let v_padding = (area.height - height) / 2;
+        
+        let dialog_area = Rect::new(
+            area.x + h_padding,
+            area.y + v_padding,
+            width,
+            height,
+        );
+        
+        // Draw a block with border for the dialog
+        let title = match dialog {
+            super::app::DialogType::Confirm(_, _) => "Confirmation",
+            super::app::DialogType::Input(title, _, _) => title,
+            super::app::DialogType::Message(_) => "Message",
+        };
+        
+        let block = Block::default()
+            .title(title)
+            .borders(Borders::ALL)
+            .border_style(Style::default().fg(VscodeTheme::BORDER))
+            .style(Style::default().bg(VscodeTheme::EDITOR_BACKGROUND));
+        
+        f.render_widget(block, dialog_area);
+        
+        // Render dialog content
+        let inner_area = dialog_area.inner(&Rect::new(1, 1, 1, 1));
+        
+        match dialog {
+            super::app::DialogType::Confirm(message, _) => {
+                let content = Paragraph::new(vec![
+                    Spans::from(message.clone()),
+                    Spans::from(""),
+                    Spans::from("Press 'y' to confirm or 'n' to cancel"),
+                ])
+                .style(Style::default().fg(VscodeTheme::TEXT))
+                .wrap(Wrap { trim: false });
+                
+                f.render_widget(content, inner_area);
+            },
+            super::app::DialogType::Input(_, value, _) => {
+                let content = Paragraph::new(vec![
+                    Spans::from(value.clone()),
+                    Spans::from(""),
+                    Spans::from("Press Enter to confirm or Esc to cancel"),
+                ])
+                .style(Style::default().fg(VscodeTheme::TEXT))
+                .wrap(Wrap { trim: false });
+                
+                f.render_widget(content, inner_area);
+            },
+            super::app::DialogType::Message(message) => {
+                let content = Paragraph::new(vec![
+                    Spans::from(message.clone()),
+                    Spans::from(""),
+                    Spans::from("Press Enter or Esc to close"),
+                ])
+                .style(Style::default().fg(VscodeTheme::TEXT))
+                .wrap(Wrap { trim: false });
+                
+                f.render_widget(content, inner_area);
+            },
+        }
+    }
+}
+
+/// Render status bar
+fn render_status_bar<B: Backend>(app: &App, f: &mut Frame<B>, area: Rect) {
+    // Split status bar into three sections: left, middle, right
+    let status_sections = Layout::default()
+        .direction(Direction::Horizontal)
+        .constraints([
+            Constraint::Percentage(30),  // Left section
+            Constraint::Percentage(40),  // Middle section
+            Constraint::Percentage(30),  // Right section
+        ])
+        .split(area);
+    
+    // Left section - branch, file info
+    let mut left_content = String::new();
+    
+    // Branch
+    if let Some(branch) = &app.git_branch {
+        left_content.push_str(&format!(" {} ", branch));
+    } else {
+        left_content.push_str(" main ");
+    }
+    
+    // File information
+    if let Some(path) = &app.current_file {
+        if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
+            left_content.push_str(&format!(" {} ", name));
+            if app.modified {
+                left_content.push('*');
+            }
+        }
+    }
+    
+    let left_status = Paragraph::new(left_content)
+        .style(Style::default()
+            .fg(VscodeTheme::TEXT)
+            .bg(VscodeTheme::STATUS_BAR_BACKGROUND));
+    
+    f.render_widget(left_status, status_sections[0]);
+    
+    // Middle section - error/warning counts
+    let error_count = app.problems.iter().filter(|p| p.severity == "error").count();
+    let warning_count = app.problems.iter().filter(|p| p.severity == "warning").count();
+    
+    let middle_content = format!(" Errors: {} Warnings: {} ", error_count, warning_count);
+    
+    let middle_status = Paragraph::new(middle_content)
+        .style(Style::default()
+            .fg(VscodeTheme::TEXT)
+            .bg(VscodeTheme::STATUS_BAR_BACKGROUND))
+        .alignment(tui::layout::Alignment::Center);
+    
+    f.render_widget(middle_status, status_sections[1]);
+    
+    // Right section - line/column, spaces/tabs, encoding, line endings
+    let right_content = if let Some(line) = app.code_view_state.selected_line {
+        format!(" Ln {}, Col {} Spaces: 4 UTF-8 LF ", 
+                line + 1, 
+                app.code_view_state.cursor_position + 1)
+    } else {
+        " Ln 1, Col 1 Spaces: 4 UTF-8 LF ".to_string()
+    };
+    
+    let right_status = Paragraph::new(right_content)
+        .style(Style::default()
+            .fg(VscodeTheme::TEXT)
+            .bg(VscodeTheme::STATUS_BAR_BACKGROUND))
+        .alignment(tui::layout::Alignment::Right);
+    
+    f.render_widget(right_status, status_sections[2]);
+}
