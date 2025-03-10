@@ -2,15 +2,33 @@ use super::VMError;
 
 #[repr(C, align(64))]
 pub struct Memory {
-    data: [u8; 1024],
+    data: Vec<u8>,
     size: usize,
 }
 
 impl Memory {
     pub fn new() -> Self {
         Self {
-            data: [0; 1024],
+            data: vec![0; 1024], // Start with 1024 bytes but can grow
             size: 0,
+        }
+    }
+
+    // Create a new memory with a specific initial capacity
+    pub fn with_capacity(capacity: usize) -> Self {
+        Self {
+            data: vec![0; capacity],
+            size: 0,
+        }
+    }
+
+    // Ensure memory has enough capacity, resizing if necessary
+    #[inline(always)]
+    pub fn ensure_capacity(&mut self, required_size: usize) {
+        if required_size > self.data.len() {
+            // Double the capacity or use required size, whichever is larger
+            let new_capacity = self.data.len().max(required_size).max(1024) * 2;
+            self.data.resize(new_capacity, 0);
         }
     }
 
@@ -29,7 +47,12 @@ impl Memory {
 
     #[inline(always)]
     pub fn store(&mut self, offset: usize, value: &[u8]) -> Result<(), VMError> {
-        self.bounds_check(offset, value.len())?;
+        let end_offset = offset.checked_add(value.len())
+            .ok_or(VMError::InvalidMemoryAccess)?;
+        
+        // Resize memory if needed
+        self.ensure_capacity(end_offset);
+        
         self.data[offset..offset + value.len()].copy_from_slice(value);
         self.size = self.size.max(offset + value.len());
         Ok(())
@@ -37,7 +60,9 @@ impl Memory {
 
     #[inline(always)]
     pub fn store8(&mut self, offset: usize, value: u8) -> Result<(), VMError> {
-        self.bounds_check(offset, 1)?;
+        // Resize memory if needed
+        self.ensure_capacity(offset + 1);
+        
         self.data[offset] = value;
         self.size = self.size.max(offset + 1);
         Ok(())
@@ -62,14 +87,20 @@ impl Memory {
 
     #[inline(always)]
     pub fn clear(&mut self) {
-        self.data.fill(0);
+        for i in 0..self.size {
+            self.data[i] = 0;
+        }
         self.size = 0;
     }
 
     #[inline(always)]
     pub fn copy(&mut self, dest: usize, src: usize, len: usize) -> Result<(), VMError> {
-        self.bounds_check(src, len)?;
-        self.bounds_check(dest, len)?;
+        let src_end = src.checked_add(len).ok_or(VMError::InvalidMemoryAccess)?;
+        let dest_end = dest.checked_add(len).ok_or(VMError::InvalidMemoryAccess)?;
+        
+        // Resize memory if needed
+        self.ensure_capacity(dest_end.max(src_end));
+        
         self.data.copy_within(src..src + len, dest);
         self.size = self.size.max(dest + len);
         Ok(())
@@ -98,4 +129,4 @@ impl Memory {
         let words = (new_size + 31) / 32;
         ((words as u64) * 3) + ((words * words) as u64) / 512
     }
-} 
+}

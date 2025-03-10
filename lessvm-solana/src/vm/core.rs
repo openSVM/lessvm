@@ -84,13 +84,6 @@ impl<'a> VM<'a> {
         accounts: &'a [AccountInfo<'a>],
         _instruction_data: &'a [u8],
     ) -> Self {
-        let data_structures = DataStructureStore {
-            btrees: vec![None; 8],
-            tries: vec![None; 8],
-            graphs: vec![None; 8],
-            ohlcvs: vec![None; 8],
-            hypergraphs: vec![None; 8],
-        };
         Self {
             pc: 0,
             gas: Gas::new(200_000),
@@ -98,7 +91,7 @@ impl<'a> VM<'a> {
             memory: Memory::new(),
             accounts: AccountsView { accounts, current: 0 },
             program_id,
-            data_structures,
+            data_structures: DataStructureStore::new(),
             reentrancy_guard: ReentrancyGuard::new(),
             tracer: Box::new(DefaultTracer),
         }
@@ -146,8 +139,21 @@ impl<'a> VM<'a> {
             return Err(VMError::StackUnderflow);
         }
 
-        let values = _mm256_loadu_si256(self.stack.as_simd_ptr()? as *const __m256i);
-        let result = _mm256_add_epi64(values, values); 
+        // Get two vectors from the stack (4 values each)
+        let values1 = _mm256_loadu_si256(self.stack.as_simd_ptr()? as *const __m256i);
+        
+        // Pop the first 4 values and get the next 4 values
+        self.stack.pop()?;
+        self.stack.pop()?;
+        self.stack.pop()?;
+        self.stack.pop()?;
+        
+        let values2 = _mm256_loadu_si256(self.stack.as_simd_ptr()? as *const __m256i);
+        
+        // Add the two vectors
+        let result = _mm256_add_epi64(values1, values2);
+        
+        // Store the result back to the stack
         _mm256_storeu_si256(self.stack.as_simd_mut_ptr()? as *mut __m256i, result);
         Ok(())
     }
@@ -236,6 +242,67 @@ impl<'a> VM<'a> {
                     }
                     self.stack.push(Value(div as u64))?;
                 },
+                OpCode::Mod => {
+                    let b = self.stack.pop()?;
+                    let a = self.stack.pop()?;
+                    if b.0 == 0 {
+                        return Err(VMError::DivisionByZero.into());
+                    }
+                    let result = Value(a.0 % b.0);
+                    self.stack.push(result)?;
+                },
+                OpCode::Exp => {
+                    let exponent = self.stack.pop()?.0;
+                    let base = self.stack.pop()?.0;
+                    
+                    // Handle potential overflow
+                    if exponent > 64 && base > 1 {
+                        return Err(VMError::ArithmeticOverflow.into());
+                    }
+                    
+                    let mut result = 1u64;
+                    let mut base_power = base;
+                    let mut exp = exponent;
+                    
+                    // Fast exponentiation algorithm
+                    while exp > 0 {
+                        if exp & 1 == 1 {
+                            result = result.checked_mul(base_power)
+                                .ok_or(VMError::ArithmeticOverflow)?;
+                        }
+                        base_power = base_power.checked_mul(base_power)
+                            .ok_or(VMError::ArithmeticOverflow)?;
+                        exp >>= 1;
+                    }
+                    
+                    self.stack.push(Value(result))?;
+                },
+                OpCode::SignExtend => {
+                    let byte_num = self.stack.pop()?.0 as usize;
+                    let value = self.stack.pop()?.0;
+                    
+                    if byte_num >= 8 {
+                        // No change if byte_num is out of range
+                        self.stack.push(Value(value))?;
+                        return Ok(());
+                    }
+                    
+                    let bit_position = (byte_num + 1) * 8 - 1;
+                    let mask = 1u64 << bit_position;
+                    let sign_bit = value & mask;
+                    
+                    let result = if sign_bit != 0 {
+                        // If sign bit is 1, set all higher bits to 1
+                        let higher_bits_mask = !((1u64 << (bit_position + 1)) - 1);
+                        value | higher_bits_mask
+                    } else {
+                        // If sign bit is 0, clear all higher bits
+                        let lower_bits_mask = (1u64 << (bit_position + 1)) - 1;
+                        value & lower_bits_mask
+                    };
+                    
+                    self.stack.push(Value(result))?;
+                },
 
                 // Memory Operations
                 OpCode::Load => {
@@ -265,6 +332,16 @@ impl<'a> VM<'a> {
                 },
                 OpCode::Msize => {
                     self.stack.push(Value(self.memory.size() as u64))?;
+                },
+                OpCode::Mload8 => {
+                    let offset = self.stack.pop()?.0 as usize;
+                    let value = self.memory.load8(offset)? as u64;
+                    self.stack.push(Value(value))?;
+                },
+                OpCode::Mstore8 => {
+                    let offset = self.stack.pop()?.0 as usize;
+                    let value = self.stack.pop()?.0 as u8;
+                    self.memory.store8(offset, value)?;
                 },
 
                 // Control Flow
@@ -454,9 +531,7 @@ impl<'a> VM<'a> {
                 OpCode::BTreeClear => {
                     let id = self.stack.pop()?.0 as usize;
                     
-                    if id >= self.data_structures.btrees.len() {
-                        return Err(VMError::InvalidDataStructureOperation.into());
-                    }
+                    self.data_structures.ensure_capacity(DataStructureType::BTreeMap, id);
                     
                     if let Some(btree) = &mut self.data_structures.btrees[id] {
                         btree.clear();
@@ -468,9 +543,7 @@ impl<'a> VM<'a> {
                 // Trie operations
                 OpCode::TrieCreate => {
                     let id = self.stack.pop()?.0 as usize;
-                    if id >= self.data_structures.tries.len() {
-                        return Err(VMError::InvalidDataStructureOperation.into());
-                    }
+                    self.data_structures.ensure_capacity(DataStructureType::Trie, id);
                     self.data_structures.tries[id] = Some(TrieDS::new());
                 },
                 OpCode::TrieInsert => {
@@ -480,9 +553,7 @@ impl<'a> VM<'a> {
                     let key_ptr = self.stack.pop()?.0 as usize;
                     let id = self.stack.pop()?.0 as usize;
                     
-                    if id >= self.data_structures.tries.len() {
-                        return Err(VMError::InvalidDataStructureOperation.into());
-                    }
+                    self.data_structures.ensure_capacity(DataStructureType::Trie, id);
                     
                     // Read key from memory
                     let key = self.memory.load(key_ptr, key_len)?;
@@ -504,9 +575,7 @@ impl<'a> VM<'a> {
                         return Err(VMError::InvalidDataStructureOperation.into());
                     }
                     
-                    if id >= self.data_structures.tries.len() {
-                        return Err(VMError::InvalidDataStructureOperation.into());
-                    }
+                    self.data_structures.ensure_capacity(DataStructureType::Trie, id);
                     
                     // Read key from memory with bounds check
                     let key = match self.memory.load(key_ptr, key_len) {
@@ -534,9 +603,7 @@ impl<'a> VM<'a> {
                         return Err(VMError::InvalidDataStructureOperation.into());
                     }
                     
-                    if id >= self.data_structures.tries.len() {
-                        return Err(VMError::InvalidDataStructureOperation.into());
-                    }
+                    self.data_structures.ensure_capacity(DataStructureType::Trie, id);
                     
                     // Read key from memory with bounds check
                     let key = match self.memory.load(key_ptr, key_len) {
@@ -554,9 +621,7 @@ impl<'a> VM<'a> {
                 OpCode::TrieClear => {
                     let id = self.stack.pop()?.0 as usize;
                     
-                    if id >= self.data_structures.tries.len() {
-                        return Err(VMError::InvalidDataStructureOperation.into());
-                    }
+                    self.data_structures.ensure_capacity(DataStructureType::Trie, id);
                     
                     if let Some(trie) = &mut self.data_structures.tries[id] {
                         trie.clear();
@@ -595,21 +660,97 @@ impl<'a> VM<'a> {
                 // OHLCV operations 
                 OpCode::OhlcvCreate => {
                     let id = self.stack.pop()?.0 as usize;
-                    if id >= self.data_structures.ohlcvs.len() {
-                        return Err(VMError::InvalidDataStructureOperation.into());
-                    }
+                    self.data_structures.ensure_capacity(DataStructureType::OHLCV, id);
                     self.data_structures.ohlcvs[id] = Some(OHLCVDS::new());
                 },
 
                 // Hypergraph operations
                 OpCode::HyperCreate => {
                     let id = self.stack.pop()?.0 as usize;
-                    if id >= self.data_structures.hypergraphs.len() {
-                        return Err(VMError::InvalidDataStructureOperation.into());
-                    }
+                    self.data_structures.ensure_capacity(DataStructureType::Hypergraph, id);
                     self.data_structures.hypergraphs[id] = Some(HypergraphDS::new());
                 },
 
+                // Bitwise Operations
+                OpCode::And => {
+                    let b = self.stack.pop()?.0;
+                    let a = self.stack.pop()?.0;
+                    self.stack.push(Value(a & b))?;
+                },
+                OpCode::Or => {
+                    let b = self.stack.pop()?.0;
+                    let a = self.stack.pop()?.0;
+                    self.stack.push(Value(a | b))?;
+                },
+                OpCode::Xor => {
+                    let b = self.stack.pop()?.0;
+                    let a = self.stack.pop()?.0;
+                    self.stack.push(Value(a ^ b))?;
+                },
+                OpCode::Not => {
+                    let a = self.stack.pop()?.0;
+                    self.stack.push(Value(!a))?;
+                },
+                OpCode::Byte => {
+                    let byte_index = self.stack.pop()?.0 as usize;
+                    let value = self.stack.pop()?.0;
+                    
+                    let result = if byte_index >= 32 {
+                        0
+                    } else {
+                        // Extract the specified byte
+                        let shift = (31 - byte_index) * 8;
+                        (value >> shift) & 0xFF
+                    };
+                    
+                    self.stack.push(Value(result))?;
+                },
+                OpCode::Shl => {
+                    let shift = self.stack.pop()?.0;
+                    let value = self.stack.pop()?.0;
+                    
+                    // Avoid undefined behavior with large shifts
+                    let result = if shift >= 64 {
+                        0
+                    } else {
+                        value << shift
+                    };
+                    
+                    self.stack.push(Value(result))?;
+                },
+                OpCode::Shr => {
+                    let shift = self.stack.pop()?.0;
+                    let value = self.stack.pop()?.0;
+                    
+                    // Avoid undefined behavior with large shifts
+                    let result = if shift >= 64 {
+                        0
+                    } else {
+                        value >> shift
+                    };
+                    
+                    self.stack.push(Value(result))?;
+                },
+                OpCode::Sar => {
+                    let shift = self.stack.pop()?.0;
+                    let value = self.stack.pop()?.0;
+                    
+                    // Arithmetic right shift (sign-extending)
+                    let result = if shift >= 64 {
+                        if (value as i64) < 0 {
+                            u64::MAX  // All 1s for negative numbers
+                        } else {
+                            0  // All 0s for positive numbers
+                        }
+                    } else {
+                        // Rust doesn't have arithmetic right shift for unsigned types
+                        // Convert to signed, shift, then back to unsigned
+                        ((value as i64) >> shift) as u64
+                    };
+                    
+                    self.stack.push(Value(result))?;
+                },
+                
                 OpCode::Halt => {
                     break;
                 },

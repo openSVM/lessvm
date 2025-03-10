@@ -12,12 +12,8 @@ use std::collections::{BTreeMap as StdBTreeMap, HashMap, HashSet};
 use std::collections::VecDeque;
 use solana_program::msg;
 
-// Constants for data structure IDs and maximum sizes
+// Constants for data structure IDs
 pub const MAX_DATA_STRUCTURES: usize = 32;
-pub const MAX_GRAPH_NODES: usize = 1024;
-pub const MAX_TRIE_NODES: usize = 1024;
-pub const MAX_BTREE_NODES: usize = 1024;
-pub const MAX_OHLCV_ENTRIES: usize = 1024;
 
 /// The type of data structure
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -136,10 +132,6 @@ impl TrieDS {
     }
 
     pub fn insert(&mut self, key: &[u8], value: Value) -> Result<(), VMError> {
-        if self.nodes.len() >= MAX_TRIE_NODES {
-            return Err(VMError::StackOverflow); // Reuse error for memory limit
-        }
-
         let mut current_node = self.root;
 
         for &byte in key {
@@ -330,10 +322,6 @@ impl OHLCVDS {
     }
 
     pub fn add_entry(&mut self, entry: OHLCVEntry) -> Result<(), VMError> {
-        if self.data.len() >= MAX_OHLCV_ENTRIES {
-            return Err(VMError::StackOverflow); // Reuse error for memory limit
-        }
-        
         // Typically OHLCV data should be sorted by timestamp
         // Find the right position to insert
         let pos = self.data.binary_search_by_key(&entry.timestamp, |e| e.timestamp)
@@ -413,10 +401,6 @@ impl HypergraphDS {
     }
 
     pub fn add_node(&mut self, node_id: u64, value: u64) -> Result<(), VMError> {
-        if self.node_values.len() >= MAX_GRAPH_NODES {
-            return Err(VMError::StackOverflow); // Reuse error for memory limit
-        }
-        
         self.node_values.insert(node_id, value);
         Ok(())
     }
