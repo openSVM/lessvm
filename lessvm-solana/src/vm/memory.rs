@@ -26,8 +26,8 @@ impl Memory {
     #[inline(always)]
     pub fn ensure_capacity(&mut self, required_size: usize) {
         if required_size > self.data.len() {
-            // Double the capacity or use required size, whichever is larger
-            let new_capacity = self.data.len().max(required_size).max(1024) * 2;
+            // Use a more efficient growth strategy: grow by 50% or to required size, whichever is larger
+            let new_capacity = (self.data.len() * 3 / 2).max(required_size);
             self.data.resize(new_capacity, 0);
         }
     }
