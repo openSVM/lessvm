@@ -14,6 +14,7 @@ use solana_program::msg;
 
 // Constants for data structure IDs
 pub const MAX_DATA_STRUCTURES: usize = 32;
+pub const MAX_GRAPH_NODES: usize = 1024; // Maximum number of nodes in a graph
 
 /// The type of data structure
 #[derive(Debug, Clone, Copy, PartialEq)]

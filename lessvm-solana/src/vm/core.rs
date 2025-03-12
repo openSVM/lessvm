@@ -51,6 +51,9 @@ impl ReentrancyGuard {
     }
 }
 
+/// Maximum number of data structures that can be created
+const MAX_DATA_STRUCTURES: usize = 16;
+
 #[repr(C, align(64))]
 struct DataStructureStore {
     btrees: Vec<Option<BTreeMapDS>>,
@@ -58,6 +61,48 @@ struct DataStructureStore {
     graphs: Vec<Option<GraphDS>>,
     ohlcvs: Vec<Option<OHLCVDS>>,
     hypergraphs: Vec<Option<HypergraphDS>>,
+}
+
+impl DataStructureStore {
+    fn new() -> Self {
+        Self {
+            btrees: Vec::with_capacity(MAX_DATA_STRUCTURES),
+            tries: Vec::with_capacity(MAX_DATA_STRUCTURES),
+            graphs: Vec::with_capacity(MAX_DATA_STRUCTURES),
+            ohlcvs: Vec::with_capacity(MAX_DATA_STRUCTURES),
+            hypergraphs: Vec::with_capacity(MAX_DATA_STRUCTURES),
+        }
+    }
+
+    fn ensure_capacity(&mut self, ds_type: DataStructureType, id: usize) {
+        match ds_type {
+            DataStructureType::BTreeMap => {
+                if id >= self.btrees.len() {
+                    self.btrees.resize_with(id + 1, || None);
+                }
+            },
+            DataStructureType::Trie => {
+                if id >= self.tries.len() {
+                    self.tries.resize_with(id + 1, || None);
+                }
+            },
+            DataStructureType::Graph => {
+                if id >= self.graphs.len() {
+                    self.graphs.resize_with(id + 1, || None);
+                }
+            },
+            DataStructureType::OHLCV => {
+                if id >= self.ohlcvs.len() {
+                    self.ohlcvs.resize_with(id + 1, || None);
+                }
+            },
+            DataStructureType::Hypergraph => {
+                if id >= self.hypergraphs.len() {
+                    self.hypergraphs.resize_with(id + 1, || None);
+                }
+            },
+        }
+    }
 }
 
 #[repr(C, align(64))]
@@ -139,16 +184,17 @@ impl<'a> VM<'a> {
             return Err(VMError::StackUnderflow);
         }
 
-        // Get two vectors from the stack (4 values each)
-        let values1 = _mm256_loadu_si256(self.stack.as_simd_ptr()? as *const __m256i);
-        
-        // Pop the first 4 values and get the next 4 values
-        self.stack.pop()?;
-        self.stack.pop()?;
-        self.stack.pop()?;
-        self.stack.pop()?;
-        
+        // Get the second vector from the stack (4 values)
         let values2 = _mm256_loadu_si256(self.stack.as_simd_ptr()? as *const __m256i);
+        
+        // Pop the first 4 values to get to the first vector
+        self.stack.pop()?;
+        self.stack.pop()?;
+        self.stack.pop()?;
+        self.stack.pop()?;
+        
+        // Get the first vector from the stack (4 values)
+        let values1 = _mm256_loadu_si256(self.stack.as_simd_ptr()? as *const __m256i);
         
         // Add the two vectors
         let result = _mm256_add_epi64(values1, values2);
@@ -753,6 +799,284 @@ impl<'a> VM<'a> {
                 
                 OpCode::Halt => {
                     break;
+                },
+                // Solana Operations that were missing
+                OpCode::GetBalance => {
+                    let account_idx = self.stack.pop()?.0 as usize;
+                    if account_idx >= self.accounts.accounts.len() {
+                        return Err(VMError::InvalidAccount.into());
+                    }
+                    let account = &self.accounts.accounts[account_idx];
+                    self.stack.push(Value(account.lamports()))?;
+                },
+                OpCode::GetOwner => {
+                    let account_idx = self.stack.pop()?.0 as usize;
+                    if account_idx >= self.accounts.accounts.len() {
+                        return Err(VMError::InvalidAccount.into());
+                    }
+                    let account = &self.accounts.accounts[account_idx];
+                    // Convert Pubkey to u64 for stack storage (using first 8 bytes)
+                    let owner_bytes = account.owner.to_bytes();
+                    let mut value_bytes = [0u8; 8];
+                    value_bytes.copy_from_slice(&owner_bytes[0..8]);
+                    self.stack.push(Value(u64::from_le_bytes(value_bytes)))?;
+                },
+                OpCode::IsWritable => {
+                    let account_idx = self.stack.pop()?.0 as usize;
+                    if account_idx >= self.accounts.accounts.len() {
+                        return Err(VMError::InvalidAccount.into());
+                    }
+                    let account = &self.accounts.accounts[account_idx];
+                    self.stack.push(Value(if account.is_writable() { 1 } else { 0 }))?;
+                },
+                OpCode::IsSigner => {
+                    let account_idx = self.stack.pop()?.0 as usize;
+                    if account_idx >= self.accounts.accounts.len() {
+                        return Err(VMError::InvalidAccount.into());
+                    }
+                    let account = &self.accounts.accounts[account_idx];
+                    self.stack.push(Value(if account.is_signer { 1 } else { 0 }))?;
+                },
+                // Control Flow
+                OpCode::Revert => {
+                    let error_code = self.stack.pop()?.0;
+                    return Err(ProgramError::Custom(error_code as u32));
+                },
+                // Graph operations
+                OpCode::GraphAddEdge => {
+                    let weight = self.stack.pop()?.0;
+                    let to = self.stack.pop()?.0;
+                    let from = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.graphs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(graph) = &mut self.data_structures.graphs[id] {
+                        graph.add_edge(from, to, weight)?;
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::GraphGetNode => {
+                    let node_id = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.graphs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(graph) = &self.data_structures.graphs[id] {
+                        match graph.get_node_value(node_id) {
+                            Some(value) => self.stack.push(Value(value))?,
+                            None => self.stack.push(Value(0))?, // Return 0 if node not found
+                        }
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::GraphSetNode => {
+                    let value = self.stack.pop()?.0;
+                    let node_id = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.graphs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(graph) = &mut self.data_structures.graphs[id] {
+                        graph.set_node_value(node_id, value)?;
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                // Graph operations
+                OpCode::GraphGetNeighbors => {
+                    let node_id = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.graphs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(graph) = &self.data_structures.graphs[id] {
+                        let neighbors = graph.get_neighbors(node_id);
+                        
+                        // Store the number of neighbors on the stack
+                        self.stack.push(Value(neighbors.len() as u64))?;
+                        
+                        // Store each neighbor and its weight on the stack
+                        for (neighbor, weight) in neighbors.iter().rev() {
+                            self.stack.push(Value(*weight))?;
+                            self.stack.push(Value(*neighbor))?;
+                        }
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::GraphBfs => {
+                    let start_node = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.graphs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(graph) = &self.data_structures.graphs[id] {
+                        let bfs_result = graph.bfs(start_node);
+                        
+                        // Store the number of nodes in the BFS result on the stack
+                        self.stack.push(Value(bfs_result.len() as u64))?;
+                        
+                        // Store each node in the BFS result on the stack (in reverse order so they come out in the right order when popped)
+                        for node in bfs_result.iter().rev() {
+                            self.stack.push(Value(*node))?;
+                        }
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::GraphClear => {
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.graphs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(graph) = &mut self.data_structures.graphs[id] {
+                        graph.clear();
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                // OHLCV operations
+                OpCode::OhlcvAddBar => {
+                    let volume = self.stack.pop()?.0;
+                    let close = self.stack.pop()?.0;
+                    let low = self.stack.pop()?.0;
+                    let high = self.stack.pop()?.0;
+                    let open = self.stack.pop()?.0;
+                    let timestamp = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.ohlcvs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    let entry = OHLCVEntry {
+                        timestamp,
+                        open,
+                        high,
+                        low,
+                        close,
+                        volume,
+                    };
+                    
+                    if let Some(ohlcv) = &mut self.data_structures.ohlcvs[id] {
+                        ohlcv.add_entry(entry)?;
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::OhlcvGetBar => {
+                    let index = self.stack.pop()?.0 as usize;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.ohlcvs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(ohlcv) = &self.data_structures.ohlcvs[id] {
+                        match ohlcv.get_entry(index) {
+                            Some(entry) => {
+                                // Push all values in reverse order so they come out in the right order when popped
+                                self.stack.push(Value(entry.volume))?;
+                                self.stack.push(Value(entry.close))?;
+                                self.stack.push(Value(entry.low))?;
+                                self.stack.push(Value(entry.high))?;
+                                self.stack.push(Value(entry.open))?;
+                                self.stack.push(Value(entry.timestamp))?;
+                            },
+                            None => {
+                                // Push zeros if entry not found
+                                for _ in 0..6 {
+                                    self.stack.push(Value(0))?;
+                                }
+                            }
+                        }
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::OhlcvSma => {
+                    let period = self.stack.pop()?.0 as usize;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.ohlcvs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(ohlcv) = &self.data_structures.ohlcvs[id] {
+                        let sma_result = ohlcv.calculate_sma(period);
+                        
+                        // Push the number of SMA values
+                        self.stack.push(Value(sma_result.len() as u64))?;
+                        
+                        // Push each SMA value and timestamp in reverse order
+                        for (timestamp, value) in sma_result.iter().rev() {
+                            self.stack.push(Value(*value))?;
+                            self.stack.push(Value(*timestamp))?;
+                        }
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                // Hypergraph operations
+                OpCode::HyperAddNode => {
+                    let value = self.stack.pop()?.0;
+                    let node_id = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.hypergraphs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(hypergraph) = &mut self.data_structures.hypergraphs[id] {
+                        hypergraph.add_node(node_id, value)?;
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::HyperAddEdge => {
+                    let weight = self.stack.pop()?.0;
+                    let edge_id = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.hypergraphs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(hypergraph) = &mut self.data_structures.hypergraphs[id] {
+                        hypergraph.create_hyperedge(edge_id, weight)?;
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                },
+                OpCode::HyperAddNodeToEdge => {
+                    let node_id = self.stack.pop()?.0;
+                    let edge_id = self.stack.pop()?.0;
+                    let id = self.stack.pop()?.0 as usize;
+                    
+                    if id >= self.data_structures.hypergraphs.len() {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
+                    
+                    if let Some(hypergraph) = &mut self.data_structures.hypergraphs[id] {
+                        hypergraph.add_node_to_edge(edge_id, node_id)?;
+                    } else {
+                        return Err(VMError::InvalidDataStructureOperation.into());
+                    }
                 },
                 _ => return Err(VMError::InvalidInstruction.into()),
             }
