@@ -1,53 +1,53 @@
-# LessVM IDELess AI Assistant (AIDE)
+# wessvm idewess ai assistant (aide)
 
-AIDE (AI Development Environment) is the AI assistant component of the LessVM IDELess development environment. It provides context-aware assistance, code suggestions, error resolution, and learning resources to developers working with LessVM on Solana.
+a-aide (ai devewopment e-enviwonment) i-is the ai a-assistant component o-of the wessvm i-idewess devewopment e-enviwonment. ʘwʘ i-it pwovides context-awawe assistance, ( ͡o ω ͡o ) code suggestions, mya ewwow wesowution, o.O and w-weawning wesouwces to devewopews wowking with w-wessvm on sowana. (✿oωo)
 
-## Overview
+## ovewview
 
-AIDE integrates advanced AI capabilities directly into the IDELess development environment, offering real-time assistance that understands the context of your code, your project structure, and the specific challenges of LessVM development on Solana.
+a-aide integwates advanced ai capabiwities diwectwy into the idewess d-devewopment enviwonment, :3 offewing w-weaw-time assistance t-that undewstands the context of youw code, 😳 youw pwoject stwuctuwe, (U ﹏ U) and t-the specific chawwenges of wessvm devewopment on sowana. mya
 
-## Features
+## featuwes
 
-### Context-Aware Code Assistance
+### context-awawe c-code assistance
 
-- **Intelligent Code Completion**: Get context-aware code suggestions as you type
-- **Function Implementation**: Receive suggestions for implementing functions based on signatures
-- **Code Explanations**: Get detailed explanations of selected code blocks
-- **Refactoring Suggestions**: Identify opportunities for code improvement
+- **intewwigent code c-compwetion**: get c-context-awawe c-code suggestions a-as you type
+- **function impwementation**: weceive s-suggestions fow impwementing functions based o-on signatuwes
+- **code expwanations**: get detaiwed expwanations of sewected code bwocks
+- **wefactowing s-suggestions**: identify o-oppowtunities f-fow code impwovement
 
-### Error Resolution
+### e-ewwow wesowution
 
-- **Error Analysis**: Understand error messages in plain language
-- **Solution Suggestions**: Get specific fixes for identified errors
-- **Root Cause Identification**: Identify the underlying causes of issues
-- **Prevention Guidance**: Learn how to avoid similar errors in the future
+- **ewwow anawysis**: undewstand ewwow m-messages in pwain w-wanguage
+- **sowution suggestions**: g-get specific f-fixes fow identified ewwows
+- **woot c-cause identification**: i-identify the undewwying causes of issues
+- **pwevention g-guidance**: weawn how t-to avoid simiwaw ewwows in the f-futuwe
 
-### Performance Optimization
+### pewfowmance o-optimization
 
-- **Gas Optimization**: Identify gas-intensive operations and suggest alternatives
-- **Execution Efficiency**: Get recommendations for more efficient algorithms and data structures
-- **Best Practices**: Learn LessVM-specific optimization patterns
-- **Comparative Analysis**: Compare different implementation approaches
+- **gas optimization**: identify gas-intensive opewations and suggest awtewnatives
+- **execution efficiency**: get wecommendations fow mowe e-efficient awgowithms a-and data stwuctuwes
+- **best p-pwactices**: w-weawn wessvm-specific o-optimization pattewns
+- **compawative anawysis**: compawe d-diffewent impwementation appwoaches
 
-### Learning Support
+### weawning suppowt
 
-- **Concept Explanations**: Get clear explanations of LessVM and Solana concepts
-- **Documentation Integration**: Access relevant documentation directly in the IDE
-- **Learning Paths**: Follow structured learning sequences for specific topics
-- **Interactive Tutorials**: Learn through guided, hands-on exercises
+- **concept expwanations**: g-get cweaw expwanations o-of wessvm and sowana c-concepts
+- **documentation i-integwation**: access wewevant documentation d-diwectwy i-in the ide
+- **weawning p-paths**: f-fowwow stwuctuwed weawning sequences fow s-specific topics
+- **intewactive t-tutowiaws**: weawn t-thwough guided, (U ᵕ U❁) h-hands-on exewcises
 
-## Architecture
+## a-awchitectuwe
 
-AIDE is built with a modular architecture that integrates seamlessly with the IDELess development environment:
+aide is buiwt with a moduwaw awchitectuwe t-that integwates seamwesswy with the idewess devewopment enviwonment:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    AIDE Component                        │
+│                    aide component                        │
 │                                                         │
 │  ┌─────────────┐   ┌─────────────┐   ┌──────────┐      │
 │  │             │   │             │   │          │      │
-│  │   Context   │   │  Response   │   │  Model   │      │
-│  │  Analyzer   │◄─►│  Generator  │◄─►│ Service  │      │
+│  │   context   │   │  w-wesponse   │   │  modew   │      │
+│  │  anawyzew   │◄─►│  genewatow  │◄─►│ s-sewvice  │      │
 │  │             │   │             │   │          │      │
 │  └─────────────┘   └─────────────┘   └──────────┘      │
 │         ▲                 ▲               ▲            │
@@ -55,152 +55,152 @@ AIDE is built with a modular architecture that integrates seamlessly with the ID
 │         ▼                 ▼               ▼            │
 │  ┌─────────────┐   ┌─────────────┐   ┌──────────┐      │
 │  │             │   │             │   │          │      │
-│  │ Knowledge   │   │    User     │   │  Cache   │      │
-│  │   Base      │   │  Interface  │   │ Manager  │      │
+│  │ k-knowwedge   │   │    u-usew     │   │  cache   │      │
+│  │   b-base      │   │  intewface  │   │ m-managew  │      │
 │  │             │   │             │   │          │      │
 │  └─────────────┘   └─────────────┘   └──────────┘      │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
 ```
 
-### Components
+### c-components
 
-- **Context Analyzer**: Analyzes the current code context, project structure, and user actions
-- **Knowledge Base**: Contains LessVM-specific information, Solana concepts, and programming patterns
-- **Response Generator**: Creates natural language responses and code suggestions
-- **User Interface**: Provides chat-like interaction and inline suggestions
-- **Model Service**: Connects to AI model backends for advanced assistance
-- **Cache Manager**: Optimizes performance through efficient caching
+- **context anawyzew**: anawyzes the cuwwent code context, :3 pwoject stwuctuwe, mya and usew actions
+- **knowwedge b-base**: contains wessvm-specific i-infowmation, OwO sowana concepts, (ˆ ﻌ ˆ)♡ a-and pwogwamming p-pattewns
+- **wesponse genewatow**: cweates nyatuwaw w-wanguage wesponses a-and code suggestions
+- **usew i-intewface**: p-pwovides chat-wike intewaction and inwine suggestions
+- **modew sewvice**: connects to ai modew b-backends fow a-advanced assistance
+- **cache m-managew**: optimizes p-pewfowmance thwough e-efficient caching
 
-## Integration
+## integwation
 
-AIDE integrates with other IDELess components:
+a-aide integwates with othew idewess components:
 
-- **Editor**: Provides inline suggestions and context-aware completions
-- **Debugger**: Offers insights during debugging sessions
-- **Simulator**: Suggests optimizations based on simulation results
-- **Deployment**: Assists with deployment configuration and troubleshooting
+- **editow**: pwovides inwine suggestions a-and context-awawe c-compwetions
+- **debuggew**: offews insights duwing debugging s-sessions
+- **simuwatow**: s-suggests optimizations based on simuwation wesuwts
+- **depwoyment**: a-assists with depwoyment configuwation and twoubweshooting
 
-## Technology Stack
+## technowogy stack
 
-- **Frontend**: React with TypeScript
-- **State Management**: Redux with Redux Toolkit
-- **AI Integration**: Custom AI service connectors
-- **Natural Language Processing**: Advanced NLP models
-- **Code Analysis**: Custom parsers and analyzers for LessVM
+- **fwontend**: weact with typescwipt
+- **state m-management**: wedux with wedux toowkit
+- **ai i-integwation**: custom a-ai sewvice connectows
+- **natuwaw wanguage pwocessing**: advanced n-nywp modews
+- **code a-anawysis**: custom pawsews and anawyzews fow wessvm
 
-## Development
+## d-devewopment
 
-### Prerequisites
+### pwewequisites
 
-- Node.js (v16.x or higher)
-- npm (v8.x or higher)
-- IDELess development environment
+- n-nyode.js (v16.x ow highew)
+- nypm (v8.x ow highew)
+- idewess d-devewopment enviwonment
 
-### Setup
+### s-setup
 
-1. Clone the repository:
+1. ʘwʘ cwone t-the wepositowy:
    ```
-   git clone https://github.com/lessvm/ideless.git
-   cd ideless/aide
-   ```
-
-2. Install dependencies:
-   ```
-   npm install
+   git cwone h-https://github.com/wessvm/idewess.git
+   cd i-idewess/aide
    ```
 
-3. Start the development server:
+2. o.O i-instaww d-dependencies:
    ```
-   npm run dev
+   nypm instaww
    ```
 
-### Project Structure
+3. UwU s-stawt the devewopment s-sewvew:
+   ```
+   nypm wun dev
+   ```
+
+### p-pwoject stwuctuwe
 
 ```
-aide/
-├── public/             # Static assets
-├── src/                # Source code
-│   ├── components/     # React components
-│   │   ├── AiAssistant.tsx       # Main assistant component
-│   │   ├── ChatInterface.tsx     # Chat interface
-│   │   ├── CodeSuggestions.tsx   # Code suggestion component
+a-aide/
+├── p-pubwic/             # static assets
+├── swc/                # s-souwce code
+│   ├── c-components/     # w-weact components
+│   │   ├── aiassistant.tsx       # main assistant c-component
+│   │   ├── c-chatintewface.tsx     # c-chat intewface
+│   │   ├── c-codesuggestions.tsx   # code s-suggestion component
 │   │   └── ...
-│   ├── services/       # Service modules
-│   │   ├── aiService.ts          # AI model integration
-│   │   ├── contextService.ts     # Context analysis
-│   │   ├── knowledgeService.ts   # Knowledge base access
+│   ├── sewvices/       # sewvice moduwes
+│   │   ├── aisewvice.ts          # ai modew integwation
+│   │   ├── contextsewvice.ts     # c-context anawysis
+│   │   ├── knowwedgesewvice.ts   # k-knowwedge base access
 │   │   └── ...
-│   ├── store/          # Redux store
-│   │   ├── slices/
-│   │   │   ├── aiSlice.ts        # AI state management
+│   ├── s-stowe/          # wedux stowe
+│   │   ├── s-swices/
+│   │   │   ├── aiswice.ts        # a-ai state management
 │   │   │   └── ...
-│   │   └── index.ts    # Store configuration
-│   ├── utils/          # Utility functions
-│   ├── types/          # TypeScript type definitions
+│   │   └── i-index.ts    # s-stowe configuwation
+│   ├── u-utiws/          # u-utiwity functions
+│   ├── types/          # typescwipt type definitions
 │   └── ...
-├── tests/              # Test files
-├── .eslintrc.js        # ESLint configuration
-├── tsconfig.json       # TypeScript configuration
-└── package.json        # Project dependencies
+├── tests/              # test fiwes
+├── .eswintwc.js        # e-eswint c-configuwation
+├── t-tsconfig.json       # typescwipt configuwation
+└── p-package.json        # pwoject dependencies
 ```
 
-### Building
+### buiwding
 
-To build the AIDE component for production:
-
-```
-npm run build
-```
-
-### Testing
-
-To run tests:
+t-to buiwd the a-aide component fow pwoduction:
 
 ```
-npm test
+n-nypm wun buiwd
 ```
 
-## Configuration
+### testing
 
-AIDE can be configured through the IDELess settings:
+to wun tests:
 
-- **AI Model**: Select the AI model to use
-- **Suggestion Frequency**: Control how often suggestions appear
-- **Knowledge Base Updates**: Configure automatic updates
-- **Privacy Settings**: Control what data is shared with AI services
+```
+n-nypm test
+```
 
-## Custom Instructions
+## c-configuwation
 
-AIDE follows specific custom instructions to ensure it provides helpful, accurate, and context-aware assistance. These instructions guide the AI's behavior, tone, and capabilities.
+aide can b-be configuwed t-thwough the idewess settings:
 
-See [Custom Instructions](./custom_instructions.md) for details.
+- **ai modew**: sewect the ai modew to use
+- **suggestion f-fwequency**: c-contwow how o-often suggestions a-appeaw
+- **knowwedge b-base updates**: configuwe a-automatic updates
+- **pwivacy s-settings**: contwow nyani data i-is shawed with ai s-sewvices
 
-## AI Assistant Specification
+## custom instwuctions
 
-For a detailed technical specification of the AI Assistant component, see [AI Assistant Specification](./ai_assistant_specification.md).
+a-aide fowwows specific custom instwuctions to e-ensuwe it pwovides hewpfuw, rawr x3 accuwate, a-and context-awawe a-assistance. 🥺 these instwuctions g-guide the ai's behaviow, :3 tone, (ꈍᴗꈍ) and capabiwities. 🥺
 
-## Contributing
+s-see [custom i-instwuctions](./custom_instwuctions.md) f-fow detaiws. (✿oωo)
 
-We welcome contributions to AIDE! Please see our [Contributing Guide](../CONTRIBUTING.md) for details on how to get started.
+## ai assistant specification
 
-## License
+fow a d-detaiwed technicaw specification of the ai assistant c-component, (U ﹏ U) s-see [ai assistant specification](./ai_assistant_specification.md). :3
 
-This project is licensed under the [MIT License](../LICENSE).
+## c-contwibuting
 
-## Acknowledgements
+we wewcome c-contwibutions to a-aide! ^^;; pwease see ouw [contwibuting guide](../contwibuting.md) f-fow detaiws on how to get stawted. rawr
 
-AIDE builds on several open-source projects and AI research:
+## wicense
 
-- [React](https://reactjs.org/) for UI components
-- [Redux](https://redux.js.org/) for state management
-- [TypeScript](https://www.typescriptlang.org/) for type safety
-- Various AI and NLP research papers and models
+t-this pwoject is w-wicensed undew the [mit wicense](../wicense). 😳😳😳
 
-## Contact
+## a-acknowwedgements
 
-For questions or feedback about AIDE:
+aide buiwds o-on sevewaw open-souwce p-pwojects a-and ai weseawch:
 
-- GitHub Issues: [https://github.com/lessvm/ideless/issues](https://github.com/lessvm/ideless/issues)
-- Discord: [https://discord.gg/lessvm](https://discord.gg/lessvm)
-- Email: [aide@lessvm.org](mailto:aide@lessvm.org)
+- [weact](https://weactjs.owg/) fow ui components
+- [wedux](https://wedux.js.owg/) fow state management
+- [typescwipt](https://www.typescwiptwang.owg/) fow type safety
+- vawious ai and nywp weseawch papews and modews
+
+## contact
+
+fow questions ow feedback about aide:
+
+- github issues: [https://github.com/wessvm/idewess/issues](https://github.com/wessvm/idewess/issues)
+- discowd: [https://discowd.gg/wessvm](https://discowd.gg/wessvm)
+- e-emaiw: [aide@wessvm.owg](maiwto:aide@wessvm.owg)

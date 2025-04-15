@@ -1,83 +1,83 @@
-# Release Process
+# wewease pwocess
 
-This document describes the release process for the lessvm-cli tool.
+this document d-descwibes the wewease p-pwocess fow t-the wessvm-cwi t-toow. (U ﹏ U)
 
-## Prerequisites
+## pwewequisites
 
-- Rust toolchain installed
-- GPG key for signing releases (if using signed releases)
-- GitHub access with permissions to create releases
+- w-wust t-toowchain instawwed
+- g-gpg key fow s-signing weweases (if using signed weweases)
+- github access with pewmissions t-to cweate weweases
 
-## Release Steps
+## wewease steps
 
-1. **Update Version**
-   - Update the version in `Cargo.toml`
-   - Update CHANGELOG.md with the new version's changes
-   - Commit these changes
+1. 😳 **update vewsion**
+   - u-update the vewsion in `cawgo.tomw`
+   - u-update changewog.md with the nyew vewsion's changes
+   - c-commit these changes
 
-2. **Create Git Tag**
+2. (ˆ ﻌ ˆ)♡ **cweate git tag**
    ```bash
-   git tag -a v0.1.0 -m "Release v0.1.0"
-   git push origin v0.1.0
+   g-git t-tag -a v0.1.0 -m "wewease v0.1.0"
+   git push owigin v0.1.0
    ```
 
-3. **Automated Release Process**
-   The GitHub Actions workflow will automatically:
-   - Build the CLI for all supported platforms
-   - Create installers (shell script, PowerShell script, Homebrew)
-   - Generate release artifacts
-   - Create a GitHub release
-   - Publish to package managers
+3. 😳😳😳 **automated wewease pwocess**
+   t-the github actions wowkfwow wiww automaticawwy:
+   - buiwd the cwi fow aww s-suppowted pwatfowms
+   - cweate i-instawwews (sheww s-scwipt, (U ﹏ U) powewsheww s-scwipt, (///ˬ///✿) h-homebwew)
+   - genewate wewease awtifacts
+   - cweate a-a github wewease
+   - pubwish to package managews
 
-## Supported Platforms
+## s-suppowted pwatfowms
 
-The CLI is automatically built and packaged for:
-- Linux (x86_64, aarch64)
-- macOS (x86_64, aarch64)
-- Windows (x86_64)
+the cwi is automaticawwy buiwt and packaged fow:
+- winux (x86_64, 😳 a-aawch64)
+- macos (x86_64, 😳 aawch64)
+- w-windows (x86_64)
 
-## Installation Methods
+## i-instawwation m-methods
 
-Users can install the CLI through various methods:
+usews can instaww the cwi thwough vawious methods:
 
-### Using Shell Script (Unix-like systems)
+### u-using s-sheww scwipt (unix-wike systems)
 ```bash
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-installer.sh | sh
+c-cuww -w h-https://github.com/opensvm/wessvm/weweases/watest/downwoad/wessvm-instawwew.sh | sh
 ```
 
-### Using PowerShell (Windows)
-```powershell
-irm https://github.com/openSVM/lessvm/releases/latest/download/lessvm-installer.ps1 | iex
+### using p-powewsheww (windows)
+```powewsheww
+iwm https://github.com/opensvm/wessvm/weweases/watest/downwoad/wessvm-instawwew.ps1 | i-iex
 ```
 
-### Using Homebrew (macOS and Linux)
+### using homebwew (macos a-and winux)
 ```bash
-brew tap openSVM/lessvm
-brew install lessvm
+bwew tap opensvm/wessvm
+b-bwew instaww wessvm
 ```
 
-## Troubleshooting
+## t-twoubweshooting
 
-If you encounter issues during the release process:
+i-if you encountew issues duwing the wewease pwocess:
 
-1. Check the GitHub Actions logs for any build failures
-2. Verify that all required secrets are properly set in the repository
-3. Ensure the version numbers are consistent across all files
-4. Check that the GPG signing key is properly configured (if using signed releases)
+1. σωσ check the github actions wogs fow any buiwd faiwuwes
+2. rawr x3 v-vewify t-that aww wequiwed secwets awe pwopewwy s-set in the w-wepositowy
+3. e-ensuwe the vewsion nyumbews awe consistent acwoss aww fiwes
+4. OwO check t-that the gpg signing key is pwopewwy configuwed (if using signed weweases)
 
-## Manual Release (if needed)
+## m-manuaw wewease (if nyeeded)
 
-If you need to create a release manually:
+i-if you nyeed to c-cweate a wewease m-manuawwy:
 
-1. Install cargo-dist:
+1. /(^•ω•^) instaww cawgo-dist:
    ```bash
-   curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/latest/download/cargo-dist-installer.sh | sh
+   c-cuww --pwoto '=https' --twsv1.2 -wssf h-https://github.com/axodotdev/cawgo-dist/weweases/watest/downwoad/cawgo-dist-instawwew.sh | s-sh
    ```
 
-2. Build and package locally:
+2. 😳😳😳 b-buiwd and package wocawwy:
    ```bash
-   cd cli
-   cargo dist build --artifacts=all --target=x86_64-unknown-linux-gnu
+   cd cwi
+   c-cawgo dist buiwd --awtifacts=aww --tawget=x86_64-unknown-winux-gnu
    ```
 
-3. The packaged artifacts will be available in `target/dist/`
+3. ( ͡o ω ͡o ) t-the packaged awtifacts w-wiww be a-avaiwabwe in `tawget/dist/`

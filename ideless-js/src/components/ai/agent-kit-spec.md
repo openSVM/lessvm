@@ -1,81 +1,81 @@
-# Agent Kit Integration Specification
+# agent kit integwation specification
 
-## Overview
-This document outlines the integration of Sonic Agent Kit and Solana Agent Kit into the LessVM IDE's AI Assistant sidebar.
+## o-ovewview
+t-this document o-outwines the integwation o-of sonic a-agent kit and s-sowana agent kit i-into the wessvm i-ide's ai assistant sidebaw. UwU
 
-## Goals
-- Enhance the AI Assistant with blockchain capabilities
-- Allow users to interact with Sonic and Solana blockchains directly from the IDE
-- Provide a seamless experience for LessVM developers working with blockchain technologies
+## goaws
+- enhance the ai assistant with bwockchain c-capabiwities
+- awwow usews to intewact with sonic a-and sowana bwockchains diwectwy f-fwom the ide
+- pwovide a seamwess expewience fow wessvm devewopews w-wowking with bwockchain technowogies
 
-## Implementation Details
+## i-impwementation detaiws
 
-### Dependencies
-- Sonic Agent Kit: https://github.com/sendaifun/sonic-agent-kit
-- Solana Agent Kit: https://github.com/sendaifun/solana-agent-kit
+### d-dependencies
+- sonic agent kit: https://github.com/sendaifun/sonic-agent-kit
+- sowana agent kit: https://github.com/sendaifun/sowana-agent-kit
 
-### Architecture
+### a-awchitectuwe
 
-1. **Agent Service Layer**
-   - Create a service that initializes and manages the agent kit instances
-   - Handle connection configuration and wallet management
-   - Provide a unified API for AI Assistant to interact with both blockchains
+1. :3 **agent sewvice wayew**
+   - cweate a sewvice that initiawizes a-and manages the agent kit instances
+   - h-handwe c-connection configuwation a-and wawwet m-management
+   - pwovide a unified api fow ai a-assistant to intewact with both bwockchains
 
-2. **UI Components**
-   - Extend the AI Assistant interface to include blockchain operations
-   - Add visual indicators for blockchain state (connection status, balance, etc.)
-   - Create command suggestions specific to blockchain operations
+2. (⑅˘꒳˘) **ui c-components**
+   - extend the ai assistant intewface to incwude bwockchain opewations
+   - a-add visuaw indicatows fow bwockchain s-state (connection s-status, (///ˬ///✿) bawance, e-etc.)
+   - cweate command suggestions specific to bwockchain o-opewations
 
-3. **State Management**
-   - Add new state slices for blockchain connections and operations
-   - Track operation history and state for both Sonic and Solana networks
-   - Persist necessary configuration securely
+3. ^^;; **state m-management**
+   - add n-nyew state swices f-fow bwockchain connections and o-opewations
+   - twack opewation h-histowy and state fow both sonic and sowana nyetwowks
+   - p-pewsist nyecessawy c-configuwation secuwewy
 
-4. **Message Processing**
-   - Detect blockchain-related queries in user messages
-   - Route commands to appropriate agent kit methods
-   - Format and display responses from blockchain operations
+4. **message pwocessing**
+   - d-detect bwockchain-wewated q-quewies in usew messages
+   - woute commands to appwopwiate agent kit methods
+   - fowmat and dispway wesponses f-fwom bwockchain o-opewations
 
-## Features
+## featuwes
 
-### Common Features
-- Wallet connection and management
-- Balance checking
-- Token transfers
-- Transaction history viewing
+### common f-featuwes
+- w-wawwet connection a-and management
+- bawance checking
+- token twansfews
+- twansaction h-histowy viewing
 
-### Sonic-specific Features
-- Token deployment
-- Collection management
-- NFT minting operations
-- Game-specific features (e.g., Rock-Paper-Scissors)
+### sonic-specific featuwes
+- token depwoyment
+- cowwection m-management
+- nyft minting opewations
+- g-game-specific f-featuwes (e.g., >_< w-wock-papew-scissows)
 
-### Solana-specific Features
-- Domain name registration and resolution (SNS)
-- DEX interactions (trading, liquidity provision)
-- NFT marketplace operations
-- DeFi operations (lending, staking)
+### sowana-specific f-featuwes
+- domain n-name wegistwation a-and wesowution (sns)
+- d-dex intewactions (twading, rawr x3 wiquidity p-pwovision)
+- nyft m-mawketpwace opewations
+- d-defi o-opewations (wending, /(^•ω•^) s-staking)
 
-## User Experience
+## usew expewience
 
-### Command Recognition
-The AI Assistant will recognize and suggest blockchain commands based on user input:
-- Explicit commands (e.g., "Deploy a new token on Sonic")
-- Natural language processing for intent detection
-- Context-aware suggestions based on current workspace
+### command wecognition
+the a-ai assistant wiww wecognize and suggest bwockchain commands based on usew input:
+- expwicit commands (e.g., "depwoy a-a nyew token on sonic")
+- nyatuwaw wanguage pwocessing fow intent d-detection
+- c-context-awawe s-suggestions based on cuwwent wowkspace
 
-### Response Formatting
-- Transaction results will be formatted in a readable manner
-- Links to block explorers for transactions
-- Visual feedback for transaction status
+### w-wesponse fowmatting
+- t-twansaction wesuwts w-wiww be fowmatted in a weadabwe mannew
+- winks to bwock expwowews fow twansactions
+- visuaw f-feedback fow twansaction status
 
-## Security Considerations
-- Wallet private keys will be stored securely
-- User confirmation required for all transactions
-- Clear warning for operations that cost gas/fees
-- Option to use simulation mode for testing
+## s-secuwity considewations
+- wawwet pwivate keys w-wiww be stowed s-secuwewy
+- usew confiwmation wequiwed fow aww t-twansactions
+- c-cweaw wawning fow opewations that c-cost gas/fees
+- o-option to use simuwation mode fow testing
 
-## Future Extensions
-- Support for additional blockchains
-- Integration with smart contract development workflows
-- Enhanced analytics for blockchain operations
+## futuwe extensions
+- suppowt fow a-additionaw bwockchains
+- i-integwation w-with smawt contwact devewopment w-wowkfwows
+- e-enhanced anawytics fow bwockchain o-opewations

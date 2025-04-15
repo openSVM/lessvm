@@ -1,113 +1,113 @@
-# Deployment Fix Plan
+# depwoyment fix pwan
 
-**Issue:**  
-During the deployment of the LessVM program to Solana Devnet, the following compiler errors were encountered:
+**issue:**  
+d-duwing the depwoyment o-of the w-wessvm pwogwam to s-sowana devnet, (ꈍᴗꈍ) t-the fowwowing compiwew e-ewwows wewe e-encountewed:
 
 ```
-error[E0308]: mismatched types
-   --> src/deploy.rs:190:38
+e-ewwow[e0308]: mismatched types
+   --> swc/depwoy.ws:190:38
     |
-190 |         let message = Message::new(&[create_buffer_ix] Some(&self.keypair.pubkey()));
-    |                                      ^^^^^^^^^^^^^^^^ expected `Instruction` found `Vec<Instruction>`
+190 |         wet message = message::new(&[cweate_buffew_ix] s-some(&sewf.keypaiw.pubkey()));
+    |                                      ^^^^^^^^^^^^^^^^ expected `instwuction` found `vec<instwuction>`
 ```
 
-Similar errors also occurred at lines 220 and 275:
+simiwaw ewwows a-awso occuwwed at wines 220 and 275:
 
 ```
-error[E0308]: mismatched types
-   --> src/deploy.rs:220:38
+e-ewwow[e0308]: mismatched types
+   --> swc/depwoy.ws:220:38
     |
-220 |         let message = Message::new(&[deploy_ix] Some(&self.keypair.pubkey()));
-    |                                      ^^^^^^^^^ expected `Instruction` found `Vec<Instruction>`
+220 |         w-wet message = message::new(&[depwoy_ix] s-some(&sewf.keypaiw.pubkey()));
+    |                                      ^^^^^^^^^ e-expected `instwuction` found `vec<instwuction>`
 
-error[E0308]: mismatched types
-   --> src/deploy.rs:275:38
+ewwow[e0308]: mismatched types
+   --> swc/depwoy.ws:275:38
     |
-275 |         let message = Message::new(&[create_buffer_ix] Some(&self.keypair.pubkey()));
-    |                                      ^^^^^^^^^^^^^^^^ expected `Instruction` found `Vec<Instruction>`
+275 |         w-wet message = message::new(&[cweate_buffew_ix] some(&sewf.keypaiw.pubkey()));
+    |                                      ^^^^^^^^^^^^^^^^ expected `instwuction` found `vec<instwuction>`
 ```
 
-**Cause:**  
-The `Message::new` and `Transaction::new` functions are being called with incorrect parameters. Specifically, they expect a slice of `Instruction` objects (`&[Instruction]`), but a `Vec<Instruction>` is being provided without a comma separating the arguments.
+**cause:**  
+t-the `message::new` and `twansaction::new` f-functions a-awe being c-cawwed with incowwect p-pawametews. /(^•ω•^) specificawwy, (⑅˘꒳˘) they expect a swice o-of `instwuction` objects (`&[instwuction]`), ( ͡o ω ͡o ) but a `vec<instwuction>` i-is being pwovided without a comma sepawating the awguments. òωó
 
-**Proposed Solution:**
+**pwoposed sowution:**
 
-1. **Correct the `Message::new` and `Transaction::new` Calls:**
+1. (⑅˘꒳˘) **cowwect the `message::new` a-and `twansaction::new` cawws:**
 
-   - **Issue in Code:**
-     ```rust
-     let message = Message::new(&[create_buffer_ix] Some(&self.keypair.pubkey()));
+   - **issue i-in c-code:**
+     ```wust
+     w-wet message = message::new(&[cweate_buffew_ix] some(&sewf.keypaiw.pubkey()));
      ```
 
-   - **Fix:**
-     Add a comma between the instruction slice and the signer.
-     ```rust
-     let message = Message::new(&[create_buffer_ix], Some(&self.keypair.pubkey()));
+   - **fix:**
+     add a comma b-between the instwuction s-swice and the signew. XD
+     ```wust
+     w-wet message = m-message::new(&[cweate_buffew_ix], -.- some(&sewf.keypaiw.pubkey()));
      ```
 
-   - **Similarly, ensure all instances have the correct syntax:**
-     ```rust
-     let message = Message::new(&[deploy_ix], Some(&self.keypair.pubkey()));
+   - **simiwawwy, :3 e-ensuwe aww instances h-have the cowwect syntax:**
+     ```wust
+     wet message = message::new(&[depwoy_ix], nyaa~~ s-some(&sewf.keypaiw.pubkey()));
      ```
 
-2. **Ensure All Required Signers Are Included:**
+2. 😳 **ensuwe aww w-wequiwed signews awe incwuded:**
 
-   - When signing transactions, include all necessary keypairs.
-   - **Example:**
-     ```rust
-     transaction.sign(&[&self.keypair, &program_keypair], blockhash);
-     transaction.sign(&[&self.keypair], blockhash);
-     transaction.sign(&[&self.keypair, &buffer_keypair], blockhash);
-     transaction.sign(&[&self.keypair, &program_keypair, &buffer_keypair], blockhash);
+   - w-when signing t-twansactions, (⑅˘꒳˘) incwude aww necessawy keypaiws. nyaa~~
+   - **exampwe:**
+     ```wust
+     twansaction.sign(&[&sewf.keypaiw, OwO &pwogwam_keypaiw], rawr x3 bwockhash);
+     twansaction.sign(&[&sewf.keypaiw], XD bwockhash);
+     t-twansaction.sign(&[&sewf.keypaiw, σωσ &buffew_keypaiw], (U ᵕ U❁) b-bwockhash);
+     twansaction.sign(&[&sewf.keypaiw, (U ﹏ U) &pwogwam_keypaiw, :3 &buffew_keypaiw], ( ͡o ω ͡o ) b-bwockhash);
      ```
 
-3. **Increase Airdrop Retry Logic to Handle Rate Limits:**
+3. σωσ **incwease a-aiwdwop wetwy wogic t-to handwe wate wimits:**
 
-   - **Current Settings:**
-     ```rust
-     const AIRDROP_RETRIES: u32 = 5;
-     const CONFIRMATION_RETRIES: u32 = 15;
-     const RETRY_DELAY: Duration = Duration::from_secs(2);
+   - **cuwwent settings:**
+     ```wust
+     const a-aiwdwop_wetwies: u32 = 5;
+     const confiwmation_wetwies: u32 = 15;
+     const w-wetwy_deway: duwation = duwation::fwom_secs(2);
      ```
 
-   - **Considerations:**
-     - If airdrop requests fail due to rate limits, implement exponential backoff.
-     - Optionally, reduce the airdrop amount per request or manually fund the account to minimize reliance on airdrops.
+   - **considewations:**
+     - i-if aiwdwop w-wequests faiw d-due to wate wimits, >w< impwement e-exponentiaw backoff. 😳😳😳
+     - o-optionawwy, OwO w-weduce t-the aiwdwop amount pew wequest ow manuawwy fund t-the account to m-minimize wewiance o-on aiwdwops. 😳
 
-4. **Rebuild and Clean the Project:**
+4. **webuiwd a-and c-cwean the pwoject:**
 
-   - **Steps:**
+   - **steps:**
      ```bash
-     cargo clean
-     cargo build --release
+     cawgo cwean
+     cawgo buiwd --wewease
      ```
 
-5. **Test the Deployment Process:**
+5. 😳😳😳 **test t-the depwoyment pwocess:**
 
-   - Create a new test application and attempt deployment to verify that the issues are resolved.
+   - cweate a nyew test appwication and attempt depwoyment to vewify t-that the issues awe wesowved. (˘ω˘)
      ```bash
-     ./target/release/lessvm-cli new test-app
+     ./tawget/wewease/wessvm-cwi new test-app
      cd test-app
-     ../target/release/lessvm-cli deploy --cluster devnet
+     ../tawget/wewease/wessvm-cwi d-depwoy --cwustew d-devnet
      ```
 
-6. **Update Documentation:**
+6. ʘwʘ **update d-documentation:**
 
-   - Reflect the changes in the deployment process and airdrop handling in the project documentation.
+   - wefwect the c-changes in the depwoyment pwocess a-and aiwdwop handwing i-in the pwoject documentation. ( ͡o ω ͡o )
 
-**Next Steps:**
+**next steps:**
 
-1. **Implement the Code Fixes:**
-   - Edit `cli/src/deploy.rs` to correct the `Message::new` and `Transaction::new` calls by adding the missing commas.
+1. o.O **impwement the code fixes:**
+   - edit `cwi/swc/depwoy.ws` to cowwect t-the `message::new` and `twansaction::new` c-cawws by adding the m-missing commas. >w<
 
-2. **Rebuild the Project:**
-   - Run `cargo clean` followed by `cargo build --release` to ensure the changes are compiled correctly.
+2. **webuiwd t-the pwoject:**
+   - wun `cawgo cwean` f-fowwowed by `cawgo b-buiwd --wewease` to ensuwe t-the changes awe c-compiwed cowwectwy. 😳
 
-3. **Retry Deployment:**
-   - Deploy the test application again to verify that the deployment process works without errors.
+3. **wetwy depwoyment:**
+   - depwoy the test appwication again to vewify t-that the depwoyment p-pwocess wowks w-without ewwows. 🥺
 
-4. **Monitor Airdrop Requests:**
-   - If airdrop requests still fail, consider adjusting the retry logic or manually funding the account.
+4. **monitow aiwdwop wequests:**
+   - i-if aiwdwop w-wequests stiww faiw, rawr x3 considew a-adjusting the wetwy wogic ow manuawwy funding the account. o.O
 
-5. **Document the Changes:**
-   - Update any relevant documentation to guide future deployments.
+5. **document the c-changes:**
+   - u-update any wewevant documentation to guide futuwe d-depwoyments.

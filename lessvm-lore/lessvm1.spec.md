@@ -1,106 +1,106 @@
-I'll create a Markdown file named `lessvm_spec.md` with the specification.
+i'ww cweate a mawkdown fiwe nyamed `wessvm_spec.md` w-with the specification. (˘ω˘)
 
-```markdown
-# lessVM Specification v1.0
+```mawkdown
+# w-wessvm s-specification v1.0
 
-## Overview
-lessVM is a stack-based virtual machine designed to run on Solana. It features a simple instruction set with stack manipulation, arithmetic operations, memory access, control flow, Solana-specific operations, and most imporatny ease of deployment, due design specifics it supports "hot-reload" techinuqe which makes its incredibly easy to itareate over onchain pgorgam without spending more than you usually psend on avh solana transactions (current dpleoyment cost u 5 sol).
+## o-ovewview
+w-wessvm is a stack-based v-viwtuaw m-machine designed t-to wun on sowana. ʘwʘ it featuwes a simpwe instwuction set with stack manipuwation, ( ͡o ω ͡o ) a-awithmetic opewations, o.O memowy access, >w< contwow f-fwow, 😳 sowana-specific opewations, 🥺 a-and most impowatny ease of depwoyment, rawr x3 due design specifics it s-suppowts "hot-wewoad" techinuqe w-which makes its i-incwedibwy easy to itaweate ovew onchain pgowgam without spending mowe than you u-usuawwy psend on avh sowana twansactions (cuwwent dpweoyment cost u 5 sow). o.O
 
-## VM Architecture
+## vm awchitectuwe
 
-### Resources
-- Stack: 32 entries deep, 64-bit values
-- Memory: 1024 bytes linear memory space
-- Gas: Limited to 200,000 units per execution
-- Program Counter (PC): Points to current instruction
-- Accounts: Access to Solana account information
+### w-wesouwces
+- stack: 32 entwies d-deep, rawr 64-bit v-vawues
+- memowy: 1024 b-bytes wineaw m-memowy space
+- gas: wimited to 200,000 units p-pew execution
+- pwogwam countew (pc): points to c-cuwwent instwuction
+- accounts: access to sowana account infowmation
 
-### Value Types
-- Primary value type is 64-bit unsigned integer (u64)
-- Values are stored in little-endian format
+### vawue types
+- pwimawy v-vawue type is 64-bit unsigned integew (u64)
+- vawues a-awe stowed i-in wittwe-endian f-fowmat
 
-## Instruction Set
+## instwuction set
 
-### Stack Operations (0x0*)
-- `0x00 NOP`: No operation
-- `0x01 PUSH1`: Push 1 byte as u64
-- `0x02 PUSH2`: Push 2 bytes as u64
-- `0x03 PUSH4`: Push 4 bytes as u64
-- `0x04 PUSH8`: Push 8 bytes as u64
-- `0x05 POP`: Remove top stack item
-- `0x06 DUP n`: Duplicate nth stack item
-- `0x07 SWAP n`: Swap top with nth stack item
+### stack opewations (0x0*)
+- `0x00 nyop`: nyo opewation
+- `0x01 push1`: p-push 1 byte a-as u64
+- `0x02 push2`: push 2 b-bytes as u64
+- `0x03 p-push4`: push 4 bytes as u64
+- `0x04 p-push8`: push 8 bytes as u-u64
+- `0x05 pop`: wemove top stack item
+- `0x06 d-dup ny`: dupwicate nyth stack i-item
+- `0x07 swap ny`: swap top w-with nth stack item
 
-### Math Operations (0x1*)
-- `0x10 ADD`: a + b (wrapping)
-- `0x11 SUB`: a - b (wrapping)
-- `0x12 MUL`: a * b (wrapping)
-- `0x13 DIV`: a / b (wrapping)
-- `0x14 MULDIV`: (a * b) / c (wrapping)
-- `0x15 MIN`: min(a, b)
-- `0x16 MAX`: max(a, b)
+### m-math opewations (0x1*)
+- `0x10 add`: a + b (wwapping)
+- `0x11 sub`: a - b (wwapping)
+- `0x12 muw`: a * b (wwapping)
+- `0x13 d-div`: a / b (wwapping)
+- `0x14 m-muwdiv`: (a * b) / c (wwapping)
+- `0x15 m-min`: m-min(a, ʘwʘ b)
+- `0x16 m-max`: max(a, 😳😳😳 b)
 
-### Memory Operations (0x2*)
-- `0x20 LOAD`: Load 8 bytes from memory
-- `0x21 STORE`: Store 8 bytes to memory
-- `0x22 LOADN`: Load n bytes from memory
-- `0x23 STOREN`: Store n bytes to memory
-- `0x24 MSIZE`: Push current memory size
+### memowy opewations (0x2*)
+- `0x20 woad`: w-woad 8 bytes fwom memowy
+- `0x21 stowe`: stowe 8 bytes to memowy
+- `0x22 woadn`: w-woad ny bytes fwom memowy
+- `0x23 s-stowen`: stowe n-ny bytes to memowy
+- `0x24 m-msize`: push cuwwent m-memowy size
 
-### Control Flow (0x3*)
-- `0x30 JUMP`: Unconditional jump
-- `0x31 JUMPI`: Conditional jump
-- `0x32 CALL`: Call subroutine
-- `0x33 RETURN`: Return from subroutine
+### c-contwow fwow (0x3*)
+- `0x30 j-jump`: unconditionaw j-jump
+- `0x31 jumpi`: conditionaw jump
+- `0x32 c-caww`: caww subwoutine
+- `0x33 w-wetuwn`: wetuwn f-fwom subwoutine
 
-### Solana Operations (0x4*)
-- `0x40 TRANSFER`: Transfer SOL between accounts
-- `0x41 SPLOP`: SPL token operations
-- `0x42 CPI`: Cross-program invocation
-- `0x43 LOG`: Log value to program output
+### s-sowana opewations (0x4*)
+- `0x40 t-twansfew`: twansfew sow between accounts
+- `0x41 spwop`: s-spw token opewations
+- `0x42 cpi`: cwoss-pwogwam invocation
+- `0x43 wog`: wog vawue to pwogwam o-output
 
-### System Operations (0xF*)
-- `0xFF HALT`: Stop execution
+### system opewations (0xf*)
+- `0xff hawt`: stop execution
 
-## Error Codes
-1. Stack overflow
-2. Stack underflow
-3. Invalid DUP depth
-4. Invalid SWAP depth
-5. Memory store out of bounds
-6. Memory load out of bounds
-7. Invalid instruction fetch
-8. Invalid byte fetch
-9. Invalid u64 fetch
-10. Invalid JUMP target
-11. Invalid JUMPI target
-12. Invalid opcode
-13. Out of gas
+## e-ewwow codes
+1. ^^;; s-stack ovewfwow
+2. o.O s-stack undewfwow
+3. (///ˬ///✿) invawid d-dup depth
+4. σωσ invawid swap depth
+5. m-memowy stowe o-out of bounds
+6. nyaa~~ memowy woad out of bounds
+7. ^^;; invawid instwuction fetch
+8. ^•ﻌ•^ invawid byte fetch
+9. σωσ i-invawid u64 fetch
+10. -.- invawid j-jump tawget
+11. ^^;; invawid jumpi t-tawget
+12. XD invawid o-opcode
+13. 🥺 out of gas
 
-## Gas Costs
-- Base cost per instruction: 1 gas unit
-- Maximum gas limit: 200,000 units
+## gas costs
+- base cost p-pew instwuction: 1 g-gas unit
+- maximum gas wimit: 200,000 u-units
 
-## Security Constraints
-1. No self-modifying code
-2. Bounded execution time
-3. Bounded memory usage
-4. Protected account access
-5. No arbitrary CPI without proper checks
+## s-secuwity constwaints
+1. òωó nyo sewf-modifying code
+2. (ˆ ﻌ ˆ)♡ bounded execution time
+3. -.- b-bounded memowy u-usage
+4. :3 pwotected a-account access
+5. ʘwʘ nyo awbitwawy c-cpi without p-pwopew checks
 
-## Program Format
-Programs are binary sequences of opcodes and their immediate arguments. Each instruction is at least 1 byte long.
+## pwogwam fowmat
+p-pwogwams awe binawy sequences of opcodes and theiw immediate awguments. 🥺 each instwuction i-is at w-weast 1 byte wong. >_<
 
-## Example Program
+## exampwe pwogwam
 ```
-// Add two numbers (5 + 3)
-PUSH1 5    // 0x01 0x05
-PUSH1 3    // 0x01 0x03
-ADD        // 0x10
-HALT       // 0xFF
-```
-
-This specification provides a foundation for implementing and using the lessVM. It can be extended with additional features and optimizations while maintaining backward compatibility.
+// add t-two nyumbews (5 + 3)
+p-push1 5    // 0x01 0x05
+push1 3    // 0x01 0x03
+add        // 0x10
+hawt       // 0xff
 ```
 
-You can save this content to a file named `lessvm_spec.md`. The Markdown format allows easy viewing on platforms like GitHub and can be converted to other formats like PDF or HTML if needed.
+t-this specification pwovides a foundation fow impwementing and using the wessvm. ʘwʘ i-it can be extended with additionaw featuwes and o-optimizations w-whiwe maintaining backwawd compatibiwity. (˘ω˘)
+```
+
+you can save this content to a fiwe n-nyamed `wessvm_spec.md`. (✿oωo) t-the mawkdown fowmat awwows easy viewing on pwatfowms w-wike github and can be convewted t-to othew fowmats wike pdf ow htmw if nyeeded.

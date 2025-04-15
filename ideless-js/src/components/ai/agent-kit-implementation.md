@@ -1,110 +1,110 @@
-# Agent Kit Implementation Guide
+# agent kit impwementation guide
 
-This guide outlines the steps needed to implement and integrate the Sonic Agent Kit and Solana Agent Kit into the LessVM IDE's AI Assistant.
+t-this guide outwines t-the steps needed t-to impwement a-and integwate t-the sonic agent k-kit and sowana a-agent kit into the w-wessvm ide's ai assistant. -.-
 
-## Prerequisites
+## pwewequisites
 
-- Node.js v16+ 
-- npm or yarn package manager
-- Access to Solana and/or Sonic testnets/mainnets
+- nyode.js v16+ 
+- nypm ow yawn p-package managew
+- access to sowana and/ow sonic t-testnets/mainnets
 
-## Installation Steps
+## instawwation s-steps
 
-1. Install the required dependencies:
-
-```bash
-cd ideless-js
-npm install @solana/web3.js @sendaifun/sonic-agent-kit @sendaifun/solana-agent-kit
-```
-
-Or if using yarn:
+1. ^•ﻌ•^ instaww the wequiwed dependencies:
 
 ```bash
-cd ideless-js
-yarn add @solana/web3.js @sendaifun/sonic-agent-kit @sendaifun/solana-agent-kit
+cd idewess-js
+n-nypm instaww @sowana/web3.js @sendaifun/sonic-agent-kit @sendaifun/sowana-agent-kit
 ```
 
-## Configuration
-
-The implementation includes:
-
-1. **AgentService**: A service layer that provides unified blockchain operations
-2. **Redux Integration**: State management for blockchain connections and transactions
-3. **UI Components**: Enhanced AI Assistant with blockchain agent capabilities
-
-### Environment Variables (Optional)
-
-You may want to provide default RPC URLs for both networks in your environment configuration:
-
-```
-SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
-SONIC_RPC_URL=https://api.testnet.sonic.game
-```
-
-## Usage
-
-### Connecting Wallets
-
-Users can connect their Solana and Sonic wallets by:
-
-1. Clicking the settings icon (⚙️) in the AI Assistant panel
-2. Entering their private key and RPC URL
-3. Clicking "Connect Solana Wallet" or "Connect Sonic Wallet"
-
-> **Security Note**: When implementing in production, consider using a more secure wallet connection method such as wallet adapters rather than directly entering private keys.
-
-### Using Blockchain Commands
-
-Once connected, users can use slash commands in the AI Assistant to interact with the blockchain:
-
-- `/balance [token_address]` - Check wallet balance
-- `/transfer <recipient_address> <amount> [token_address]` - Send tokens
-- `/switch <solana|sonic>` - Switch between blockchains
-- `/history` - View recent transactions
-- `/help` - Show available commands
-
-## Testing
-
-The implementation includes test files for core functionality:
-
-- `AgentService.test.ts` - Tests for the blockchain service layer
-
-To run tests:
+ow if using yawn:
 
 ```bash
-cd ideless-js
-npm test
+c-cd idewess-js
+y-yawn add @sowana/web3.js @sendaifun/sonic-agent-kit @sendaifun/sowana-agent-kit
 ```
 
-## Troubleshooting
+## configuwation
 
-### Common Issues
+the impwementation incwudes:
 
-1. **Connection Errors**: Ensure RPC URLs are correct and accessible from the user's network
-2. **Invalid Private Key**: Private keys must be in the correct format (base58 encoded string)
-3. **Transaction Failures**: Check that the wallet has sufficient funds for the transaction
+1. rawr **agentsewvice**: a sewvice wayew t-that pwovides unified bwockchain opewations
+2. (˘ω˘) **wedux integwation**: state m-management fow bwockchain connections a-and twansactions
+3. nyaa~~ **ui components**: e-enhanced a-ai assistant w-with bwockchain agent capabiwities
 
-### Error Handling
+### enviwonment v-vawiabwes (optionaw)
 
-The implementation includes error handling for common blockchain operations:
-- Connection failures
-- Insufficient funds
-- Invalid addresses
-- Transaction timeouts
+you may want to pwovide d-defauwt wpc uwws fow both nyetwowks in youw enviwonment configuwation:
 
-## Future Enhancements
+```
+sowana_wpc_uww=https://api.mainnet-beta.sowana.com
+sonic_wpc_uww=https://api.testnet.sonic.game
+```
 
-Potential areas for future development:
+## u-usage
 
-1. Secure wallet connection using wallet adapters
-2. Advanced transaction support (NFTs, DeFi operations)
-3. Cross-chain operations
-4. Enhanced analytics for blockchain activities
-5. Smart contract deployment and interaction
+### connecting wawwets
 
-## Resources
+u-usews can c-connect theiw s-sowana and sonic wawwets by:
 
-- [Solana Documentation](https://docs.solana.com/)
-- [Sonic Documentation](https://docs.sonic.game/)
-- [Sonic Agent Kit Repository](https://github.com/sendaifun/sonic-agent-kit)
-- [Solana Agent Kit Repository](https://github.com/sendaifun/solana-agent-kit)
+1. UwU cwicking the settings icon (⚙️) i-in the ai assistant p-panew
+2. :3 entewing theiw p-pwivate key and w-wpc uww
+3. (⑅˘꒳˘) cwicking "connect sowana w-wawwet" ow "connect sonic wawwet"
+
+> **secuwity n-nyote**: when impwementing in pwoduction, (///ˬ///✿) considew u-using a mowe secuwe wawwet c-connection method such as wawwet a-adaptews wathew t-than diwectwy entewing pwivate keys. ^^;;
+
+### using bwockchain commands
+
+once connected, >_< usews can use swash commands i-in the ai a-assistant to intewact with the bwockchain:
+
+- `/bawance [token_addwess]` - c-check w-wawwet bawance
+- `/twansfew <wecipient_addwess> <amount> [token_addwess]` - s-send tokens
+- `/switch <sowana|sonic>` - switch between bwockchains
+- `/histowy` - v-view wecent twansactions
+- `/hewp` - show avaiwabwe commands
+
+## testing
+
+the impwementation incwudes t-test fiwes fow cowe functionawity:
+
+- `agentsewvice.test.ts` - t-tests fow the b-bwockchain sewvice w-wayew
+
+to wun tests:
+
+```bash
+c-cd idewess-js
+n-nypm test
+```
+
+## t-twoubweshooting
+
+### c-common issues
+
+1. rawr x3 **connection ewwows**: e-ensuwe wpc uwws a-awe cowwect and a-accessibwe fwom t-the usew's nyetwowk
+2. /(^•ω•^) **invawid p-pwivate key**: pwivate keys must be in the cowwect fowmat (base58 e-encoded stwing)
+3. :3 **twansaction faiwuwes**: check that the wawwet has sufficient funds fow the twansaction
+
+### e-ewwow handwing
+
+the impwementation incwudes ewwow handwing f-fow common bwockchain o-opewations:
+- c-connection faiwuwes
+- insufficient f-funds
+- invawid addwesses
+- t-twansaction t-timeouts
+
+## futuwe enhancements
+
+potentiaw aweas fow futuwe devewopment:
+
+1. (ꈍᴗꈍ) secuwe wawwet connection u-using wawwet adaptews
+2. a-advanced twansaction suppowt (nfts, /(^•ω•^) d-defi opewations)
+3. (⑅˘꒳˘) c-cwoss-chain opewations
+4. ( ͡o ω ͡o ) enhanced anawytics f-fow bwockchain a-activities
+5. òωó smawt contwact d-depwoyment and i-intewaction
+
+## wesouwces
+
+- [sowana documentation](https://docs.sowana.com/)
+- [sonic documentation](https://docs.sonic.game/)
+- [sonic agent kit w-wepositowy](https://github.com/sendaifun/sonic-agent-kit)
+- [sowana a-agent kit w-wepositowy](https://github.com/sendaifun/sowana-agent-kit)

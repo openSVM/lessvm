@@ -1,77 +1,77 @@
-# Code of Conduct for LessVM IDELess
+# code of conduct fow wessvm idewess
 
-## Our Pledge
+## o-ouw pwedge
 
-We as members, contributors, and leaders pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
+w-we as membews, (ꈍᴗꈍ) c-contwibutows, :3 a-and weadews pwedge t-to make pawticipation i-in ouw c-community a hawassment-fwee e-expewience fow evewyone, (U ﹏ U) wegawdwess of age, UwU body size, 😳😳😳 visibwe ow invisibwe d-disabiwity, XD ethnicity, o.O sex chawactewistics, (⑅˘꒳˘) g-gendew identity and expwession, 😳😳😳 w-wevew of expewience, education, nyaa~~ socio-economic status, rawr nyationawity, p-pewsonaw appeawance, -.- wace, w-wewigion, (✿oωo) ow s-sexuaw identity and owientation. /(^•ω•^)
 
-We pledge to act and interact in ways that contribute to an open, welcoming, diverse, inclusive, and healthy community.
+we pwedge to act and intewact in ways that contwibute t-to an open, 🥺 wewcoming, divewse, ʘwʘ incwusive, UwU and heawthy community. XD
 
-## Our Standards
+## o-ouw standawds
 
-Examples of behavior that contributes to a positive environment for our community include:
+exampwes of behaviow t-that contwibutes t-to a positive e-enviwonment fow o-ouw community incwude:
 
-* Demonstrating empathy and kindness toward other people
-* Being respectful of differing opinions, viewpoints, and experiences
-* Giving and gracefully accepting constructive feedback
-* Accepting responsibility and apologizing to those affected by our mistakes, and learning from the experience
-* Focusing on what is best not just for us as individuals, but for the overall community
+* demonstwating empathy a-and kindness towawd othew peopwe
+* being wespectfuw o-of diffewing opinions, (✿oωo) viewpoints, :3 and expewiences
+* giving and gwacefuwwy accepting constwuctive f-feedback
+* accepting wesponsibiwity a-and a-apowogizing to t-those affected by ouw mistakes, (///ˬ///✿) and weawning fwom the expewience
+* f-focusing on nyani i-is best nyot just fow us as i-individuaws, nyaa~~ but f-fow the ovewaww community
 
-Examples of unacceptable behavior include:
+exampwes o-of unacceptabwe behaviow incwude:
 
-* The use of sexualized language or imagery, and sexual attention or advances of any kind
-* Trolling, insulting or derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or email address, without their explicit permission
-* Other conduct which could reasonably be considered inappropriate in a professional setting
+* t-the use of sexuawized wanguage ow imagewy, >w< a-and sexuaw attention ow advances o-of any kind
+* twowwing, -.- insuwting o-ow dewogatowy c-comments, (✿oωo) and pewsonaw ow powiticaw attacks
+* pubwic ow pwivate hawassment
+* pubwishing othews' pwivate infowmation, (˘ω˘) s-such a-as a physicaw ow emaiw addwess, rawr w-without theiw expwicit p-pewmission
+* o-othew conduct which couwd weasonabwy be considewed inappwopwiate i-in a pwofessionaw setting
 
-## Enforcement Responsibilities
+## enfowcement wesponsibiwities
 
-Project maintainers are responsible for clarifying and enforcing our standards of acceptable behavior and will take appropriate and fair corrective action in response to any behavior that they deem inappropriate, threatening, offensive, or harmful.
+pwoject maintainews a-awe wesponsibwe fow cwawifying a-and enfowcing o-ouw standawds o-of acceptabwe behaviow and wiww t-take appwopwiate a-and faiw cowwective a-action in w-wesponse to any behaviow that they deem inappwopwiate, OwO t-thweatening, ^•ﻌ•^ o-offensive, UwU ow h-hawmfuw. (˘ω˘)
 
-Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, and will communicate reasons for moderation decisions when appropriate.
+pwoject m-maintainews h-have the wight and wesponsibiwity to wemove, (///ˬ///✿) edit, σωσ ow weject comments, /(^•ω•^) c-commits, code, 😳 wiki edits, 😳 issues, and othew contwibutions that awe nyot awigned to this c-code of conduct, (⑅˘꒳˘) and wiww communicate weasons fow modewation decisions w-when appwopwiate. 😳😳😳
 
-## Scope
+## s-scope
 
-This Code of Conduct applies within all community spaces, and also applies when an individual is officially representing the community in public spaces. Examples of representing our community include using an official e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event.
+t-this code of conduct appwies w-within aww community spaces, 😳 and a-awso appwies when a-an individuaw is officiawwy wepwesenting the community in pubwic spaces. XD exampwes of wepwesenting o-ouw community incwude using a-an officiaw e-maiw addwess, posting v-via an officiaw s-sociaw media account, mya ow acting as an appointed w-wepwesentative a-at an onwine ow offwine event. ^•ﻌ•^
 
-## Enforcement
+## e-enfowcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the project maintainers responsible for enforcement at [conduct@lessvm.org](mailto:conduct@lessvm.org). All complaints will be reviewed and investigated promptly and fairly.
+i-instances of abusive, ʘwʘ hawassing, ( ͡o ω ͡o ) ow othewwise unacceptabwe behaviow may be w-wepowted to the p-pwoject maintainews w-wesponsibwe fow enfowcement a-at [conduct@wessvm.owg](maiwto:conduct@wessvm.owg). mya a-aww compwaints wiww be weviewed a-and investigated pwomptwy and faiwwy. o.O
 
-All project maintainers are obligated to respect the privacy and security of the reporter of any incident.
+aww pwoject maintainews awe obwigated t-to wespect the p-pwivacy and secuwity of the wepowtew of any incident. (✿oωo)
 
-## Enforcement Guidelines
+## e-enfowcement g-guidewines
 
-Project maintainers will follow these Community Impact Guidelines in determining the consequences for any action they deem in violation of this Code of Conduct:
+pwoject maintainews wiww fowwow these community i-impact guidewines in detewmining the consequences fow any action they deem in v-viowation of this code of conduct:
 
-### 1. Correction
+### 1. :3 cowwection
 
-**Community Impact**: Use of inappropriate language or other behavior deemed unprofessional or unwelcome in the community.
+**community i-impact**: use o-of inappwopwiate wanguage ow othew behaviow deemed unpwofessionaw o-ow unwewcome i-in the community.
 
-**Consequence**: A private, written warning from project maintainers, providing clarity around the nature of the violation and an explanation of why the behavior was inappropriate. A public apology may be requested.
+**consequence**: a pwivate, 😳 wwitten wawning fwom pwoject maintainews, (U ﹏ U) p-pwoviding cwawity awound t-the nyatuwe of the viowation and an expwanation of why the behaviow w-was inappwopwiate. mya a pubwic a-apowogy may be w-wequested. (U ᵕ U❁)
 
-### 2. Warning
+### 2. wawning
 
-**Community Impact**: A violation through a single incident or series of actions.
+**community i-impact**: a viowation thwough a-a singwe i-incident ow sewies o-of actions. :3
 
-**Consequence**: A warning with consequences for continued behavior. No interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, for a specified period of time. This includes avoiding interactions in community spaces as well as external channels like social media. Violating these terms may lead to a temporary or permanent ban.
+**consequence**: a wawning with c-consequences fow c-continued behaviow. mya nyo intewaction with the peopwe i-invowved, OwO incwuding u-unsowicited i-intewaction with those enfowcing the code of c-conduct, (ˆ ﻌ ˆ)♡ fow a specified pewiod o-of time. ʘwʘ this i-incwudes avoiding intewactions in community spaces as weww as extewnaw c-channews w-wike sociaw media. o.O v-viowating these t-tewms may wead to a tempowawy o-ow pewmanent ban. UwU
 
-### 3. Temporary Ban
+### 3. rawr x3 tempowawy ban
 
-**Community Impact**: A serious violation of community standards, including sustained inappropriate behavior.
+**community impact**: a sewious viowation of community s-standawds, 🥺 incwuding sustained i-inappwopwiate behaviow. :3
 
-**Consequence**: A temporary ban from any sort of interaction or public communication with the community for a specified period of time. No public or private interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, is allowed during this period. Violating these terms may lead to a permanent ban.
+**consequence**: a tempowawy b-ban fwom any sowt of intewaction o-ow pubwic communication with t-the community f-fow a specified p-pewiod of time. (ꈍᴗꈍ) n-nyo pubwic ow p-pwivate intewaction with the peopwe invowved, 🥺 incwuding unsowicited intewaction with those enfowcing the code of c-conduct, (✿oωo) is awwowed d-duwing this p-pewiod. (U ﹏ U) viowating these tewms may w-wead to a pewmanent ban.
 
-### 4. Permanent Ban
+### 4. :3 pewmanent ban
 
-**Community Impact**: Demonstrating a pattern of violation of community standards, including sustained inappropriate behavior, harassment of an individual, or aggression toward or disparagement of classes of individuals.
+**community impact**: demonstwating a-a pattewn o-of viowation of community standawds, ^^;; i-incwuding sustained inappwopwiate behaviow, rawr h-hawassment of a-an individuaw, 😳😳😳 ow aggwession towawd o-ow dispawagement o-of cwasses of individuaws. (✿oωo)
 
-**Consequence**: A permanent ban from any sort of public interaction within the community.
+**consequence**: a pewmanent ban fwom any sowt of pubwic intewaction w-within the c-community. OwO
 
-## Attribution
+## a-attwibution
 
-This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.0, available at https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.
+this c-code of conduct i-is adapted fwom the [contwibutow c-covenant](https://www.contwibutow-covenant.owg), ʘwʘ v-vewsion 2.0, (ˆ ﻌ ˆ)♡ avaiwabwe at https://www.contwibutow-covenant.owg/vewsion/2/0/code_of_conduct.htmw. (U ﹏ U)
 
-Community Impact Guidelines were inspired by [Mozilla's code of conduct enforcement ladder](https://github.com/mozilla/diversity).
+c-community i-impact guidewines wewe inspiwed b-by [moziwwa's code of conduct enfowcement waddew](https://github.com/moziwwa/divewsity). UwU
 
-For answers to common questions about this code of conduct, see the FAQ at https://www.contributor-covenant.org/faq. Translations are available at https://www.contributor-covenant.org/translations.
+f-fow answews to common q-questions about t-this code of conduct, XD see the faq a-at https://www.contwibutow-covenant.owg/faq. ʘwʘ twanswations awe avaiwabwe at https://www.contwibutow-covenant.owg/twanswations. rawr x3

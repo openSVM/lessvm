@@ -1,170 +1,170 @@
-# LessVM IDELess
+# wessvm idewess
 
-<p align="center">
-  <img src="./screenshots/ideless-logo.png" alt="LessVM IDELess Logo" width="200"/>
+<p awign="centew">
+  <img s-swc="./scweenshots/idewess-wogo.png" a-awt="wessvm idewess w-wogo" width="200"/>
 </p>
 
-<p align="center">
-  A comprehensive development environment for LessVM on Solana
+<p a-awign="centew">
+  a-a compwehensive d-devewopment enviwonment f-fow wessvm o-on sowana
 </p>
 
-<p align="center">
-  <a href="https://github.com/lessvm/ideless/releases/latest"><img src="https://img.shields.io/github/v/release/lessvm/ideless" alt="Latest Release"></a>
-  <a href="https://github.com/lessvm/ideless/blob/main/LICENSE"><img src="https://img.shields.io/github/license/lessvm/ideless" alt="License"></a>
-  <a href="https://discord.gg/lessvm"><img src="https://img.shields.io/discord/123456789?color=7389D8&label=discord&logo=discord&logoColor=ffffff" alt="Discord"></a>
-  <a href="https://twitter.com/lessvm"><img src="https://img.shields.io/twitter/follow/lessvm?style=social" alt="Twitter"></a>
+<p awign="centew">
+  <a hwef="https://github.com/wessvm/idewess/weweases/watest"><img swc="https://img.shiewds.io/github/v/wewease/wessvm/idewess" awt="watest w-wewease"></a>
+  <a hwef="https://github.com/wessvm/idewess/bwob/main/wicense"><img swc="https://img.shiewds.io/github/wicense/wessvm/idewess" a-awt="wicense"></a>
+  <a hwef="https://discowd.gg/wessvm"><img s-swc="https://img.shiewds.io/discowd/123456789?cowow=7389d8&wabew=discowd&wogo=discowd&wogocowow=ffffff" awt="discowd"></a>
+  <a hwef="https://twittew.com/wessvm"><img swc="https://img.shiewds.io/twittew/fowwow/wessvm?stywe=sociaw" a-awt="twittew"></a>
 </p>
 
-## Overview
+## ovewview
 
-IDELess is a powerful, integrated development environment specifically designed for creating, testing, debugging, and deploying LessVM programs on the Solana blockchain. It combines a feature-rich code editor, advanced debugging tools, performance-focused simulator, and streamlined deployment capabilities with an AI assistant to enhance developer productivity.
+idewess i-is a powewfuw, >w< i-integwated devewopment enviwonment specificawwy designed fow cweating, XD testing, o.O d-debugging, and depwoying wessvm pwogwams on the sowana bwockchain. mya it combines a-a featuwe-wich code editow, a-advanced debugging t-toows, 🥺 pewfowmance-focused s-simuwatow, ^^;; a-and stweamwined depwoyment capabiwities w-with an ai assistant to enhance devewopew pwoductivity. :3
 
-<p align="center">
-  <img src="./screenshots/ideless-main.png" alt="IDELess Main Interface" width="800"/>
+<p a-awign="centew">
+  <img swc="./scweenshots/idewess-main.png" awt="idewess main intewface" width="800"/>
 </p>
 
-## Features
+## featuwes
 
-### 🖥️ Powerful Editor
+### 🖥️ p-powewfuw editow
 
-- Syntax highlighting for LessVM
-- Intelligent code completion
-- Real-time error checking
-- Integrated documentation
-- Project management
+- syntax highwighting f-fow wessvm
+- i-intewwigent c-code compwetion
+- weaw-time ewwow checking
+- integwated documentation
+- p-pwoject m-management
 
-### 🐞 Advanced Debugger
+### 🐞 advanced d-debuggew
 
-- Breakpoint management
-- Step-by-step execution
-- Stack and memory visualization
-- Variable inspection
-- Call stack navigation
+- bweakpoint m-management
+- step-by-step e-execution
+- stack and memowy visuawization
+- vawiabwe i-inspection
+- caww stack nyavigation
 
-### 🚀 Performance Simulator
+### 🚀 p-pewfowmance simuwatow
 
-- Real-time execution simulation
-- Gas usage analysis
-- Performance optimization tools
-- State visualization
-- Edge case testing
+- weaw-time e-execution simuwation
+- g-gas usage anawysis
+- p-pewfowmance optimization toows
+- state visuawization
+- edge case testing
 
-### 🔗 Deployment Tools
+### 🔗 depwoyment toows
 
-- Solana network integration
-- Deployment configuration
-- Transaction building and signing
-- Deployment monitoring
-- Verification tools
+- sowana n-nyetwowk integwation
+- d-depwoyment configuwation
+- t-twansaction b-buiwding and signing
+- d-depwoyment monitowing
+- vewification toows
 
-### 🤖 AI Assistant
+### 🤖 ai a-assistant
 
-- Context-aware code suggestions
-- Error resolution help
-- Performance optimization recommendations
-- Documentation integration
-- Learning resources
+- context-awawe code suggestions
+- ewwow wesowution hewp
+- pewfowmance o-optimization wecommendations
+- documentation integwation
+- w-weawning w-wesouwces
 
-## Getting Started
+## g-getting stawted
 
-### Installation
+### instawwation
 
-See the [Installation Guide](./installation_guide.md) for detailed instructions on installing IDELess on different platforms.
+s-see the [instawwation g-guide](./instawwation_guide.md) f-fow d-detaiwed instwuctions on instawwing idewess on d-diffewent pwatfowms. (U ﹏ U)
 
-### Quick Start
+### q-quick s-stawt
 
-Check out the [Quick Start Guide](./quick_start.md) to begin developing with IDELess right away.
+check out t-the [quick stawt g-guide](./quick_stawt.md) to begin devewoping with idewess wight a-away. OwO
 
-### Documentation
+### documentation
 
-Comprehensive documentation is available in the [docs](https://docs.lessvm.org/ideless) directory and online at [docs.lessvm.org/ideless](https://docs.lessvm.org/ideless).
+compwehensive documentation is avaiwabwe in the [docs](https://docs.wessvm.owg/idewess) diwectowy and o-onwine at [docs.wessvm.owg/idewess](https://docs.wessvm.owg/idewess). 😳😳😳
 
-## Screenshots
+## scweenshots
 
-<p align="center">
-  <img src="./screenshots/editor.png" alt="Code Editor" width="400"/>
-  <img src="./screenshots/debugger.png" alt="Debugger" width="400"/>
+<p awign="centew">
+  <img swc="./scweenshots/editow.png" a-awt="code editow" w-width="400"/>
+  <img s-swc="./scweenshots/debuggew.png" awt="debuggew" w-width="400"/>
 </p>
-<p align="center">
-  <img src="./screenshots/simulator.png" alt="Simulator" width="400"/>
-  <img src="./screenshots/deployment.png" alt="Deployment" width="400"/>
+<p awign="centew">
+  <img swc="./scweenshots/simuwatow.png" a-awt="simuwatow" w-width="400"/>
+  <img swc="./scweenshots/depwoyment.png" awt="depwoyment" width="400"/>
 </p>
 
-## System Requirements
+## system wequiwements
 
-### Minimum Requirements
-- **OS**: Windows 10/11, macOS 10.15+, or Ubuntu 20.04+
-- **Processor**: Dual-core 2GHz or higher
-- **Memory**: 8GB RAM
-- **Storage**: 1GB available space
-- **Display**: 1280x720 resolution
+### minimum wequiwements
+- **os**: w-windows 10/11, (ˆ ﻌ ˆ)♡ macos 10.15+, XD ow u-ubuntu 20.04+
+- **pwocessow**: duaw-cowe 2ghz ow h-highew
+- **memowy**: 8gb w-wam
+- **stowage**: 1gb avaiwabwe space
+- **dispway**: 1280x720 wesowution
 
-### Recommended Requirements
-- **OS**: Windows 11, macOS 12+, or Ubuntu 22.04+
-- **Processor**: Quad-core 3GHz or higher
-- **Memory**: 16GB RAM
-- **Storage**: 2GB available space
-- **Display**: 1920x1080 resolution or higher
+### w-wecommended w-wequiwements
+- **os**: windows 11, (ˆ ﻌ ˆ)♡ m-macos 12+, o-ow ubuntu 22.04+
+- **pwocessow**: quad-cowe 3ghz ow highew
+- **memowy**: 16gb wam
+- **stowage**: 2gb avaiwabwe s-space
+- **dispway**: 1920x1080 w-wesowution ow highew
 
-## Development
+## d-devewopment
 
-### Building from Source
+### buiwding f-fwom souwce
 
-1. Clone the repository:
+1. ( ͡o ω ͡o ) c-cwone the wepositowy:
    ```
-   git clone https://github.com/lessvm/ideless.git
-   cd ideless
-   ```
-
-2. Install dependencies:
-   ```
-   npm install
+   git cwone https://github.com/wessvm/idewess.git
+   c-cd idewess
    ```
 
-3. Start the development server:
+2. rawr x3 instaww dependencies:
    ```
-   npm run dev
-   ```
-
-4. Build for production:
-   ```
-   npm run build
+   nypm instaww
    ```
 
-### Contributing
+3. nyaa~~ s-stawt the devewopment s-sewvew:
+   ```
+   nypm wun dev
+   ```
 
-We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details on how to get started.
+4. >_< b-buiwd fow pwoduction:
+   ```
+   n-nypm wun buiwd
+   ```
 
-## Keyboard Shortcuts
+### contwibuting
 
-See the [Keyboard Shortcuts](./keyboard_shortcuts.md) document for a comprehensive list of keyboard shortcuts to enhance your productivity.
+we wewcome contwibutions! ^^;; pwease see o-ouw [contwibuting guide](./contwibuting.md) fow detaiws on how to get stawted. (ˆ ﻌ ˆ)♡
 
-## RPC Configuration
+## keyboawd showtcuts
 
-IDELess uses OpenSVM RPC servers by default for all Solana blockchain interactions. This ensures optimal performance and reliability when working with LessVM programs.
+s-see the [keyboawd showtcuts](./keyboawd_showtcuts.md) document fow a compwehensive w-wist o-of keyboawd showtcuts to enhance youw pwoductivity.
 
-## License
+## wpc configuwation
 
-This project is licensed under the [MIT License](./LICENSE).
+i-idewess u-uses opensvm wpc sewvews by defauwt fow aww sowana bwockchain i-intewactions. ^^;; this ensuwes optimaw p-pewfowmance and wewiabiwity when wowking with wessvm pwogwams. (⑅˘꒳˘)
 
-## Support
+## w-wicense
 
-- [GitHub Issues](https://github.com/lessvm/ideless/issues) - Bug reports and feature requests
-- [Discord Community](https://discord.gg/lessvm) - Real-time help and community discussions
-- [Twitter](https://twitter.com/lessvm) - Latest news and updates
-- [Email Support](mailto:support@lessvm.org) - Direct support from the team
+this pwoject is w-wicensed undew t-the [mit wicense](./wicense). rawr x3
 
-## Acknowledgements
+## suppowt
 
-IDELess is built on the shoulders of giants. We'd like to thank:
+- [github i-issues](https://github.com/wessvm/idewess/issues) - bug wepowts a-and featuwe w-wequests
+- [discowd c-community](https://discowd.gg/wessvm) - weaw-time h-hewp and c-community discussions
+- [twittew](https://twittew.com/wessvm) - watest nyews and updates
+- [emaiw s-suppowt](maiwto:suppowt@wessvm.owg) - d-diwect s-suppowt fwom the team
 
-- The Solana Foundation for their support
-- The Monaco Editor team for the excellent code editing capabilities
-- All our open source dependencies and their maintainers
-- Our amazing community of testers and early adopters
+## acknowwedgements
+
+idewess i-is buiwt on the shouwdews of g-giants. (///ˬ///✿) we'd wike t-to thank:
+
+- the sowana foundation fow theiw suppowt
+- the monaco e-editow team f-fow the excewwent c-code editing c-capabiwities
+- aww ouw open souwce d-dependencies and theiw maintainews
+- ouw amazing community of testews and eawwy adoptews
 
 ---
 
-<p align="center">
-  Made with ❤️ by the LessVM Team
+<p a-awign="centew">
+  made with ❤️ b-by the wessvm team
 </p>

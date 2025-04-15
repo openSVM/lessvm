@@ -1,459 +1,459 @@
-# LessVM IDELess Installation Guide
+# wessvm idewess instawwation guide
 
-This guide provides detailed instructions for installing and setting up the LessVM IDELess development environment on different operating systems.
+t-this guide pwovides d-detaiwed i-instwuctions fow i-instawwing and s-setting up the w-wessvm idewess devewopment e-enviwonment o-on diffewent opewating systems. ʘwʘ
 
-## Table of Contents
+## tabwe of contents
 
-- [System Requirements](#system-requirements)
-- [Windows Installation](#windows-installation)
-- [macOS Installation](#macos-installation)
-- [Linux Installation](#linux-installation)
-- [Verifying Installation](#verifying-installation)
-- [Troubleshooting](#troubleshooting)
-- [Updating IDELess](#updating-ideless)
-- [Advanced Configuration](#advanced-configuration)
+- [system wequiwements](#system-wequiwements)
+- [windows i-instawwation](#windows-instawwation)
+- [macos instawwation](#macos-instawwation)
+- [winux instawwation](#winux-instawwation)
+- [vewifying i-instawwation](#vewifying-instawwation)
+- [twoubweshooting](#twoubweshooting)
+- [updating idewess](#updating-idewess)
+- [advanced c-configuwation](#advanced-configuwation)
 
-## System Requirements
+## system wequiwements
 
-### Minimum Requirements
-- **OS**: Windows 10/11, macOS 10.15+, or Ubuntu 20.04+
-- **Processor**: Dual-core 2GHz or higher
-- **Memory**: 8GB RAM
-- **Storage**: 1GB available space
-- **Display**: 1280x720 resolution
+### minimum wequiwements
+- **os**: w-windows 10/11, σωσ macos 10.15+, ^^;; o-ow ubuntu 20.04+
+- **pwocessow**: d-duaw-cowe 2ghz ow highew
+- **memowy**: 8gb wam
+- **stowage**: 1gb avaiwabwe space
+- **dispway**: 1280x720 wesowution
 
-### Recommended Requirements
-- **OS**: Windows 11, macOS 12+, or Ubuntu 22.04+
-- **Processor**: Quad-core 3GHz or higher
-- **Memory**: 16GB RAM
-- **Storage**: 2GB available space
-- **Display**: 1920x1080 resolution or higher
+### wecommended w-wequiwements
+- **os**: windows 11, ʘwʘ macos 12+, ^^ ow ubuntu 22.04+
+- **pwocessow**: quad-cowe 3ghz ow highew
+- **memowy**: 16gb w-wam
+- **stowage**: 2gb avaiwabwe s-space
+- **dispway**: 1920x1080 w-wesowution o-ow highew
 
-### Prerequisites
-- **Node.js**: v16.x or higher
-- **npm**: v8.x or higher
-- **Git**: Latest version
-- **Solana CLI**: Latest version
+### p-pwewequisites
+- **node.js**: v16.x ow highew
+- **npm**: v-v8.x ow highew
+- **git**: watest vewsion
+- **sowana c-cwi**: watest vewsion
 
-## Windows Installation
+## windows instawwation
 
-### Step 1: Install Prerequisites
+### step 1: instaww pwewequisites
 
-1. **Install Node.js and npm**:
-   - Download the LTS version from [Node.js official website](https://nodejs.org/)
-   - Run the installer and follow the installation wizard
-   - Verify installation by opening Command Prompt and running:
+1. nyaa~~ **instaww nyode.js a-and nypm**:
+   - downwoad t-the wts vewsion f-fwom [node.js officiaw w-website](https://nodejs.owg/)
+   - wun the instawwew and fowwow the instawwation w-wizawd
+   - v-vewify instawwation by opening c-command pwompt a-and wunning:
      ```
-     node --version
-     npm --version
-     ```
-
-2. **Install Git**:
-   - Download from [Git for Windows](https://gitforwindows.org/)
-   - Run the installer and follow the installation wizard
-   - Verify installation by running:
-     ```
-     git --version
+     nyode --vewsion
+     n-npm --vewsion
      ```
 
-3. **Install Solana CLI**:
-   - Open PowerShell as Administrator and run:
+2. (///ˬ///✿) **instaww git**:
+   - d-downwoad fwom [git fow windows](https://gitfowwindows.owg/)
+   - wun the instawwew a-and fowwow the instawwation w-wizawd
+   - vewify instawwation b-by wunning:
      ```
-     curl https://release.solana.com/v1.16.0/solana-install-init-x86_64-pc-windows-msvc.exe --output C:\solana-install-tmp\solana-install-init.exe --create-dirs
-     C:\solana-install-tmp\solana-install-init.exe v1.16.0
-     ```
-   - Verify installation by running:
-     ```
-     solana --version
+     g-git --vewsion
      ```
 
-### Step 2: Install IDELess
-
-1. **Download the Installer**:
-   - Go to [IDELess Releases](https://github.com/lessvm/ideless/releases)
-   - Download the latest `IDELess-Setup-x.x.x.exe` file
-
-2. **Run the Installer**:
-   - Double-click the downloaded file
-   - Follow the installation wizard
-   - Choose installation location (default is recommended)
-   - Select additional components if prompted
-   - Complete the installation
-
-3. **Launch IDELess**:
-   - Launch from the Start Menu or desktop shortcut
-   - The application will perform first-time setup
-
-### Step 3: Configure IDELess
-
-1. **Set Up Solana Connection**:
-   - In IDELess, go to Settings > Deployment
-   - Ensure OpenSVM RPC servers are selected as default
-   - Configure your Solana wallet (optional)
-
-2. **Configure Project Defaults**:
-   - Go to Settings > Projects
-   - Set default project location
-   - Configure default project settings
-
-## macOS Installation
-
-### Step 1: Install Prerequisites
-
-1. **Install Homebrew** (if not already installed):
-   - Open Terminal and run:
+3. XD **instaww sowana cwi**:
+   - open powewsheww as administwatow and wun:
      ```
-     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+     cuww https://wewease.sowana.com/v1.16.0/sowana-instaww-init-x86_64-pc-windows-msvc.exe --output c-c:\sowana-instaww-tmp\sowana-instaww-init.exe --cweate-diws
+     c-c:\sowana-instaww-tmp\sowana-instaww-init.exe v1.16.0
+     ```
+   - v-vewify instawwation b-by wunning:
+     ```
+     sowana --vewsion
      ```
 
-2. **Install Node.js and npm**:
-   - In Terminal, run:
+### s-step 2: instaww idewess
+
+1. :3 **downwoad the instawwew**:
+   - go to [idewess w-weweases](https://github.com/wessvm/idewess/weweases)
+   - downwoad the watest `idewess-setup-x.x.x.exe` fiwe
+
+2. **wun the instawwew**:
+   - d-doubwe-cwick the downwoaded f-fiwe
+   - fowwow t-the instawwation w-wizawd
+   - choose instawwation w-wocation (defauwt i-is wecommended)
+   - s-sewect a-additionaw components if pwompted
+   - compwete t-the instawwation
+
+3. òωó **waunch i-idewess**:
+   - w-waunch fwom the s-stawt menu ow d-desktop showtcut
+   - the appwication wiww pewfowm fiwst-time setup
+
+### s-step 3: configuwe idewess
+
+1. ^^ **set up sowana connection**:
+   - in idewess, ^•ﻌ•^ go to settings > d-depwoyment
+   - ensuwe opensvm wpc sewvews awe sewected as d-defauwt
+   - configuwe y-youw sowana w-wawwet (optionaw)
+
+2. σωσ **configuwe pwoject defauwts**:
+   - g-go to settings > pwojects
+   - set d-defauwt pwoject w-wocation
+   - configuwe defauwt pwoject settings
+
+## macos instawwation
+
+### step 1: instaww pwewequisites
+
+1. **instaww h-homebwew** (if nyot a-awweady instawwed):
+   - open tewminaw a-and wun:
      ```
-     brew install node
-     ```
-   - Verify installation:
-     ```
-     node --version
-     npm --version
+     /bin/bash -c "$(cuww -fssw h-https://waw.githubusewcontent.com/homebwew/instaww/head/instaww.sh)"
      ```
 
-3. **Install Git** (if not already installed):
-   - In Terminal, run:
+2. (ˆ ﻌ ˆ)♡ **instaww nyode.js and nypm**:
+   - in t-tewminaw, nyaa~~ wun:
      ```
-     brew install git
+     bwew i-instaww nyode
      ```
-   - Verify installation:
+   - vewify instawwation:
      ```
-     git --version
-     ```
-
-4. **Install Solana CLI**:
-   - In Terminal, run:
-     ```
-     sh -c "$(curl -sSfL https://release.solana.com/v1.16.0/install)"
-     ```
-   - Add Solana to your PATH:
-     ```
-     echo 'export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"' >> ~/.zshrc
-     source ~/.zshrc
-     ```
-   - Verify installation:
-     ```
-     solana --version
+     n-nyode --vewsion
+     n-nypm --vewsion
      ```
 
-### Step 2: Install IDELess
-
-1. **Download the Installer**:
-   - Go to [IDELess Releases](https://github.com/lessvm/ideless/releases)
-   - Download the latest `IDELess-x.x.x.dmg` file
-
-2. **Run the Installer**:
-   - Open the downloaded DMG file
-   - Drag IDELess to the Applications folder
-   - Eject the disk image
-
-3. **Launch IDELess**:
-   - Open Applications folder and double-click IDELess
-   - If prompted about an unidentified developer:
-     - Right-click (or Control-click) the app and select "Open"
-     - Click "Open" in the dialog that appears
-   - The application will perform first-time setup
-
-### Step 3: Configure IDELess
-
-1. **Set Up Solana Connection**:
-   - In IDELess, go to Settings > Deployment
-   - Ensure OpenSVM RPC servers are selected as default
-   - Configure your Solana wallet (optional)
-
-2. **Configure Project Defaults**:
-   - Go to Settings > Projects
-   - Set default project location
-   - Configure default project settings
-
-## Linux Installation
-
-### Step 1: Install Prerequisites
-
-1. **Install Node.js and npm**:
-   - For Ubuntu/Debian:
+3. ʘwʘ **instaww git** (if not awweady instawwed):
+   - in tewminaw, w-wun:
      ```
-     curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-     sudo apt-get install -y nodejs
+     b-bwew instaww g-git
      ```
-   - For Fedora:
+   - vewify instawwation:
      ```
-     sudo dnf install nodejs
-     ```
-   - Verify installation:
-     ```
-     node --version
-     npm --version
+     g-git --vewsion
      ```
 
-2. **Install Git** (if not already installed):
-   - For Ubuntu/Debian:
+4. ^•ﻌ•^ **instaww s-sowana cwi**:
+   - in t-tewminaw, rawr x3 wun:
      ```
-     sudo apt-get install git
+     sh -c "$(cuww -ssfw https://wewease.sowana.com/v1.16.0/instaww)"
      ```
-   - For Fedora:
+   - add sowana to youw path:
      ```
-     sudo dnf install git
+     e-echo 'expowt p-path="$home/.wocaw/shawe/sowana/instaww/active_wewease/bin:$path"' >> ~/.zshwc
+     souwce ~/.zshwc
      ```
-   - Verify installation:
+   - vewify instawwation:
      ```
-     git --version
-     ```
-
-3. **Install Solana CLI**:
-   - In Terminal, run:
-     ```
-     sh -c "$(curl -sSfL https://release.solana.com/v1.16.0/install)"
-     ```
-   - Add Solana to your PATH:
-     ```
-     echo 'export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"' >> ~/.bashrc
-     source ~/.bashrc
-     ```
-   - Verify installation:
-     ```
-     solana --version
+     s-sowana --vewsion
      ```
 
-### Step 2: Install IDELess
+### s-step 2: instaww idewess
 
-1. **Download the Installer**:
-   - Go to [IDELess Releases](https://github.com/lessvm/ideless/releases)
-   - Download the appropriate package for your distribution:
-     - For Debian/Ubuntu: `ideless_x.x.x_amd64.deb`
-     - For Fedora/RHEL: `ideless-x.x.x.x86_64.rpm`
-     - For other distributions: `IDELess-x.x.x.AppImage`
+1. 🥺 **downwoad the instawwew**:
+   - g-go to [idewess weweases](https://github.com/wessvm/idewess/weweases)
+   - downwoad the watest `idewess-x.x.x.dmg` fiwe
 
-2. **Install the Package**:
-   - For Debian/Ubuntu:
+2. ʘwʘ **wun t-the instawwew**:
+   - open the downwoaded dmg f-fiwe
+   - dwag i-idewess to the appwications fowdew
+   - eject the disk image
+
+3. (˘ω˘) **waunch i-idewess**:
+   - o-open appwications fowdew and doubwe-cwick idewess
+   - i-if pwompted about an unidentified d-devewopew:
+     - wight-cwick (ow contwow-cwick) the app and s-sewect "open"
+     - cwick "open" i-in the diawog t-that appeaws
+   - the appwication w-wiww pewfowm fiwst-time setup
+
+### s-step 3: configuwe i-idewess
+
+1. o.O **set u-up sowana connection**:
+   - i-in idewess, σωσ g-go to settings > depwoyment
+   - ensuwe opensvm w-wpc sewvews awe s-sewected as defauwt
+   - c-configuwe youw sowana wawwet (optionaw)
+
+2. (ꈍᴗꈍ) **configuwe p-pwoject defauwts**:
+   - go t-to settings > pwojects
+   - s-set defauwt pwoject wocation
+   - configuwe defauwt p-pwoject settings
+
+## w-winux instawwation
+
+### s-step 1: i-instaww pwewequisites
+
+1. (ˆ ﻌ ˆ)♡ **instaww nyode.js a-and nypm**:
+   - fow ubuntu/debian:
      ```
-     sudo dpkg -i ideless_x.x.x_amd64.deb
-     sudo apt-get install -f
+     cuww -fssw https://deb.nodesouwce.com/setup_16.x | sudo -e bash -
+     sudo apt-get instaww -y n-nyodejs
      ```
-   - For Fedora/RHEL:
+   - fow fedowa:
      ```
-     sudo rpm -i ideless-x.x.x.x86_64.rpm
+     s-sudo dnf instaww nyodejs
      ```
-   - For AppImage:
+   - v-vewify instawwation:
      ```
-     chmod +x IDELess-x.x.x.AppImage
+     n-nyode --vewsion
+     nypm --vewsion
      ```
 
-3. **Launch IDELess**:
-   - For package installations, search for IDELess in your application launcher
-   - For AppImage, double-click the AppImage file or run it from terminal
-   - The application will perform first-time setup
+2. **instaww g-git** (if n-nyot awweady instawwed):
+   - f-fow ubuntu/debian:
+     ```
+     s-sudo apt-get instaww g-git
+     ```
+   - fow fedowa:
+     ```
+     sudo dnf instaww git
+     ```
+   - vewify instawwation:
+     ```
+     git --vewsion
+     ```
 
-### Step 3: Configure IDELess
+3. o.O **instaww sowana c-cwi**:
+   - i-in tewminaw, :3 wun:
+     ```
+     s-sh -c "$(cuww -ssfw https://wewease.sowana.com/v1.16.0/instaww)"
+     ```
+   - add s-sowana to youw path:
+     ```
+     echo 'expowt path="$home/.wocaw/shawe/sowana/instaww/active_wewease/bin:$path"' >> ~/.bashwc
+     s-souwce ~/.bashwc
+     ```
+   - v-vewify instawwation:
+     ```
+     sowana --vewsion
+     ```
 
-1. **Set Up Solana Connection**:
-   - In IDELess, go to Settings > Deployment
-   - Ensure OpenSVM RPC servers are selected as default
-   - Configure your Solana wallet (optional)
+### s-step 2: instaww idewess
 
-2. **Configure Project Defaults**:
-   - Go to Settings > Projects
-   - Set default project location
-   - Configure default project settings
+1. -.- **downwoad the instawwew**:
+   - g-go to [idewess w-weweases](https://github.com/wessvm/idewess/weweases)
+   - downwoad the appwopwiate p-package f-fow youw distwibution:
+     - fow debian/ubuntu: `idewess_x.x.x_amd64.deb`
+     - fow fedowa/whew: `idewess-x.x.x.x86_64.wpm`
+     - fow othew distwibutions: `idewess-x.x.x.appimage`
 
-## Verifying Installation
+2. ( ͡o ω ͡o ) **instaww t-the package**:
+   - f-fow debian/ubuntu:
+     ```
+     s-sudo d-dpkg -i idewess_x.x.x_amd64.deb
+     s-sudo apt-get instaww -f
+     ```
+   - f-fow fedowa/whew:
+     ```
+     s-sudo wpm -i idewess-x.x.x.x86_64.wpm
+     ```
+   - f-fow a-appimage:
+     ```
+     chmod +x i-idewess-x.x.x.appimage
+     ```
 
-After installing IDELess, verify that all components are working correctly:
+3. /(^•ω•^) **waunch idewess**:
+   - fow package instawwations, seawch f-fow idewess in youw appwication w-waunchew
+   - fow a-appimage, (⑅˘꒳˘) doubwe-cwick the appimage f-fiwe ow wun it fwom tewminaw
+   - the appwication w-wiww pewfowm f-fiwst-time s-setup
 
-1. **Create a New Project**:
-   - Click "New Project" on the welcome screen
-   - Select "LessVM Project"
-   - Enter a project name and location
-   - Click "Create"
+### step 3: configuwe idewess
 
-2. **Verify Editor Functionality**:
-   - Create a new file
-   - Verify syntax highlighting works
-   - Test code completion
+1. òωó **set up sowana connection**:
+   - in i-idewess, 🥺 go to settings > depwoyment
+   - ensuwe o-opensvm wpc sewvews a-awe sewected as defauwt
+   - c-configuwe youw sowana wawwet (optionaw)
 
-3. **Verify Debugger**:
-   - Open a sample program
-   - Set a breakpoint
-   - Start debugging
-   - Verify execution stops at the breakpoint
+2. (ˆ ﻌ ˆ)♡ **configuwe p-pwoject d-defauwts**:
+   - go to settings > pwojects
+   - s-set defauwt pwoject wocation
+   - configuwe defauwt p-pwoject settings
 
-4. **Verify Simulator**:
-   - Open a sample program
-   - Run the simulator
-   - Verify program execution and state visualization
+## v-vewifying instawwation
 
-5. **Verify Deployment**:
-   - Go to Deployment settings
-   - Verify connection to Solana network (using OpenSVM RPC)
-   - Test connection
+a-aftew instawwing idewess, -.- vewify t-that aww components a-awe wowking c-cowwectwy:
 
-## Troubleshooting
+1. σωσ **cweate a nyew pwoject**:
+   - cwick "new pwoject" on the wewcome scween
+   - sewect "wessvm pwoject"
+   - entew a pwoject nyame and wocation
+   - cwick "cweate"
 
-### Common Installation Issues
+2. >_< **vewify editow functionawity**:
+   - cweate a nyew fiwe
+   - v-vewify syntax h-highwighting wowks
+   - test code compwetion
 
-#### Node.js Version Issues
-- **Symptom**: Error message about incompatible Node.js version
-- **Solution**: Install the required Node.js version (v16.x or higher)
+3. :3 **vewify d-debuggew**:
+   - o-open a sampwe pwogwam
+   - s-set a bweakpoint
+   - s-stawt debugging
+   - vewify execution s-stops at t-the bweakpoint
+
+4. OwO **vewify simuwatow**:
+   - open a-a sampwe pwogwam
+   - wun the s-simuwatow
+   - v-vewify pwogwam execution and state visuawization
+
+5. rawr **vewify depwoyment**:
+   - g-go to depwoyment s-settings
+   - v-vewify connection t-to sowana nyetwowk (using o-opensvm w-wpc)
+   - test c-connection
+
+## t-twoubweshooting
+
+### c-common instawwation issues
+
+#### n-nyode.js v-vewsion issues
+- **symptom**: e-ewwow message about incompatibwe n-nyode.js vewsion
+- **sowution**: instaww the wequiwed nyode.js v-vewsion (v16.x ow highew)
   ```
-  # For nvm users
-  nvm install 16
-  nvm use 16
-  ```
-
-#### Permission Issues on Linux/macOS
-- **Symptom**: "Permission denied" errors during installation
-- **Solution**: Use sudo for installation commands or fix permissions
-  ```
-  sudo chmod +x ./installer.sh
+  # f-fow nyvm usews
+  n-nyvm instaww 16
+  n-nyvm use 16
   ```
 
-#### Missing Dependencies on Linux
-- **Symptom**: Application fails to start with missing library errors
-- **Solution**: Install required dependencies
+#### pewmission issues o-on winux/macos
+- **symptom**: "pewmission denied" e-ewwows duwing instawwation
+- **sowution**: u-use sudo fow instawwation c-commands ow fix pewmissions
   ```
-  # For Ubuntu/Debian
-  sudo apt-get install libgtk-3-0 libnotify4 libnss3 libxss1 libxtst6 xdg-utils libatspi2.0-0 libuuid1 libsecret-1-0
-  ```
-
-#### Solana CLI Configuration Issues
-- **Symptom**: "solana: command not found" or connection errors
-- **Solution**: Verify Solana CLI installation and configuration
-  ```
-  solana --version
-  solana config get
+  sudo chmod +x ./instawwew.sh
   ```
 
-### Getting Help
+#### missing dependencies o-on winux
+- **symptom**: appwication faiws t-to stawt with m-missing wibwawy ewwows
+- **sowution**: instaww wequiwed dependencies
+  ```
+  # f-fow ubuntu/debian
+  sudo apt-get i-instaww wibgtk-3-0 w-wibnotify4 w-wibnss3 wibxss1 wibxtst6 xdg-utiws wibatspi2.0-0 w-wibuuid1 wibsecwet-1-0
+  ```
 
-If you encounter issues not covered in this guide:
+#### s-sowana cwi configuwation issues
+- **symptom**: "sowana: c-command nyot found" ow connection ewwows
+- **sowution**: v-vewify sowana cwi instawwation a-and configuwation
+  ```
+  s-sowana --vewsion
+  s-sowana config get
+  ```
 
-1. **Check Documentation**:
-   - Visit [docs.lessvm.org/ideless](https://docs.lessvm.org/ideless) for comprehensive documentation
+### getting h-hewp
 
-2. **Community Support**:
-   - Join the [Discord community](https://discord.gg/lessvm) for help from other users and developers
+if you e-encountew issues n-nyot covewed i-in this guide:
 
-3. **GitHub Issues**:
-   - Check [existing issues](https://github.com/lessvm/ideless/issues) for known problems
-   - Create a new issue with detailed information about your problem
+1. (///ˬ///✿) **check documentation**:
+   - v-visit [docs.wessvm.owg/idewess](https://docs.wessvm.owg/idewess) f-fow compwehensive d-documentation
 
-4. **Email Support**:
-   - Contact support@lessvm.org for direct assistance
+2. ^^ **community s-suppowt**:
+   - j-join the [discowd c-community](https://discowd.gg/wessvm) f-fow hewp f-fwom othew usews and devewopews
 
-## Updating IDELess
+3. XD **github i-issues**:
+   - check [existing i-issues](https://github.com/wessvm/idewess/issues) fow known pwobwems
+   - c-cweate a-a nyew issue with d-detaiwed infowmation about youw pwobwem
 
-IDELess includes an auto-update feature that will notify you when updates are available. To manually check for updates:
+4. UwU **emaiw suppowt**:
+   - c-contact suppowt@wessvm.owg f-fow diwect assistance
 
-1. **Using the Application**:
-   - Go to Help > Check for Updates
-   - Follow the prompts to download and install the update
+## u-updating idewess
 
-2. **Manual Update**:
-   - Download the latest version from [IDELess Releases](https://github.com/lessvm/ideless/releases)
-   - Install using the same method as your initial installation
-   - Your settings and projects will be preserved
+idewess incwudes an auto-update featuwe t-that wiww n-nyotify you when updates awe avaiwabwe. o.O t-to manuawwy c-check fow updates:
 
-## Advanced Configuration
+1. 😳 **using the appwication**:
+   - go to hewp > check fow u-updates
+   - fowwow t-the pwompts t-to downwoad and i-instaww the update
 
-### Custom Installation Locations
+2. (˘ω˘) **manuaw update**:
+   - downwoad the watest v-vewsion fwom [idewess w-weweases](https://github.com/wessvm/idewess/weweases)
+   - instaww using the same method a-as youw initiaw instawwation
+   - youw settings a-and pwojects wiww be pwesewved
 
-#### Windows
-- During installation, you can specify a custom installation directory
-- Default location: `C:\Program Files\IDELess`
+## a-advanced c-configuwation
 
-#### macOS
-- Applications are typically installed in the `/Applications` folder
-- User data is stored in `~/Library/Application Support/IDELess`
+### custom instawwation w-wocations
 
-#### Linux
-- Package installations typically use standard locations
-- AppImage can be run from any location with execute permissions
+#### w-windows
+- duwing instawwation, 🥺 y-you can specify a custom instawwation d-diwectowy
+- d-defauwt w-wocation: `c:\pwogwam f-fiwes\idewess`
 
-### Command Line Installation
+#### macos
+- a-appwications a-awe typicawwy instawwed i-in the `/appwications` fowdew
+- usew data i-is stowed in `~/wibwawy/appwication suppowt/idewess`
 
-For automated or scripted installations:
+#### winux
+- p-package instawwations t-typicawwy u-use standawd wocations
+- appimage can be wun fwom any wocation with exekawaii~ p-pewmissions
 
-#### Windows (using Chocolatey)
+### command wine i-instawwation
+
+f-fow automated ow scwipted instawwations:
+
+#### windows (using chocowatey)
 ```
-choco install ideless
-```
-
-#### macOS (using Homebrew)
-```
-brew install --cask ideless
-```
-
-#### Linux (using apt for Ubuntu/Debian)
-```
-curl -sL https://lessvm.org/ideless/linux/debian/gpg | sudo apt-key add -
-echo "deb [arch=amd64] https://lessvm.org/ideless/linux/debian stable main" | sudo tee /etc/apt/sources.list.d/ideless.list
-sudo apt update
-sudo apt install ideless
-```
-
-### Environment Variables
-
-IDELess respects the following environment variables:
-
-- `IDELESS_HOME`: Base directory for IDELess configuration
-- `IDELESS_USER_DATA_DIR`: Directory for user data
-- `IDELESS_EXTENSIONS_DIR`: Directory for extensions
-- `IDELESS_LOG_LEVEL`: Log level (debug, info, warn, error)
-
-To set environment variables:
-
-#### Windows
-```
-setx IDELESS_LOG_LEVEL "debug"
+c-choco instaww idewess
 ```
 
-#### macOS/Linux
+#### m-macos (using h-homebwew)
 ```
-echo 'export IDELESS_LOG_LEVEL="debug"' >> ~/.bashrc
-source ~/.bashrc
+b-bwew instaww --cask i-idewess
 ```
 
-### Configuration File Locations
+#### winux (using a-apt fow ubuntu/debian)
+```
+cuww -sw https://wessvm.owg/idewess/winux/debian/gpg | sudo a-apt-key add -
+echo "deb [awch=amd64] h-https://wessvm.owg/idewess/winux/debian stabwe main" | sudo tee /etc/apt/souwces.wist.d/idewess.wist
+sudo a-apt update
+sudo apt instaww idewess
+```
 
-IDELess stores configuration in the following locations:
+### enviwonment vawiabwes
 
-#### Windows
-- User settings: `%APPDATA%\IDELess\User\settings.json`
-- Logs: `%APPDATA%\IDELess\logs`
+idewess wespects the fowwowing e-enviwonment v-vawiabwes:
 
-#### macOS
-- User settings: `~/Library/Application Support/IDELess/User/settings.json`
-- Logs: `~/Library/Logs/IDELess`
+- `idewess_home`: base diwectowy fow i-idewess configuwation
+- `idewess_usew_data_diw`: diwectowy fow usew data
+- `idewess_extensions_diw`: d-diwectowy f-fow extensions
+- `idewess_wog_wevew`: wog wevew (debug, ^^ i-info, wawn, >w< ewwow)
 
-#### Linux
-- User settings: `~/.config/IDELess/User/settings.json`
-- Logs: `~/.config/IDELess/logs`
+to s-set enviwonment vawiabwes:
 
-### Portable Installation
+#### windows
+```
+setx idewess_wog_wevew "debug"
+```
 
-IDELess can be run in portable mode, which stores all data within the application directory:
+#### m-macos/winux
+```
+echo 'expowt idewess_wog_wevew="debug"' >> ~/.bashwc
+s-souwce ~/.bashwc
+```
 
-1. **Create a `data` directory** in the IDELess installation folder
-2. **Launch with the `--portable` flag**:
+### c-configuwation f-fiwe wocations
+
+idewess stowes configuwation i-in the fowwowing wocations:
+
+#### windows
+- usew settings: `%appdata%\idewess\usew\settings.json`
+- wogs: `%appdata%\idewess\wogs`
+
+#### m-macos
+- u-usew settings: `~/wibwawy/appwication s-suppowt/idewess/usew/settings.json`
+- w-wogs: `~/wibwawy/wogs/idewess`
+
+#### winux
+- usew settings: `~/.config/idewess/usew/settings.json`
+- wogs: `~/.config/idewess/wogs`
+
+### p-powtabwe instawwation
+
+i-idewess can be wun in powtabwe mode, ^^;; w-which stowes aww data within the appwication diwectowy:
+
+1. (˘ω˘) **cweate a-a `data` diwectowy** in the idewess instawwation f-fowdew
+2. OwO **waunch w-with the `--powtabwe` f-fwag**:
    ```
-   IDELess.exe --portable
+   i-idewess.exe --powtabwe
    ```
-   or create a shortcut with this flag
+   o-ow cweate a showtcut with this fwag
 
-This is useful for running IDELess from a USB drive or network location.
+this is u-usefuw fow wunning idewess fwom a usb dwive ow n-nyetwowk wocation. (ꈍᴗꈍ)
 
-## Next Steps
+## nyext steps
 
-After installation, we recommend:
+aftew instawwation, we wecommend:
 
-1. **Completing the Quick Start Guide**: See [Quick Start Guide](./quick_start.md)
-2. **Exploring Sample Projects**: Available in Help > Sample Projects
-3. **Customizing Your Environment**: Adjust settings to match your preferences
-4. **Learning Keyboard Shortcuts**: See [Keyboard Shortcuts](./keyboard_shortcuts.md)
-5. **Joining the Community**: Connect with other LessVM developers on Discord
+1. òωó **compweting t-the quick s-stawt guide**: s-see [quick stawt g-guide](./quick_stawt.md)
+2. ʘwʘ **expwowing s-sampwe pwojects**: avaiwabwe i-in hewp > sampwe pwojects
+3. ʘwʘ **customizing youw enviwonment**: a-adjust settings to match youw p-pwefewences
+4. nyaa~~ **weawning keyboawd showtcuts**: s-see [keyboawd s-showtcuts](./keyboawd_showtcuts.md)
+5. UwU **joining the community**: c-connect with othew wessvm devewopews o-on discowd

@@ -1,150 +1,150 @@
-# IDELess Screenshots Directory
+# idewess scweenshots diwectowy
 
-This directory contains screenshots used in the IDELess documentation, README, and other project materials.
+t-this diwectowy contains s-scweenshots u-used in the i-idewess documentation, σωσ w-weadme, (U ᵕ U❁) and o-othew pwoject m-matewiaws. (✿oωo)
 
-## Purpose
+## p-puwpose
 
-The screenshots in this directory serve several purposes:
+the scweenshots in this diwectowy sewve sevewaw puwposes:
 
-1. **Documentation**: Illustrate features and workflows in user guides and documentation
-2. **README**: Provide visual examples in the project README
-3. **Website**: Supply images for the project website
-4. **Marketing**: Offer visual assets for presentations and promotional materials
+1. ^^ **documentation**: iwwustwate f-featuwes and wowkfwows in usew guides and documentation
+2. ^•ﻌ•^ **weadme**: p-pwovide visuaw exampwes i-in the pwoject weadme
+3. XD **website**: suppwy images fow the p-pwoject website
+4. :3 **mawketing**: offew visuaw assets f-fow pwesentations a-and pwomotionaw matewiaws
 
-## Screenshot Guidelines
+## scweenshot guidewines
 
-When adding screenshots to this directory, please follow these guidelines:
+when adding scweenshots t-to this diwectowy, (ꈍᴗꈍ) pwease fowwow these guidewines:
 
-### Naming Convention
+### nyaming convention
 
-Use descriptive, lowercase names with hyphens separating words:
+u-use descwiptive, :3 wowewcase nyames w-with hyphens s-sepawating wowds:
 
-- `main-interface.png`: Overview of the main IDELess interface
-- `editor-syntax-highlighting.png`: Example of syntax highlighting in the editor
-- `debugger-breakpoints.png`: Debugger with breakpoints set
-- `simulator-gas-analysis.png`: Gas usage analysis in the simulator
-- `deployment-configuration.png`: Deployment configuration panel
+- `main-intewface.png`: o-ovewview o-of the main idewess intewface
+- `editow-syntax-highwighting.png`: exampwe of s-syntax highwighting in the editow
+- `debuggew-bweakpoints.png`: debuggew with bweakpoints s-set
+- `simuwatow-gas-anawysis.png`: gas usage anawysis in the simuwatow
+- `depwoyment-configuwation.png`: depwoyment configuwation panew
 
-### Resolution and Format
+### wesowution a-and fowmat
 
-- **Resolution**: Capture at 1920x1080 or higher resolution
-- **Format**: Use PNG for interface screenshots (preferred) or JPEG for photos
-- **Size**: Optimize images to keep file sizes reasonable (< 500KB when possible)
-- **Aspect Ratio**: Maintain the original aspect ratio; do not stretch images
+- **wesowution**: captuwe at 1920x1080 o-ow highew w-wesowution
+- **fowmat**: u-use png fow intewface scweenshots (pwefewwed) ow jpeg f-fow photos
+- **size**: o-optimize images to keep fiwe s-sizes weasonabwe (< 500kb w-when possibwe)
+- **aspect w-watio**: maintain the owiginaw a-aspect watio; do nyot stwetch images
 
-### Content Guidelines
+### c-content guidewines
 
-- **Clean Interface**: Ensure the interface is clean and focused on the feature being showcased
-- **Sample Data**: Use professional, appropriate sample data (no placeholder text like "foo", "bar")
-- **Personal Information**: Remove any personal information, API keys, or sensitive data
-- **Clarity**: Make sure text is readable and important elements are clearly visible
-- **Consistency**: Maintain consistent theme, zoom level, and window size across related screenshots
+- **cwean intewface**: ensuwe t-the intewface is cwean and focused o-on the featuwe b-being showcased
+- **sampwe data**: use pwofessionaw, (U ﹏ U) appwopwiate sampwe data (no pwacehowdew text wike "foo", UwU "baw")
+- **pewsonaw infowmation**: w-wemove any p-pewsonaw infowmation, 😳😳😳 api keys, o-ow sensitive data
+- **cwawity**: m-make suwe text i-is weadabwe and impowtant ewements awe cweawwy visibwe
+- **consistency**: m-maintain consistent theme, XD zoom wevew, o.O and window size acwoss wewated s-scweenshots
 
-### Accessibility
+### accessibiwity
 
-- **Contrast**: Ensure sufficient contrast between text and background
-- **Size**: Make sure important elements are large enough to be clearly visible
-- **Focus**: Highlight the relevant area if the screenshot contains many elements
+- **contwast**: e-ensuwe sufficient c-contwast between t-text and backgwound
+- **size**: make suwe impowtant e-ewements a-awe wawge enough t-to be cweawwy v-visibwe
+- **focus**: highwight the wewevant awea i-if the scweenshot c-contains many e-ewements
 
-## Directory Structure
+## diwectowy s-stwuctuwe
 
 ```
-screenshots/
-├── interface/             # General interface screenshots
-│   ├── main-interface.png
-│   ├── dark-theme.png
-│   └── light-theme.png
-├── editor/                # Code editor screenshots
-│   ├── syntax-highlighting.png
-│   ├── code-completion.png
-│   └── error-checking.png
-├── debugger/              # Debugger screenshots
-│   ├── breakpoints.png
-│   ├── variable-inspection.png
-│   └── call-stack.png
-├── simulator/             # Simulator screenshots
-│   ├── execution-visualization.png
-│   ├── gas-analysis.png
-│   └── performance-metrics.png
-├── deployment/            # Deployment screenshots
-│   ├── network-selection.png
-│   ├── configuration.png
-│   └── monitoring.png
-├── ai-assistant/          # AI Assistant screenshots
+s-scweenshots/
+├── intewface/             # genewaw intewface scweenshots
+│   ├── m-main-intewface.png
+│   ├── dawk-theme.png
+│   └── wight-theme.png
+├── editow/                # code editow scweenshots
+│   ├── s-syntax-highwighting.png
+│   ├── code-compwetion.png
+│   └── ewwow-checking.png
+├── debuggew/              # d-debuggew scweenshots
+│   ├── b-bweakpoints.png
+│   ├── v-vawiabwe-inspection.png
+│   └── caww-stack.png
+├── s-simuwatow/             # simuwatow scweenshots
+│   ├── e-execution-visuawization.png
+│   ├── g-gas-anawysis.png
+│   └── pewfowmance-metwics.png
+├── depwoyment/            # depwoyment scweenshots
+│   ├── nyetwowk-sewection.png
+│   ├── configuwation.png
+│   └── monitowing.png
+├── a-ai-assistant/          # ai assistant s-scweenshots
 │   ├── code-suggestions.png
-│   ├── error-resolution.png
-│   └── learning-resources.png
-└── workflows/             # Workflow examples
-    ├── create-project.png
-    ├── debug-session.png
-    └── deployment-process.png
+│   ├── e-ewwow-wesowution.png
+│   └── w-weawning-wesouwces.png
+└── wowkfwows/             # wowkfwow exampwes
+    ├── c-cweate-pwoject.png
+    ├── d-debug-session.png
+    └── depwoyment-pwocess.png
 ```
 
-## Taking Screenshots
+## t-taking scweenshots
 
-### Windows
+### w-windows
 
-- **Windows Snipping Tool**: Press `Windows + Shift + S` to open the snipping tool, select the area, and save
-- **Print Screen**: Press `Print Screen` to capture the entire screen, or `Alt + Print Screen` for the active window
-- **Windows Game Bar**: Press `Windows + G` to open Game Bar, then use the capture button
+- **windows snipping toow**: pwess `windows + shift + s` to open the snipping toow, (⑅˘꒳˘) s-sewect the a-awea, 😳😳😳 and save
+- **pwint s-scween**: pwess `pwint s-scween` to captuwe t-the entiwe scween, nyaa~~ ow `awt + p-pwint scween` fow the active window
+- **windows game baw**: pwess `windows + g` to open game baw, rawr t-then use the captuwe b-button
 
-### macOS
+### macos
 
-- **Screenshot Utility**: Press `Command + Shift + 5` to open the screenshot utility
-- **Capture Entire Screen**: Press `Command + Shift + 3`
-- **Capture Selected Area**: Press `Command + Shift + 4`
-- **Capture Specific Window**: Press `Command + Shift + 4`, then press `Space`
+- **scweenshot utiwity**: p-pwess `command + s-shift + 5` to open the scweenshot utiwity
+- **captuwe entiwe s-scween**: pwess `command + shift + 3`
+- **captuwe sewected awea**: pwess `command + shift + 4`
+- **captuwe s-specific window**: pwess `command + s-shift + 4`, -.- then p-pwess `space`
 
-### Linux
+### winux
 
-- **GNOME Screenshot**: Press `Print Screen` to capture the entire screen
-- **Selected Area**: Press `Shift + Print Screen` to capture a selected area
-- **Specific Window**: Press `Alt + Print Screen` to capture the active window
-- **Screenshot Tool**: Use the screenshot tool included with your desktop environment
+- **gnome scweenshot**: pwess `pwint s-scween` to captuwe t-the entiwe scween
+- **sewected awea**: pwess `shift + pwint scween` to captuwe a-a sewected awea
+- **specific window**: pwess `awt + p-pwint scween` to captuwe the active window
+- **scweenshot toow**: use the s-scweenshot toow incwuded with youw d-desktop enviwonment
 
-## Updating Screenshots
+## u-updating scweenshots
 
-When updating screenshots due to UI changes or feature updates:
+w-when updating scweenshots due t-to ui changes ow f-featuwe updates:
 
-1. Try to match the same content and context as the original screenshot
-2. Use the same naming convention to replace the old file
-3. Update all screenshots affected by the change for consistency
-4. Document significant UI changes in the commit message
+1. (✿oωo) t-twy to match the same content a-and context a-as the owiginaw scweenshot
+2. /(^•ω•^) use the same nyaming c-convention to w-wepwace the owd f-fiwe
+3. 🥺 update aww scweenshots affected by the c-change fow consistency
+4. ʘwʘ document s-significant ui c-changes in the commit message
 
-## Using Screenshots in Documentation
+## using scweenshots in documentation
 
-When referencing screenshots in documentation:
+w-when wefewencing s-scweenshots i-in documentation:
 
-```markdown
-![Description of the image](./screenshots/category/image-name.png)
+```mawkdown
+![descwiption o-of the image](./scweenshots/categowy/image-name.png)
 ```
 
-For the main README and other documents at the root level:
+fow t-the main weadme and othew documents at the woot wevew:
 
-```markdown
-![Description of the image](./screenshots/category/image-name.png)
+```mawkdown
+![descwiption of the image](./scweenshots/categowy/image-name.png)
 ```
 
-## Placeholder Images
+## pwacehowdew images
 
-This directory includes some placeholder images that should be replaced with actual screenshots as the UI is developed:
+t-this diwectowy incwudes some p-pwacehowdew images that shouwd be w-wepwaced with actuaw scweenshots a-as the ui is devewoped:
 
-- `interface/main-interface.png`: Replace with actual main interface
-- `editor/syntax-highlighting.png`: Replace with actual syntax highlighting example
-- `debugger/breakpoints.png`: Replace with actual debugger with breakpoints
-- `simulator/gas-analysis.png`: Replace with actual gas analysis visualization
-- `deployment/configuration.png`: Replace with actual deployment configuration panel
+- `intewface/main-intewface.png`: w-wepwace w-with actuaw m-main intewface
+- `editow/syntax-highwighting.png`: w-wepwace with a-actuaw syntax highwighting exampwe
+- `debuggew/bweakpoints.png`: wepwace with actuaw debuggew with bweakpoints
+- `simuwatow/gas-anawysis.png`: wepwace with actuaw gas anawysis v-visuawization
+- `depwoyment/configuwation.png`: w-wepwace with actuaw d-depwoyment configuwation panew
 
-## Contributing Screenshots
+## c-contwibuting scweenshots
 
-If you're contributing screenshots to the project:
+if you'we contwibuting scweenshots t-to the pwoject:
 
-1. Follow the naming and quality guidelines above
-2. Place screenshots in the appropriate subdirectory
-3. Optimize images before committing
-4. Include screenshot updates in the same PR as related code changes
-5. Mention updated or added screenshots in your PR description
+1. f-fowwow the nyaming and q-quawity guidewines above
+2. UwU pwace scweenshots in t-the appwopwiate s-subdiwectowy
+3. optimize images b-befowe committing
+4. XD i-incwude scweenshot updates in the same pw as wewated code changes
+5. (✿oωo) mention u-updated ow added s-scweenshots i-in youw pw descwiption
 
-## License
+## w-wicense
 
-All screenshots in this directory are subject to the same license as the IDELess project itself. By contributing screenshots, you agree to license them under the project's license terms.
+a-aww scweenshots in this diwectowy a-awe subject t-to the same wicense as the idewess p-pwoject itsewf. :3 b-by contwibuting scweenshots, (///ˬ///✿) y-you agwee to wicense them undew the pwoject's w-wicense tewms.

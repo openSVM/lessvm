@@ -1,235 +1,235 @@
-# LessVM IDELess Quick Start Guide
+# wessvm idewess quick stawt guide
 
-This guide will help you get started with IDELess, the integrated development environment for LessVM on Solana. Follow these steps to create, debug, simulate, and deploy your first LessVM program.
+t-this guide wiww h-hewp you get s-stawted with idewess, >w< t-the integwated d-devewopment e-enviwonment fow w-wessvm on sowana. rawr x3 f-fowwow these steps to cweate, OwO debug, simuwate, ^•ﻌ•^ and depwoy youw fiwst wessvm pwogwam. >_<
 
-## Table of Contents
+## t-tabwe of contents
 
-1. [Installation](#installation)
-2. [Creating Your First Project](#creating-your-first-project)
-3. [Understanding the Interface](#understanding-the-interface)
-4. [Writing Your First Program](#writing-your-first-program)
-5. [Debugging Your Program](#debugging-your-program)
-6. [Simulating Execution](#simulating-execution)
-7. [Deploying to Solana](#deploying-to-solana)
-8. [Using the AI Assistant](#using-the-ai-assistant)
-9. [Next Steps](#next-steps)
+1. OwO [instawwation](#instawwation)
+2. >_< [cweating youw f-fiwst pwoject](#cweating-youw-fiwst-pwoject)
+3. (ꈍᴗꈍ) [undewstanding the intewface](#undewstanding-the-intewface)
+4. >w< [wwiting y-youw fiwst pwogwam](#wwiting-youw-fiwst-pwogwam)
+5. (U ﹏ U) [debugging youw pwogwam](#debugging-youw-pwogwam)
+6. ^^ [simuwating execution](#simuwating-execution)
+7. (U ﹏ U) [depwoying to sowana](#depwoying-to-sowana)
+8. :3 [using t-the ai assistant](#using-the-ai-assistant)
+9. [next s-steps](#next-steps)
 
-## Installation
+## i-instawwation
 
-Before starting, ensure you have IDELess installed on your system:
+befowe stawting, (✿oωo) ensuwe you have idewess instawwed on youw system:
 
-1. Download and install IDELess from [our official website](https://lessvm.org/ideless/download)
-2. Follow the [Installation Guide](./installation_guide.md) for detailed instructions
+1. XD d-downwoad and instaww idewess fwom [ouw officiaw website](https://wessvm.owg/idewess/downwoad)
+2. >w< fowwow t-the [instawwation guide](./instawwation_guide.md) f-fow detaiwed i-instwuctions
 
-## Creating Your First Project
+## c-cweating youw f-fiwst pwoject
 
-Let's create a simple "Hello World" project to get started:
+wet's cweate a simpwe "hewwo wowwd" p-pwoject to get stawted:
 
-1. **Launch IDELess** from your applications menu or desktop shortcut
-2. From the welcome screen, click **New Project**
-3. Select **LessVM Project** from the template options
-4. Enter a **Project Name** (e.g., "HelloWorld")
-5. Choose a **Location** for your project
-6. Click **Create Project**
+1. òωó **waunch idewess** f-fwom youw appwications menu ow desktop showtcut
+2. (ꈍᴗꈍ) fwom the wewcome scween, rawr x3 cwick **new pwoject**
+3. rawr x3 s-sewect **wessvm pwoject** f-fwom the tempwate o-options
+4. σωσ entew a-a **pwoject nyame** (e.g., "hewwowowwd")
+5. (ꈍᴗꈍ) choose a **wocation** fow youw p-pwoject
+6. rawr cwick **cweate p-pwoject**
 
-IDELess will create a new project with the following structure:
-
-```
-HelloWorld/
-├── src/
-│   └── main.lvm       # Main program file
-├── tests/
-│   └── main.test.lvm  # Test file
-└── lessvm.toml        # Project configuration
-```
-
-## Understanding the Interface
-
-The IDELess interface consists of several key areas:
-
-![IDELess Interface](./screenshots/interface_overview.png)
-
-1. **Editor**: Central area where you write and edit code
-2. **Explorer**: Left sidebar showing project files and structure
-3. **Debugger**: Tools for debugging your program
-4. **Simulator**: Tools for simulating program execution
-5. **Deployment**: Tools for deploying to Solana
-6. **AI Assistant**: Right sidebar providing context-aware assistance
-7. **Terminal**: Bottom panel for command output and logs
-8. **Status Bar**: Bottom bar showing program status and information
-
-## Writing Your First Program
-
-Let's write a simple program that adds two numbers:
-
-1. Open `src/main.lvm` in the editor
-2. Replace the default content with the following code:
+idewess wiww c-cweate a nyew p-pwoject with the fowwowing stwuctuwe:
 
 ```
-// Simple addition program
-function add(a: i32, b: i32) -> i32 {
-    return a + b;
+h-hewwowowwd/
+├── swc/
+│   └── m-main.wvm       # main pwogwam fiwe
+├── t-tests/
+│   └── main.test.wvm  # t-test fiwe
+└── wessvm.tomw        # p-pwoject configuwation
+```
+
+## u-undewstanding the intewface
+
+the idewess intewface consists of sevewaw key aweas:
+
+![idewess intewface](./scweenshots/intewface_ovewview.png)
+
+1. ^^;; **editow**: centwaw awea whewe you wwite and e-edit code
+2. rawr x3 **expwowew**: w-weft sidebaw showing p-pwoject fiwes and s-stwuctuwe
+3. **debuggew**: t-toows fow debugging youw pwogwam
+4. (ˆ ﻌ ˆ)♡ **simuwatow**: toows fow simuwating p-pwogwam execution
+5. σωσ **depwoyment**: toows fow depwoying to sowana
+6. **ai assistant**: wight s-sidebaw pwoviding context-awawe a-assistance
+7. (U ﹏ U) **tewminaw**: b-bottom panew fow c-command output and wogs
+8. >w< **status b-baw**: bottom b-baw showing pwogwam s-status and i-infowmation
+
+## wwiting youw fiwst pwogwam
+
+wet's w-wwite a simpwe p-pwogwam that a-adds two nyumbews:
+
+1. σωσ o-open `swc/main.wvm` i-in the editow
+2. nyaa~~ wepwace the defauwt content with the f-fowwowing code:
+
+```
+// simpwe addition pwogwam
+function add(a: i32, 🥺 b: i32) -> i32 {
+    wetuwn a-a + b;
 }
 
 function main() {
-    // Initialize variables
-    let x: i32 = 5;
-    let y: i32 = 7;
+    // initiawize vawiabwes
+    wet x-x: i32 = 5;
+    w-wet y: i32 = 7;
     
-    // Call add function
-    let result: i32 = add(x, y);
+    // c-caww add function
+    w-wet wesuwt: i32 = add(x, rawr x3 y);
     
-    // Print result
-    print("Result: " + to_string(result));
+    // p-pwint w-wesuwt
+    pwint("wesuwt: " + to_stwing(wesuwt));
 }
 ```
 
-3. Save the file with **Ctrl+S** (or **⌘+S** on macOS)
+3. σωσ save the fiwe with **ctww+s** (ow **⌘+s** on macos)
 
-Notice how IDELess provides:
-- Syntax highlighting for LessVM code
-- Code completion as you type
-- Real-time error checking
-- Function parameter hints
+nyotice how idewess pwovides:
+- s-syntax highwighting fow wessvm c-code
+- code compwetion as you t-type
+- weaw-time e-ewwow checking
+- function pawametew hints
 
-## Debugging Your Program
+## d-debugging youw p-pwogwam
 
-Now let's debug our program to understand its execution:
+nyow wet's debug ouw pwogwam t-to undewstand i-its execution:
 
-1. Set a breakpoint by clicking in the gutter next to line 10 (the `let result` line)
-2. Click the **Debug** button in the toolbar or press **F5**
-3. The program will start and pause at your breakpoint
-4. Examine the **Variables** panel to see the values of `x` and `y`
-5. Use the debug controls to:
-   - **Step Over** (F10): Execute the current line and move to the next
-   - **Step Into** (F11): Enter a function call
-   - **Step Out** (Shift+F11): Exit the current function
-   - **Continue** (F5): Resume execution until the next breakpoint
-6. Continue execution to see the final result
+1. (///ˬ///✿) set a bweakpoint by cwicking in the guttew nyext to wine 10 (the `wet w-wesuwt` w-wine)
+2. (U ﹏ U) cwick t-the **debug** button in the t-toowbaw ow pwess **f5**
+3. ^^;; t-the pwogwam wiww stawt a-and pause at youw bweakpoint
+4. 🥺 examine the **vawiabwes** panew to see the vawues o-of `x` and `y`
+5. òωó u-use the debug contwows to:
+   - **step ovew** (f10): e-exekawaii~ t-the cuwwent wine and move to the nyext
+   - **step into** (f11): e-entew a function caww
+   - **step out** (shift+f11): exit the cuwwent function
+   - **continue** (f5): wesume e-execution untiw the nyext bweakpoint
+6. XD continue e-execution t-to see the finaw wesuwt
 
-## Simulating Execution
+## simuwating execution
 
-The Simulator allows you to analyze program performance and behavior:
+the simuwatow a-awwows you to anawyze p-pwogwam pewfowmance and behaviow:
 
-1. Click the **Simulator** tab in the right panel
-2. Click **Run Simulation**
-3. Observe the execution visualization showing:
-   - Memory state changes
-   - Stack operations
-   - Gas usage
-   - Execution path
-4. Review the **Gas Analysis** to understand computational costs
-5. Experiment with different inputs using the **Simulation Parameters** panel
+1. :3 cwick the **simuwatow** t-tab in the wight panew
+2. (U ﹏ U) cwick **wun s-simuwation**
+3. >w< obsewve the execution visuawization showing:
+   - m-memowy state changes
+   - s-stack opewations
+   - g-gas usage
+   - execution p-path
+4. /(^•ω•^) weview the **gas anawysis** t-to undewstand c-computationaw c-costs
+5. (⑅˘꒳˘) expewiment with diffewent i-inputs u-using the **simuwation pawametews** panew
 
-## Deploying to Solana
+## depwoying t-to sowana
 
-Now let's deploy our program to the Solana blockchain:
+n-nyow wet's depwoy o-ouw pwogwam to the sowana bwockchain:
 
-1. Click the **Deploy** tab in the right panel
-2. Select a network:
-   - **Localnet**: For local testing (default)
-   - **Devnet**: For development testing
-   - **Testnet**: For pre-production testing
-   - **Mainnet**: For production deployment
-3. Ensure **OpenSVM RPC** is selected as the RPC provider
-4. Configure your deployment:
-   - **Program ID**: Generate a new one or use existing
-   - **Payer**: Select your wallet for transaction fees
-   - **Upgrade Authority**: Set who can upgrade the program
-5. Click **Build & Deploy**
-6. Monitor the deployment progress in the terminal
-7. Once complete, you'll see the deployment details including:
-   - Program ID
-   - Transaction signature
-   - Block explorer link
+1. ʘwʘ cwick the **depwoy** t-tab in the wight panew
+2. rawr x3 sewect a-a nyetwowk:
+   - **wocawnet**: f-fow wocaw testing (defauwt)
+   - **devnet**: fow devewopment testing
+   - **testnet**: fow pwe-pwoduction t-testing
+   - **mainnet**: f-fow pwoduction d-depwoyment
+3. (˘ω˘) e-ensuwe **opensvm wpc** is sewected a-as the wpc pwovidew
+4. o.O configuwe youw depwoyment:
+   - **pwogwam id**: genewate a nyew one ow use existing
+   - **payew**: s-sewect youw wawwet fow twansaction f-fees
+   - **upgwade authowity**: s-set who can upgwade the pwogwam
+5. 😳 c-cwick **buiwd & depwoy**
+6. o.O m-monitow the d-depwoyment pwogwess i-in the tewminaw
+7. ^^;; o-once compwete, ( ͡o ω ͡o ) y-you'ww see the depwoyment detaiws incwuding:
+   - pwogwam id
+   - twansaction signatuwe
+   - bwock expwowew w-wink
 
-## Using the AI Assistant
+## using t-the ai assistant
 
-The AI Assistant can help you learn and improve your code:
+t-the ai assistant can hewp you w-weawn and impwove youw code:
 
-1. Click the **AI Assistant** tab in the right panel
-2. Try these useful commands:
-   - **Explain Code**: Select code and ask "Explain this code"
-   - **Optimize**: Ask "How can I optimize this function?"
-   - **Fix Errors**: When you have an error, ask "How do I fix this?"
-   - **Learn Concepts**: Ask "Explain how memory works in LessVM"
-   - **Generate Code**: Ask "Write a function to sort an array"
+1. ^^;; cwick the **ai assistant** tab i-in the wight p-panew
+2. ^^;; twy these usefuw commands:
+   - **expwain c-code**: sewect code and ask "expwain this code"
+   - **optimize**: a-ask "how can i-i optimize this function?"
+   - **fix e-ewwows**: w-when you have an ewwow, XD ask "how do i fix this?"
+   - **weawn concepts**: ask "expwain how memowy w-wowks in wessvm"
+   - **genewate c-code**: ask "wwite a-a function t-to sowt an awway"
 
-The AI Assistant is context-aware and understands your code, providing relevant suggestions and explanations.
+t-the ai assistant is context-awawe a-and undewstands y-youw code, 🥺 pwoviding wewevant s-suggestions a-and expwanations. (///ˬ///✿)
 
-## Next Steps
+## nyext steps
 
-Congratulations! You've created, debugged, simulated, and deployed your first LessVM program. Here are some next steps to continue your journey:
+c-congwatuwations! (U ᵕ U❁) you've cweated, ^^;; debugged, ^^;; s-simuwated, rawr and depwoyed youw fiwst w-wessvm pwogwam. (˘ω˘) h-hewe awe some nyext steps to c-continue youw jouwney:
 
-1. **Explore Sample Projects**:
-   - Go to **File > Open Sample** to explore example projects
-   - Study different patterns and techniques
+1. 🥺 **expwowe sampwe pwojects**:
+   - go t-to **fiwe > open s-sampwe** to expwowe e-exampwe pwojects
+   - study diffewent pattewns and techniques
 
-2. **Learn LessVM**:
-   - Review the [LessVM Documentation](https://docs.lessvm.org)
-   - Experiment with different opcodes and features
-   - Use the AI Assistant to explain concepts
+2. nyaa~~ **weawn w-wessvm**:
+   - weview the [wessvm documentation](https://docs.wessvm.owg)
+   - expewiment w-with diffewent o-opcodes and featuwes
+   - u-use the ai assistant to expwain c-concepts
 
-3. **Customize Your Environment**:
-   - Explore **Settings** to customize the editor
-   - Set up keyboard shortcuts for your workflow
-   - Configure themes and layout
+3. :3 **customize y-youw enviwonment**:
+   - expwowe **settings** t-to customize the editow
+   - set up keyboawd s-showtcuts f-fow youw wowkfwow
+   - configuwe t-themes and wayout
 
-4. **Join the Community**:
-   - Join our [Discord community](https://discord.gg/lessvm)
-   - Share your projects and get feedback
-   - Participate in challenges and hackathons
+4. **join the community**:
+   - j-join ouw [discowd c-community](https://discowd.gg/wessvm)
+   - s-shawe youw pwojects and get feedback
+   - pawticipate in chawwenges and hackathons
 
-## Common Tasks Reference
+## common tasks wefewence
 
-### Project Management
-- **New Project**: File > New Project
-- **Open Project**: File > Open Project
-- **Save All**: File > Save All
-- **Close Project**: File > Close Project
+### pwoject management
+- **new pwoject**: fiwe > nyew pwoject
+- **open pwoject**: fiwe > open pwoject
+- **save aww**: fiwe > save a-aww
+- **cwose p-pwoject**: fiwe > cwose pwoject
 
-### Editing
-- **Find**: Ctrl+F (⌘+F on macOS)
-- **Replace**: Ctrl+H (⌘+Option+F on macOS)
-- **Format Document**: Alt+Shift+F (Option+Shift+F on macOS)
-- **Toggle Comment**: Ctrl+/ (⌘+/ on macOS)
-- **Code Completion**: Ctrl+Space (⌘+Space on macOS)
+### editing
+- **find**: c-ctww+f (⌘+f o-on macos)
+- **wepwace**: c-ctww+h (⌘+option+f on macos)
+- **fowmat d-document**: awt+shift+f (option+shift+f o-on macos)
+- **toggwe c-comment**: ctww+/ (⌘+/ o-on macos)
+- **code compwetion**: c-ctww+space (⌘+space o-on macos)
 
-### Debugging
-- **Start/Continue Debugging**: F5
-- **Stop Debugging**: Shift+F5
-- **Step Over**: F10
-- **Step Into**: F11
-- **Step Out**: Shift+F11
-- **Toggle Breakpoint**: F9
+### debugging
+- **stawt/continue debugging**: f-f5
+- **stop debugging**: s-shift+f5
+- **step o-ovew**: f-f10
+- **step i-into**: f11
+- **step o-out**: shift+f11
+- **toggwe b-bweakpoint**: f-f9
 
-### Simulation
-- **Start Simulation**: Alt+S (Option+S on macOS)
-- **Stop Simulation**: Alt+X (Option+X on macOS)
-- **Reset Simulation**: Alt+R (Option+R on macOS)
-- **Show Gas Analysis**: Alt+G (Option+G on macOS)
+### simuwation
+- **stawt s-simuwation**: awt+s (option+s o-on macos)
+- **stop s-simuwation**: a-awt+x (option+x on macos)
+- **weset s-simuwation**: awt+w (option+w on macos)
+- **show g-gas anawysis**: awt+g (option+g o-on macos)
 
-### Deployment
-- **Build**: Ctrl+Shift+B (⌘+Shift+B on macOS)
-- **Deploy**: Ctrl+Shift+D (⌘+Shift+D on macOS)
-- **Verify Deployment**: Ctrl+Shift+V (⌘+Shift+V on macOS)
+### d-depwoyment
+- **buiwd**: c-ctww+shift+b (⌘+shift+b on macos)
+- **depwoy**: c-ctww+shift+d (⌘+shift+d on macos)
+- **vewify d-depwoyment**: ctww+shift+v (⌘+shift+v o-on macos)
 
-### AI Assistant
-- **Show Assistant**: Alt+A (Option+A on macOS)
-- **Explain Selection**: Alt+E (Option+E on macOS)
-- **Optimize Selection**: Alt+O (Option+O on macOS)
-- **Generate Code**: Alt+G (Option+G on macOS)
+### ai assistant
+- **show a-assistant**: awt+a (option+a on macos)
+- **expwain sewection**: awt+e (option+e o-on macos)
+- **optimize sewection**: a-awt+o (option+o o-on macos)
+- **genewate code**: awt+g (option+g on macos)
 
-For a complete list of keyboard shortcuts, see the [Keyboard Shortcuts](./keyboard_shortcuts.md) document.
+fow a compwete w-wist of keyboawd showtcuts, /(^•ω•^) see t-the [keyboawd s-showtcuts](./keyboawd_showtcuts.md) d-document. ^•ﻌ•^
 
-## Troubleshooting
+## twoubweshooting
 
-If you encounter issues:
+if you encountew i-issues:
 
-1. Check the **Terminal** panel for error messages
-2. Consult the **Problems** panel for code issues
-3. Use the AI Assistant for help with errors
-4. Refer to the [Documentation](https://docs.lessvm.org/ideless)
-5. Ask the community on [Discord](https://discord.gg/lessvm)
+1. UwU c-check the **tewminaw** panew fow e-ewwow messages
+2. 😳😳😳 consuwt the **pwobwems** panew f-fow code issues
+3. OwO use the ai a-assistant fow hewp w-with ewwows
+4. ^•ﻌ•^ w-wefew to the [documentation](https://docs.wessvm.owg/idewess)
+5. (ꈍᴗꈍ) ask the community o-on [discowd](https://discowd.gg/wessvm)
 
-Happy coding with IDELess!
+happy c-coding with i-idewess!

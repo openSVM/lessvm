@@ -1,98 +1,98 @@
-# Contributing to lessVM
+# contwibuting to wessvm
 
-We love your input! We want to make contributing to lessVM as easy and transparent as possible, whether it's:
+we wuv y-youw input! /(^•ω•^) we want t-to make contwibuting t-to wessvm a-as easy and twanspawent a-as possibwe, (⑅˘꒳˘) w-whethew i-it's:
 
-- Reporting a bug
-- Discussing the current state of the code
-- Submitting a fix
-- Proposing new features
-- Becoming a maintainer
+- wepowting a-a bug
+- discussing the cuwwent state of the code
+- submitting a fix
+- pwoposing n-nyew featuwes
+- becoming a maintainew
 
-## Development Process
+## devewopment p-pwocess
 
-We use GitHub to host code, to track issues and feature requests, as well as accept pull requests.
+we use github t-to host code, ( ͡o ω ͡o ) to twack issues and featuwe wequests, òωó as weww as accept p-puww wequests. (⑅˘꒳˘)
 
-1. Fork the repo and create your branch from `main`
-2. If you've added code that should be tested, add tests
-3. If you've changed APIs, update the documentation
-4. Ensure the test suite passes
-5. Make sure your code lints
-6. Issue that pull request!
+1. XD fowk the w-wepo and cweate y-youw bwanch fwom `main`
+2. -.- if you've added code that shouwd be tested, :3 add tests
+3. nyaa~~ i-if you've changed apis, 😳 update the documentation
+4. (⑅˘꒳˘) ensuwe the test suite p-passes
+5. nyaa~~ make suwe youw code wints
+6. OwO i-issue that p-puww wequest! rawr x3
 
-## Any contributions you make will be under the Apache 2.0 Software License
+## a-any contwibutions y-you make wiww be undew the apache 2.0 softwawe w-wicense
 
-In short, when you submit code changes, your submissions are understood to be under the same [Apache 2.0 License](http://choosealicense.com/licenses/apache-2.0/) that covers the project. Feel free to contact the maintainers if that's a concern.
+in showt, XD when you submit code changes, y-youw submissions awe undewstood to be undew the same [apache 2.0 wicense](http://chooseawicense.com/wicenses/apache-2.0/) that covews the p-pwoject. σωσ feew fwee to contact the m-maintainews if t-that's a concewn. (U ᵕ U❁)
 
-## Report bugs using GitHub's [issue tracker](https://github.com/yourusername/lessvm/issues)
+## w-wepowt bugs using github's [issue twackew](https://github.com/youwusewname/wessvm/issues)
 
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/yourusername/lessvm/issues/new); it's that easy!
+we use github i-issues to twack p-pubwic bugs. (U ﹏ U) wepowt a bug by [opening a-a nyew issue](https://github.com/youwusewname/wessvm/issues/new); i-it's that easy! :3
 
-## Write bug reports with detail, background, and sample code
+## wwite b-bug wepowts with detaiw, ( ͡o ω ͡o ) backgwound, σωσ a-and sampwe code
 
-**Great Bug Reports** tend to have:
+**gweat bug wepowts** tend t-to have:
 
-- A quick summary and/or background
-- Steps to reproduce
-  - Be specific!
-  - Give sample code if you can
-- What you expected would happen
-- What actually happens
-- Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
+- a quick summawy and/ow b-backgwound
+- steps to wepwoduce
+  - b-be specific! >w<
+  - g-give sampwe code if you can
+- nyani you expected wouwd happen
+- nyani actuawwy happens
+- nyotes (possibwy i-incwuding why y-you think this might be happening, 😳😳😳 o-ow stuff you t-twied that didn't w-wowk)
 
-## Development Guidelines
+## devewopment guidewines
 
-### Code Style
+### code stywe
 
-- Follow Rust standard formatting (use `rustfmt`)
-- Use meaningful variable names
-- Comment complex logic
-- Keep functions small and focused
-- Use Rust idioms and best practices
+- fowwow w-wust standawd fowmatting (use `wustfmt`)
+- use meaningfuw vawiabwe nyames
+- comment compwex wogic
+- k-keep functions smow and focused
+- u-use wust idioms a-and best pwactices
 
-### Testing
+### t-testing
 
-- Write unit tests for all new code
-- Include integration tests for new features
-- Test edge cases and error conditions
-- Use property-based testing where appropriate
-- Ensure all tests pass before submitting PR
+- wwite unit t-tests fow aww n-nyew code
+- incwude i-integwation t-tests fow nyew featuwes
+- test edge cases and e-ewwow conditions
+- u-use pwopewty-based t-testing whewe a-appwopwiate
+- e-ensuwe aww tests pass befowe submitting pw
 
-### Gas Optimization
+### gas optimization
 
-- Consider gas costs in all operations
-- Use zero-copy operations where possible
-- Minimize memory allocations
-- Profile gas usage in tests
+- c-considew gas costs in aww opewations
+- use zewo-copy opewations whewe possibwe
+- minimize m-memowy awwocations
+- pwofiwe gas usage in tests
 
-### Security
+### secuwity
 
-- Follow security best practices
-- Add bounds checking for all memory operations
-- Validate all account accesses
-- Handle all error cases
-- Document security considerations
+- f-fowwow secuwity b-best pwactices
+- a-add bounds checking fow aww memowy o-opewations
+- vawidate aww account a-accesses
+- h-handwe aww ewwow cases
+- document secuwity considewations
 
-### Documentation
+### documentation
 
-- Update README.md for new features
-- Document all public functions
-- Include examples in documentation
-- Update gas costs table
-- Document breaking changes
+- update weadme.md fow new featuwes
+- d-document aww pubwic functions
+- i-incwude exampwes in documentation
+- u-update g-gas costs tabwe
+- document bweaking changes
 
-## Pull Request Process
+## p-puww wequest pwocess
 
-1. Update the README.md with details of changes to the interface
-2. Update the version numbers in Cargo.toml and README.md
-3. Add your changes to CHANGELOG.md
-4. The PR will be merged once you have the sign-off of two maintainers
+1. OwO u-update the weadme.md with d-detaiws of changes t-to the intewface
+2. 😳 update the vewsion nyumbews in cawgo.tomw and weadme.md
+3. 😳😳😳 a-add youw changes t-to changewog.md
+4. (˘ω˘) t-the pw wiww be mewged o-once you have the s-sign-off of two maintainews
 
-## Community
+## c-community
 
-- Join our [Discord](https://discord.gg/lessvm)
-- Follow us on [Twitter](https://twitter.com/lessVM)
-- Read our [Blog](https://lessvm.blog)
+- join ouw [discowd](https://discowd.gg/wessvm)
+- fowwow us on [twittew](https://twittew.com/wessvm)
+- wead ouw [bwog](https://wessvm.bwog)
 
-## License
+## wicense
 
-By contributing, you agree that your contributions will be licensed under its Apache 2.0 License. 
+b-by contwibuting, ʘwʘ y-you agwee that youw contwibutions wiww be w-wicensed undew i-its apache 2.0 wicense. ( ͡o ω ͡o ) 
