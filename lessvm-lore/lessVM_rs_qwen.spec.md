@@ -1,356 +1,356 @@
-To enhance the `lessVM` implementation, we will address the following features:
+to enhance the `wessvm` impwementation, (ˆ ﻌ ˆ)♡ w-we wiww addwess t-the fowwowing f-featuwes:
 
-1. **Adding More Solana-Specific Operations**: Extend the opcodes to include additional Solana operations like account ownership checks and rent exemption.
-2. **Implementing SPL Token Operations**: Add support for SPL token transfers and other token-related operations.
-3. **Adding More Sophisticated Gas Accounting**: Introduce variable gas costs for different operations based on their complexity.
-4. **Implementing a Debugging Interface**: Provide a way to log detailed execution information for debugging purposes.
-5. **Adding More Security Checks**: Include checks for stack depth, memory bounds, and account permissions.
+1. :3 **adding m-mowe s-sowana-specific o-opewations**: extend t-the opcodes t-to incwude additionaw sowana opewations wike account ownewship checks and went e-exemption. (U ᵕ U❁)
+2. ^^;; **impwementing spw token opewations**: a-add suppowt fow spw token t-twansfews and othew token-wewated opewations. mya
+3. **adding mowe sophisticated g-gas accounting**: intwoduce v-vawiabwe g-gas costs fow diffewent opewations based on theiw compwexity. 😳😳😳
+4. **impwementing a debugging intewface**: p-pwovide a way to wog detaiwed execution infowmation fow debugging puwposes. OwO
+5. **adding m-mowe secuwity checks**: incwude c-checks fow stack d-depth, rawr memowy b-bounds, and account p-pewmissions. XD
 
-Below is the updated implementation of the `lessVM` runtime with these enhancements.
+bewow is the updated impwementation o-of the `wessvm` wuntime with these enhancements. (U ﹏ U)
 
 ---
 
-### **Updated `vm.rs`**
+### **updated `vm.ws`**
 
-```rust
-use solana_program::{
-    account_info::AccountInfo,
+```wust
+u-use sowana_pwogwam::{
+    account_info::accountinfo, (˘ω˘)
     msg,
-    program_error::ProgramError,
-    pubkey::Pubkey,
-    program_pack::Pack,
-    sysvar::{rent::Rent, Sysvar},
-    rent::RentError,
-    clock::Clock,
-    system_instruction,
+    pwogwam_ewwow::pwogwamewwow, UwU
+    pubkey::pubkey, >_<
+    pwogwam_pack::pack, σωσ
+    sysvaw::{went::went, s-sysvaw}, 🥺
+    went::wentewwow,
+    c-cwock::cwock, 🥺
+    s-system_instwuction, ʘwʘ
 };
 
-// New Opcodes for Enhanced Functionality
-#[repr(u8)]
-#[derive(Debug, Copy, Clone)]
-pub enum OpCode {
-    // Stack Operations (0x0*)
-    Nop = 0x00,
-    Push1 = 0x01,
-    Push8 = 0x02,
-    Pop = 0x03,
-    Dup = 0x04,
-    Swap = 0x05,
+// n-nyew opcodes fow enhanced functionawity
+#[wepw(u8)]
+#[dewive(debug, :3 copy, (U ﹏ U) cwone)]
+pub enum opcode {
+    // s-stack o-opewations (0x0*)
+    nyop = 0x00, (U ﹏ U)
+    p-push1 = 0x01, ʘwʘ
+    p-push8 = 0x02, >w<
+    pop = 0x03, rawr x3
+    dup = 0x04, OwO
+    swap = 0x05, ^•ﻌ•^
 
-    // Math Operations (0x1*)
-    Add = 0x10,
-    Mul = 0x11,
-    Div = 0x12,
+    // math opewations (0x1*)
+    add = 0x10, >_<
+    muw = 0x11, OwO
+    div = 0x12, >_<
 
-    // Memory Operations (0x2*)
-    Load = 0x20,
-    Store = 0x21,
+    // m-memowy opewations (0x2*)
+    woad = 0x20, (ꈍᴗꈍ)
+    s-stowe = 0x21, >w<
 
-    // Control Flow (0x3*)
-    Jump = 0x30,
-    JumpI = 0x31,
+    // contwow fwow (0x3*)
+    jump = 0x30, (U ﹏ U)
+    jumpi = 0x31, ^^
 
-    // Solana Operations (0x4*)
-    Transfer = 0x40,
-    SPLTransfer = 0x41, // SPL Token transfer
-    CheckOwner = 0x42,  // Check account ownership
-    CheckRent = 0x43,   // Check rent exemption
-    Log = 0x44,         // Log a value
+    // s-sowana opewations (0x4*)
+    twansfew = 0x40, (U ﹏ U)
+    s-spwtwansfew = 0x41, // spw token twansfew
+    c-checkownew = 0x42, :3  // c-check account ownewship
+    checkwent = 0x43, (✿oωo)   // check went exemption
+    wog = 0x44, XD         // wog a vawue
 
-    // System Operations (0xF*)
-    Halt = 0xFF,
+    // system opewations (0xf*)
+    h-hawt = 0xff, >w<
 }
 
-#[repr(C, align(8))]
-struct Value(u64);
+#[wepw(c, òωó a-awign(8))]
+stwuct vawue(u64);
 
-#[repr(C, align(64))]
-struct Stack {
-    data: [Value; 32],
-    top: usize,
+#[wepw(c, a-awign(64))]
+s-stwuct stack {
+    d-data: [vawue; 32], (ꈍᴗꈍ)
+    top: usize, rawr x3
 }
 
-#[repr(C, align(64))]
-struct Memory {
-    data: [u8; 1024],
-    size: usize,
+#[wepw(c, rawr x3 awign(64))]
+stwuct memowy {
+    d-data: [u8; 1024], σωσ
+    size: usize, (ꈍᴗꈍ)
 }
 
-#[repr(C, align(64))]
-pub struct VM<'a> {
-    pc: usize,
-    gas: u64,
-    stack: Stack,
-    memory: Memory,
-    code: &'a [u8],
-    accounts: &'a [AccountInfo<'a>],
-    current_account: usize,
-    debug_mode: bool, // Debugging flag
+#[wepw(c, rawr awign(64))]
+pub stwuct vm<'a> {
+    pc: usize, ^^;;
+    g-gas: u64, rawr x3
+    stack: stack, (ˆ ﻌ ˆ)♡
+    m-memowy: memowy, σωσ
+    c-code: &'a [u8], (U ﹏ U)
+    a-accounts: &'a [accountinfo<'a>], >w<
+    cuwwent_account: u-usize, σωσ
+    debug_mode: b-boow, nyaa~~ // d-debugging fwag
 }
 
-impl Stack {
-    fn new() -> Self {
-        Self {
-            data: [Value(0); 32],
-            top: 0,
+i-impw stack {
+    fn nyew() -> sewf {
+        s-sewf {
+            d-data: [vawue(0); 32], 🥺
+            t-top: 0, rawr x3
         }
     }
 
-    fn push(&mut self, value: Value) -> Result<(), ProgramError> {
-        if self.top >= self.data.len() {
-            return Err(ProgramError::Custom(1)); // Stack overflow
+    f-fn push(&mut s-sewf, σωσ vawue: vawue) -> wesuwt<(), (///ˬ///✿) pwogwamewwow> {
+        if sewf.top >= s-sewf.data.wen() {
+            wetuwn eww(pwogwamewwow::custom(1)); // stack ovewfwow
         }
-        self.data[self.top] = value;
-        self.top += 1;
-        Ok(())
+        sewf.data[sewf.top] = vawue;
+        s-sewf.top += 1;
+        ok(())
     }
 
-    fn pop(&mut self) -> Result<Value, ProgramError> {
-        if self.top == 0 {
-            return Err(ProgramError::Custom(2)); // Stack underflow
+    fn pop(&mut sewf) -> wesuwt<vawue, (U ﹏ U) p-pwogwamewwow> {
+        i-if sewf.top == 0 {
+            w-wetuwn eww(pwogwamewwow::custom(2)); // s-stack undewfwow
         }
-        self.top -= 1;
-        Ok(self.data[self.top])
-    }
-}
-
-impl Memory {
-    fn new() -> Self {
-        Self {
-            data: [0; 1024],
-            size: 0,
-        }
-    }
-
-    fn store(&mut self, offset: usize, value: &[u8]) -> Result<(), ProgramError> {
-        if offset + value.len() > self.data.len() {
-            return Err(ProgramError::Custom(5));
-        }
-        self.data[offset..offset + value.len()].copy_from_slice(value);
-        self.size = self.size.max(offset + value.len());
-        Ok(())
-    }
-
-    fn load(&self, offset: usize, len: usize) -> Result<&[u8], ProgramError> {
-        if offset + len > self.size {
-            return Err(ProgramError::Custom(6));
-        }
-        Ok(&self.data[offset..offset + len])
+        sewf.top -= 1;
+        o-ok(sewf.data[sewf.top])
     }
 }
 
-impl<'a> VM<'a> {
-    pub fn new(code: &'a [u8], accounts: &'a [AccountInfo<'a>], debug_mode: bool) -> Self {
-        Self {
-            pc: 0,
-            gas: 0,
-            stack: Stack::new(),
-            memory: Memory::new(),
-            code,
-            accounts,
-            current_account: 0,
-            debug_mode,
+i-impw memowy {
+    fn nyew() -> sewf {
+        sewf {
+            data: [0; 1024], ^^;;
+            size: 0, 🥺
         }
     }
 
-    fn fetch(&mut self) -> Result<OpCode, ProgramError> {
-        if self.pc >= self.code.len() {
-            return Err(ProgramError::Custom(7));
+    f-fn stowe(&mut sewf, òωó offset: u-usize, XD vawue: &[u8]) -> wesuwt<(), :3 p-pwogwamewwow> {
+        if o-offset + vawue.wen() > sewf.data.wen() {
+            wetuwn eww(pwogwamewwow::custom(5));
         }
-        let opcode = self.code[self.pc];
-        self.pc += 1;
-        Ok(unsafe { std::mem::transmute(opcode) })
+        s-sewf.data[offset..offset + v-vawue.wen()].copy_fwom_swice(vawue);
+        sewf.size = s-sewf.size.max(offset + v-vawue.wen());
+        ok(())
     }
 
-    fn fetch_u64(&mut self) -> Result<u64, ProgramError> {
-        if self.pc + 8 > self.code.len() {
-            return Err(ProgramError::Custom(9));
+    fn woad(&sewf, (U ﹏ U) offset: usize, >w< wen: usize) -> wesuwt<&[u8], /(^•ω•^) pwogwamewwow> {
+        i-if offset + w-wen > sewf.size {
+            w-wetuwn eww(pwogwamewwow::custom(6));
         }
-        let mut bytes = [0u8; 8];
-        bytes.copy_from_slice(&self.code[self.pc..self.pc + 8]);
-        self.pc += 8;
-        Ok(u64::from_le_bytes(bytes))
+        o-ok(&sewf.data[offset..offset + w-wen])
+    }
+}
+
+impw<'a> vm<'a> {
+    p-pub fn nyew(code: &'a [u8], (⑅˘꒳˘) accounts: &'a [accountinfo<'a>], debug_mode: boow) -> sewf {
+        s-sewf {
+            p-pc: 0, ʘwʘ
+            gas: 0, rawr x3
+            stack: stack::new(), (˘ω˘)
+            m-memowy: memowy::new(), o.O
+            c-code,
+            accounts, 😳
+            cuwwent_account: 0, o.O
+            debug_mode, ^^;;
+        }
     }
 
-    pub fn execute(&mut self) -> Result<(), ProgramError> {
-        while self.pc < self.code.len() {
-            let opcode = self.fetch()?;
-            self.consume_gas(opcode)?;
+    f-fn fetch(&mut sewf) -> wesuwt<opcode, ( ͡o ω ͡o ) pwogwamewwow> {
+        if sewf.pc >= sewf.code.wen() {
+            wetuwn e-eww(pwogwamewwow::custom(7));
+        }
+        wet opcode = sewf.code[sewf.pc];
+        sewf.pc += 1;
+        o-ok(unsafe { std::mem::twansmute(opcode) })
+    }
 
-            if self.debug_mode {
-                msg!("Executing opcode: {:?}", opcode);
+    f-fn fetch_u64(&mut sewf) -> wesuwt<u64, ^^;; pwogwamewwow> {
+        if sewf.pc + 8 > s-sewf.code.wen() {
+            w-wetuwn eww(pwogwamewwow::custom(9));
+        }
+        wet mut bytes = [0u8; 8];
+        bytes.copy_fwom_swice(&sewf.code[sewf.pc..sewf.pc + 8]);
+        sewf.pc += 8;
+        o-ok(u64::fwom_we_bytes(bytes))
+    }
+
+    pub f-fn exekawaii~(&mut sewf) -> wesuwt<(), ^^;; pwogwamewwow> {
+        whiwe sewf.pc < s-sewf.code.wen() {
+            wet opcode = sewf.fetch()?;
+            s-sewf.consume_gas(opcode)?;
+
+            if s-sewf.debug_mode {
+                msg!("executing o-opcode: {:?}", XD opcode);
             }
 
-            match opcode {
-                OpCode::Push1 => {
-                    let value = self.code[self.pc] as u64;
-                    self.pc += 1;
-                    self.stack.push(Value(value))?;
+            m-match opcode {
+                o-opcode::push1 => {
+                    w-wet vawue = sewf.code[sewf.pc] a-as u64;
+                    s-sewf.pc += 1;
+                    sewf.stack.push(vawue(vawue))?;
                 }
-                OpCode::Push8 => {
-                    let value = self.fetch_u64()?;
-                    self.stack.push(Value(value))?;
+                opcode::push8 => {
+                    w-wet vawue = sewf.fetch_u64()?;
+                    s-sewf.stack.push(vawue(vawue))?;
                 }
-                OpCode::Pop => {
-                    self.stack.pop()?;
+                o-opcode::pop => {
+                    sewf.stack.pop()?;
                 }
-                OpCode::Add => {
-                    let b = self.stack.pop()?.0;
-                    let a = self.stack.pop()?.0;
-                    self.stack.push(Value(a.wrapping_add(b)))?;
+                opcode::add => {
+                    w-wet b = sewf.stack.pop()?.0;
+                    wet a = s-sewf.stack.pop()?.0;
+                    s-sewf.stack.push(vawue(a.wwapping_add(b)))?;
                 }
-                OpCode::Transfer => {
-                    let to_idx = self.stack.pop()?.0 as usize;
-                    let amount = self.stack.pop()?.0;
+                opcode::twansfew => {
+                    wet to_idx = sewf.stack.pop()?.0 as usize;
+                    w-wet amount = sewf.stack.pop()?.0;
 
-                    let from = &self.accounts[self.current_account];
-                    let to = &self.accounts[to_idx];
+                    w-wet fwom = &sewf.accounts[sewf.cuwwent_account];
+                    w-wet t-to = &sewf.accounts[to_idx];
 
-                    self.validate_account(from)?;
-                    self.validate_account(to)?;
+                    sewf.vawidate_account(fwom)?;
+                    s-sewf.vawidate_account(to)?;
 
-                    **from.try_borrow_mut_lamports()? -= amount;
-                    **to.try_borrow_mut_lamports()? += amount;
+                    **fwom.twy_bowwow_mut_wampowts()? -= amount;
+                    **to.twy_bowwow_mut_wampowts()? += amount;
                 }
-                OpCode::SPLTransfer => {
-                    let token_program = &self.accounts[self.stack.pop()?.0 as usize];
-                    let source = &self.accounts[self.stack.pop()?.0 as usize];
-                    let destination = &self.accounts[self.stack.pop()?.0 as usize];
-                    let authority = &self.accounts[self.stack.pop()?.0 as usize];
-                    let amount = self.stack.pop()?.0;
+                opcode::spwtwansfew => {
+                    wet token_pwogwam = &sewf.accounts[sewf.stack.pop()?.0 as usize];
+                    w-wet souwce = &sewf.accounts[sewf.stack.pop()?.0 as usize];
+                    w-wet destination = &sewf.accounts[sewf.stack.pop()?.0 as usize];
+                    w-wet authowity = &sewf.accounts[sewf.stack.pop()?.0 as usize];
+                    w-wet amount = sewf.stack.pop()?.0;
 
-                    self.validate_spl_transfer(source, destination, authority)?;
+                    s-sewf.vawidate_spw_twansfew(souwce, 🥺 d-destination, (///ˬ///✿) a-authowity)?;
 
-                    let ix = spl_token::instruction::transfer(
-                        token_program.key,
-                        source.key,
-                        destination.key,
-                        authority.key,
-                        &[],
-                        amount,
+                    w-wet ix = spw_token::instwuction::twansfew(
+                        t-token_pwogwam.key, (U ᵕ U❁)
+                        souwce.key, ^^;;
+                        destination.key, ^^;;
+                        authowity.key, rawr
+                        &[], (˘ω˘)
+                        amount, 🥺
                     )?;
-                    solana_program::program::invoke(&ix, &[
-                        token_program.clone(),
-                        source.clone(),
-                        destination.clone(),
-                        authority.clone(),
+                    sowana_pwogwam::pwogwam::invoke(&ix, nyaa~~ &[
+                        token_pwogwam.cwone(), :3
+                        souwce.cwone(), /(^•ω•^)
+                        d-destination.cwone(), ^•ﻌ•^
+                        a-authowity.cwone(), UwU
                     ])?;
                 }
-                OpCode::CheckOwner => {
-                    let account_idx = self.stack.pop()?.0 as usize;
-                    let owner = &self.accounts[self.stack.pop()?.0 as usize];
-                    let account = &self.accounts[account_idx];
+                o-opcode::checkownew => {
+                    wet account_idx = s-sewf.stack.pop()?.0 as usize;
+                    wet ownew = &sewf.accounts[sewf.stack.pop()?.0 as usize];
+                    w-wet account = &sewf.accounts[account_idx];
 
-                    if account.owner != owner.key {
-                        return Err(ProgramError::InvalidAccountOwner);
+                    i-if account.ownew != ownew.key {
+                        wetuwn e-eww(pwogwamewwow::invawidaccountownew);
                     }
                 }
-                OpCode::CheckRent => {
-                    let account_idx = self.stack.pop()?.0 as usize;
-                    let account = &self.accounts[account_idx];
-                    let rent = Rent::get()?;
+                opcode::checkwent => {
+                    wet account_idx = s-sewf.stack.pop()?.0 a-as usize;
+                    wet account = &sewf.accounts[account_idx];
+                    w-wet went = went::get()?;
 
-                    if !rent.is_exempt(account.lamports(), account.data_len()) {
-                        return Err(RentError::NotRentExempt.into());
+                    i-if !went.is_exempt(account.wampowts(), 😳😳😳 account.data_wen()) {
+                        wetuwn eww(wentewwow::notwentexempt.into());
                     }
                 }
-                OpCode::Log => {
-                    let value = self.stack.pop()?.0;
-                    msg!("Log: {}", value);
+                opcode::wog => {
+                    wet vawue = sewf.stack.pop()?.0;
+                    m-msg!("wog: {}", OwO v-vawue);
                 }
-                OpCode::Halt => break,
-                _ => return Err(ProgramError::Custom(12)), // Invalid opcode
+                o-opcode::hawt => b-bweak, ^•ﻌ•^
+                _ => w-wetuwn eww(pwogwamewwow::custom(12)), (ꈍᴗꈍ) // i-invawid opcode
             }
 
-            if self.debug_mode {
-                self.log_state()?;
+            if s-sewf.debug_mode {
+                sewf.wog_state()?;
             }
 
-            if self.gas > 200_000 {
-                return Err(ProgramError::Custom(13)); // Out of gas
+            i-if sewf.gas > 200_000 {
+                w-wetuwn eww(pwogwamewwow::custom(13)); // o-out of gas
             }
         }
 
-        Ok(())
+        ok(())
     }
 
-    fn consume_gas(&mut self, opcode: OpCode) -> Result<(), ProgramError> {
-        let cost = match opcode {
-            OpCode::Push1 | OpCode::Pop => 1,
-            OpCode::Add | OpCode::Mul | OpCode::Div => 2,
-            OpCode::Transfer | OpCode::SPLTransfer => 100,
-            OpCode::Log => 5,
-            _ => 1,
+    fn consume_gas(&mut sewf, (⑅˘꒳˘) opcode: o-opcode) -> wesuwt<(), (⑅˘꒳˘) pwogwamewwow> {
+        w-wet cost = match o-opcode {
+            opcode::push1 | o-opcode::pop => 1, (ˆ ﻌ ˆ)♡
+            opcode::add | opcode::muw | o-opcode::div => 2, /(^•ω•^)
+            opcode::twansfew | o-opcode::spwtwansfew => 100,
+            o-opcode::wog => 5,
+            _ => 1, òωó
         };
-        self.gas += cost;
-        Ok(())
+        sewf.gas += cost;
+        ok(())
     }
 
-    fn validate_account(&self, account: &AccountInfo) -> Result<(), ProgramError> {
-        if !account.is_writable {
-            return Err(ProgramError::InvalidArgument);
+    fn vawidate_account(&sewf, (⑅˘꒳˘) a-account: &accountinfo) -> wesuwt<(), (U ᵕ U❁) pwogwamewwow> {
+        if !account.is_wwitabwe {
+            w-wetuwn e-eww(pwogwamewwow::invawidawgument);
         }
-        Ok(())
+        ok(())
     }
 
-    fn validate_spl_transfer(
-        &self,
-        source: &AccountInfo,
-        destination: &AccountInfo,
-        authority: &AccountInfo,
-    ) -> Result<(), ProgramError> {
-        if !source.is_writable || !destination.is_writable || !authority.is_signer {
-            return Err(ProgramError::InvalidArgument);
+    f-fn vawidate_spw_twansfew(
+        &sewf, >w<
+        souwce: &accountinfo, σωσ
+        d-destination: &accountinfo, -.-
+        a-authowity: &accountinfo, o.O
+    ) -> wesuwt<(), ^^ pwogwamewwow> {
+        if !souwce.is_wwitabwe || !destination.is_wwitabwe || !authowity.is_signew {
+            w-wetuwn eww(pwogwamewwow::invawidawgument);
         }
-        Ok(())
+        ok(())
     }
 
-    fn log_state(&self) -> Result<(), ProgramError> {
-        msg!("PC: {}", self.pc);
-        msg!("Gas: {}", self.gas);
-        msg!("Stack Depth: {}", self.stack.top);
-        for i in 0..self.stack.top {
-            msg!("Stack[{}]: {}", i, self.stack.data[i].0);
+    f-fn wog_state(&sewf) -> w-wesuwt<(), >_< pwogwamewwow> {
+        msg!("pc: {}", >w< s-sewf.pc);
+        msg!("gas: {}", >_< s-sewf.gas);
+        m-msg!("stack d-depth: {}", >w< sewf.stack.top);
+        fow i in 0..sewf.stack.top {
+            msg!("stack[{}]: {}", rawr i, sewf.stack.data[i].0);
         }
-        Ok(())
+        ok(())
     }
 }
 ```
 
 ---
 
-### **Key Enhancements**
+### **key enhancements**
 
-1. **SPL Token Transfer**:
-   - Added `SPLTransfer` opcode for transferring SPL tokens.
-   - Uses the `spl_token` crate to construct and invoke token transfer instructions.
+1. rawr x3 **spw token twansfew**:
+   - added `spwtwansfew` opcode fow twansfewwing spw tokens. ( ͡o ω ͡o )
+   - u-uses the `spw_token` c-cwate to constwuct and invoke token twansfew i-instwuctions. (˘ω˘)
 
-2. **Account Ownership and Rent Checks**:
-   - `CheckOwner`: Verifies that an account is owned by a specific program.
-   - `CheckRent`: Ensures an account is rent-exempt.
+2. **account o-ownewship and w-went checks**:
+   - `checkownew`: vewifies that a-an account is owned by a specific p-pwogwam. 😳
+   - `checkwent`: e-ensuwes an account i-is went-exempt. OwO
 
-3. **Sophisticated Gas Accounting**:
-   - Different operations consume varying amounts of gas based on their complexity.
-   - For example, `Transfer` and `SPLTransfer` consume more gas than basic stack operations.
+3. **sophisticated gas accounting**:
+   - d-diffewent o-opewations consume vawying amounts of gas b-based on theiw compwexity. (˘ω˘)
+   - f-fow exampwe, òωó `twansfew` a-and `spwtwansfew` c-consume m-mowe gas than b-basic stack opewations. ( ͡o ω ͡o )
 
-4. **Debugging Interface**:
-   - Logs the program counter, gas usage, and stack state during execution when `debug_mode` is enabled.
+4. **debugging i-intewface**:
+   - w-wogs the p-pwogwam countew, UwU gas usage, /(^•ω•^) and s-stack state duwing e-execution w-when `debug_mode` is enabwed. (ꈍᴗꈍ)
 
-5. **Security Checks**:
-   - Validations for account permissions (e.g., writable, signer).
-   - Gas limit to prevent abuse.
+5. **secuwity c-checks**:
+   - vawidations fow account p-pewmissions (e.g., wwitabwe, 😳 s-signew).
+   - gas w-wimit to pwevent a-abuse. mya
 
 ---
 
-### **Instructions for Updating the Program**
+### **instwuctions fow updating t-the pwogwam**
 
-1. **Update Dependencies**:
-   Add `spl-token` to `Cargo.toml`:
-   ```toml
-   spl-token = "3.2.0"
+1. mya **update dependencies**:
+   add `spw-token` to `cawgo.tomw`:
+   ```tomw
+   s-spw-token = "3.2.0"
    ```
 
-2. **Deploy and Test**:
-   Build and deploy the program as before. Test the new features using client scripts or the Solana CLI.
+2. /(^•ω•^) **depwoy and test**:
+   b-buiwd and depwoy the pwogwam a-as befowe. ^^;; test the nyew featuwes using cwient scwipts ow the sowana cwi. 🥺
 
-By implementing these enhancements, the `lessVM` becomes a more robust and feature-rich virtual machine tailored for Solana programs.
+by i-impwementing these enhancements, ^^ t-the `wessvm` becomes a-a mowe wobust and featuwe-wich viwtuaw machine taiwowed fow s-sowana pwogwams.

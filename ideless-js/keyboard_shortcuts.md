@@ -1,364 +1,364 @@
-# LessVM IDELess Keyboard Shortcuts
+# wessvm idewess keyboawd showtcuts
 
-This document provides a comprehensive list of keyboard shortcuts for the LessVM IDELess development environment. Mastering these shortcuts will significantly enhance your productivity when developing LessVM programs on Solana.
+t-this document p-pwovides a compwehensive w-wist o-of keyboawd showtcuts f-fow the wessvm i-idewess devewopment e-enviwonment. >w< m-mastewing these showtcuts wiww significantwy enhance youw pwoductivity when d-devewoping wessvm pwogwams on sowana. ^^
 
-## Table of Contents
+## tabwe o-of contents
 
-- [General Shortcuts](#general-shortcuts)
-- [Editor Shortcuts](#editor-shortcuts)
-- [Debugger Shortcuts](#debugger-shortcuts)
-- [Simulator Shortcuts](#simulator-shortcuts)
-- [Deployment Shortcuts](#deployment-shortcuts)
-- [AI Assistant Shortcuts](#ai-assistant-shortcuts)
-- [Navigation Shortcuts](#navigation-shortcuts)
-- [Panel Management Shortcuts](#panel-management-shortcuts)
-- [Custom Shortcuts](#custom-shortcuts)
-- [Platform-Specific Differences](#platform-specific-differences)
+- [genewaw showtcuts](#genewaw-showtcuts)
+- [editow s-showtcuts](#editow-showtcuts)
+- [debuggew showtcuts](#debuggew-showtcuts)
+- [simuwatow showtcuts](#simuwatow-showtcuts)
+- [depwoyment showtcuts](#depwoyment-showtcuts)
+- [ai a-assistant showtcuts](#ai-assistant-showtcuts)
+- [navigation showtcuts](#navigation-showtcuts)
+- [panew m-management s-showtcuts](#panew-management-showtcuts)
+- [custom showtcuts](#custom-showtcuts)
+- [pwatfowm-specific diffewences](#pwatfowm-specific-diffewences)
 
-## General Shortcuts
+## genewaw showtcuts
 
-### Application Control
+### a-appwication contwow
 
-| Shortcut | Action | Description |
+| showtcut | action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+N` / `⌘+N` | New File | Create a new file |
-| `Ctrl+O` / `⌘+O` | Open File | Open an existing file |
-| `Ctrl+S` / `⌘+S` | Save | Save the current file |
-| `Ctrl+Shift+S` / `⌘+Shift+S` | Save As | Save the current file with a new name |
-| `Ctrl+W` / `⌘+W` | Close Tab | Close the current tab |
-| `Ctrl+Shift+W` / `⌘+Shift+W` | Close Window | Close the current window |
-| `Ctrl+Q` / `⌘+Q` | Quit | Exit the application |
-| `F11` | Toggle Fullscreen | Switch between fullscreen and windowed mode |
-| `Ctrl+,` / `⌘+,` | Settings | Open settings panel |
-| `Ctrl+Shift+P` / `⌘+Shift+P` | Command Palette | Open command palette |
-| `Ctrl+R` / `⌘+R` | Reload Window | Reload the application window |
-| `Ctrl+Shift+I` / `⌘+Option+I` | Developer Tools | Open developer tools for debugging the IDE itself |
+| `ctww+n` / `⌘+n` | nyew fiwe | cweate a nyew fiwe |
+| `ctww+o` / `⌘+o` | o-open fiwe | open an e-existing fiwe |
+| `ctww+s` / `⌘+s` | s-save | save t-the cuwwent fiwe |
+| `ctww+shift+s` / `⌘+shift+s` | s-save as | save the cuwwent fiwe with a n-nyew nyame |
+| `ctww+w` / `⌘+w` | cwose tab | cwose the cuwwent t-tab |
+| `ctww+shift+w` / `⌘+shift+w` | cwose window | cwose the cuwwent window |
+| `ctww+q` / `⌘+q` | quit | exit the appwication |
+| `f11` | t-toggwe fuwwscween | switch between f-fuwwscween a-and windowed mode |
+| `ctww+,` / `⌘+,` | s-settings | open settings panew |
+| `ctww+shift+p` / `⌘+shift+p` | command pawette | o-open command p-pawette |
+| `ctww+w` / `⌘+w` | wewoad window | w-wewoad the appwication w-window |
+| `ctww+shift+i` / `⌘+option+i` | devewopew toows | o-open devewopew toows fow d-debugging the ide itsewf |
 
-### Project Management
+### pwoject management
 
-| Shortcut | Action | Description |
+| s-showtcut | action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+Shift+N` / `⌘+Shift+N` | New Project | Create a new project |
-| `Ctrl+Shift+O` / `⌘+Shift+O` | Open Project | Open an existing project |
-| `Ctrl+Alt+C` / `⌘+Option+C` | Project Configuration | Open project configuration |
-| `Ctrl+Shift+B` / `⌘+Shift+B` | Build Project | Build the current project |
-| `Ctrl+Shift+E` / `⌘+Shift+E` | Export Project | Export the current project |
-| `Ctrl+Alt+P` / `⌘+Option+P` | Project Properties | Show project properties |
+| `ctww+shift+n` / `⌘+shift+n` | nyew p-pwoject | cweate a nyew pwoject |
+| `ctww+shift+o` / `⌘+shift+o` | o-open pwoject | o-open an existing pwoject |
+| `ctww+awt+c` / `⌘+option+c` | pwoject configuwation | open pwoject configuwation |
+| `ctww+shift+b` / `⌘+shift+b` | buiwd pwoject | buiwd t-the cuwwent pwoject |
+| `ctww+shift+e` / `⌘+shift+e` | e-expowt pwoject | expowt t-the cuwwent p-pwoject |
+| `ctww+awt+p` / `⌘+option+p` | p-pwoject pwopewties | show pwoject pwopewties |
 
-## Editor Shortcuts
+## editow showtcuts
 
-### Basic Editing
+### b-basic editing
 
-| Shortcut | Action | Description |
+| showtcut | action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+X` / `⌘+X` | Cut | Cut selected text |
-| `Ctrl+C` / `⌘+C` | Copy | Copy selected text |
-| `Ctrl+V` / `⌘+V` | Paste | Paste from clipboard |
-| `Ctrl+Z` / `⌘+Z` | Undo | Undo last action |
-| `Ctrl+Y` / `⌘+Shift+Z` | Redo | Redo last undone action |
-| `Ctrl+A` / `⌘+A` | Select All | Select all text in the current file |
-| `Ctrl+D` / `⌘+D` | Duplicate Line | Duplicate the current line |
-| `Ctrl+Shift+K` / `⌘+Shift+K` | Delete Line | Delete the current line |
-| `Alt+Up` / `Option+Up` | Move Line Up | Move the current line up |
-| `Alt+Down` / `Option+Down` | Move Line Down | Move the current line down |
-| `Ctrl+/` / `⌘+/` | Toggle Comment | Comment or uncomment the current line |
-| `Tab` | Indent | Indent the current line |
-| `Shift+Tab` | Outdent | Outdent the current line |
-| `Ctrl+]` / `⌘+]` | Indent Line | Indent the current line |
-| `Ctrl+[` / `⌘+[` | Outdent Line | Outdent the current line |
-| `Ctrl+Enter` / `⌘+Enter` | Insert Line Below | Insert a new line below the current line |
-| `Ctrl+Shift+Enter` / `⌘+Shift+Enter` | Insert Line Above | Insert a new line above the current line |
+| `ctww+x` / `⌘+x` | cut | cut sewected text |
+| `ctww+c` / `⌘+c` | c-copy | copy sewected text |
+| `ctww+v` / `⌘+v` | p-paste | paste f-fwom cwipboawd |
+| `ctww+z` / `⌘+z` | u-undo | undo wast action |
+| `ctww+y` / `⌘+shift+z` | w-wedo | wedo w-wast undone action |
+| `ctww+a` / `⌘+a` | s-sewect a-aww | sewect aww text in the cuwwent fiwe |
+| `ctww+d` / `⌘+d` | d-dupwicate w-wine | dupwicate t-the cuwwent wine |
+| `ctww+shift+k` / `⌘+shift+k` | d-dewete wine | d-dewete the cuwwent wine |
+| `awt+up` / `option+up` | move wine up | move the c-cuwwent wine up |
+| `awt+down` / `option+down` | move wine down | move the cuwwent wine down |
+| `ctww+/` / `⌘+/` | toggwe comment | comment o-ow uncomment the cuwwent wine |
+| `tab` | indent | indent the cuwwent w-wine |
+| `shift+tab` | o-outdent | o-outdent the cuwwent wine |
+| `ctww+]` / `⌘+]` | i-indent wine | indent the c-cuwwent wine |
+| `ctww+[` / `⌘+[` | o-outdent wine | outdent the cuwwent wine |
+| `ctww+entew` / `⌘+entew` | insewt wine bewow | insewt a nyew wine bewow the c-cuwwent wine |
+| `ctww+shift+entew` / `⌘+shift+entew` | insewt w-wine above | insewt a nyew wine a-above the cuwwent w-wine |
 
-### Advanced Editing
+### advanced editing
 
-| Shortcut | Action | Description |
+| showtcut | a-action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+F` / `⌘+F` | Find | Find text in the current file |
-| `Ctrl+H` / `⌘+Option+F` | Replace | Find and replace text in the current file |
-| `Ctrl+G` / `⌘+G` | Go to Line | Go to a specific line number |
-| `Ctrl+Shift+F` / `⌘+Shift+F` | Find in Files | Find text across all project files |
-| `Ctrl+Shift+H` / `⌘+Shift+Option+F` | Replace in Files | Find and replace text across all project files |
-| `Alt+Click` / `Option+Click` | Multiple Cursors | Add a cursor at the clicked position |
-| `Ctrl+Alt+Up` / `⌘+Option+Up` | Add Cursor Above | Add a cursor on the line above |
-| `Ctrl+Alt+Down` / `⌘+Option+Down` | Add Cursor Below | Add a cursor on the line below |
-| `Ctrl+U` / `⌘+U` | Undo Cursor | Undo the last cursor operation |
-| `Ctrl+L` / `⌘+L` | Select Line | Select the current line |
-| `Ctrl+Shift+L` / `⌘+Shift+L` | Select All Occurrences | Select all occurrences of the current selection |
-| `Ctrl+F2` / `⌘+F2` | Select All Occurrences of Word | Select all occurrences of the current word |
-| `Ctrl+Space` / `⌘+Space` | Trigger Suggestion | Show code completion suggestions |
-| `Ctrl+Shift+Space` / `⌘+Shift+Space` | Trigger Parameter Hints | Show parameter hints |
-| `Ctrl+K Ctrl+F` / `⌘+K ⌘+F` | Format Selection | Format the selected text |
-| `Alt+F12` / `Option+F12` | Peek Definition | Show definition inline |
-| `F12` | Go to Definition | Go to the definition of the symbol under cursor |
-| `Shift+F12` / `Shift+F12` | Find References | Find all references to the symbol under cursor |
-| `Ctrl+K Ctrl+X` / `⌘+K ⌘+X` | Trim Trailing Whitespace | Remove trailing whitespace |
+| `ctww+f` / `⌘+f` | f-find | find text in the cuwwent f-fiwe |
+| `ctww+h` / `⌘+option+f` | w-wepwace | find and wepwace text in the cuwwent fiwe |
+| `ctww+g` / `⌘+g` | go to wine | g-go to a specific w-wine nyumbew |
+| `ctww+shift+f` / `⌘+shift+f` | f-find in fiwes | find text acwoss a-aww pwoject f-fiwes |
+| `ctww+shift+h` / `⌘+shift+option+f` | wepwace in fiwes | f-find and wepwace text acwoss aww pwoject fiwes |
+| `awt+cwick` / `option+cwick` | muwtipwe c-cuwsows | add a-a cuwsow at the cwicked position |
+| `ctww+awt+up` / `⌘+option+up` | add cuwsow a-above | add a c-cuwsow on the wine above |
+| `ctww+awt+down` / `⌘+option+down` | add cuwsow bewow | add a cuwsow o-on the wine bewow |
+| `ctww+u` / `⌘+u` | undo cuwsow | undo the wast cuwsow opewation |
+| `ctww+w` / `⌘+w` | s-sewect wine | sewect the cuwwent wine |
+| `ctww+shift+w` / `⌘+shift+w` | sewect a-aww occuwwences | s-sewect aww occuwwences of the cuwwent sewection |
+| `ctww+f2` / `⌘+f2` | sewect aww occuwwences o-of wowd | s-sewect aww occuwwences of the cuwwent wowd |
+| `ctww+space` / `⌘+space` | twiggew suggestion | s-show code compwetion suggestions |
+| `ctww+shift+space` / `⌘+shift+space` | t-twiggew pawametew hints | show pawametew hints |
+| `ctww+k ctww+f` / `⌘+k ⌘+f` | f-fowmat sewection | fowmat t-the sewected text |
+| `awt+f12` / `option+f12` | p-peek definition | show definition i-inwine |
+| `f12` | go to definition | g-go to t-the definition o-of the symbow undew cuwsow |
+| `shift+f12` / `shift+f12` | f-find w-wefewences | find aww wefewences to the symbow undew c-cuwsow |
+| `ctww+k c-ctww+x` / `⌘+k ⌘+x` | t-twim twaiwing whitespace | wemove twaiwing whitespace |
 
-### Code Folding
+### code f-fowding
 
-| Shortcut | Action | Description |
+| showtcut | action | d-descwiption |
 |----------|--------|-------------|
-| `Ctrl+Shift+[` / `⌘+Option+[` | Fold | Fold the current region |
-| `Ctrl+Shift+]` / `⌘+Option+]` | Unfold | Unfold the current region |
-| `Ctrl+K Ctrl+0` / `⌘+K ⌘+0` | Fold All | Fold all regions |
-| `Ctrl+K Ctrl+J` / `⌘+K ⌘+J` | Unfold All | Unfold all regions |
-| `Ctrl+K Ctrl+1` / `⌘+K ⌘+1` | Fold Level 1 | Fold all regions of level 1 |
-| `Ctrl+K Ctrl+2` / `⌘+K ⌘+2` | Fold Level 2 | Fold all regions of level 2 |
-| `Ctrl+K Ctrl+3` / `⌘+K ⌘+3` | Fold Level 3 | Fold all regions of level 3 |
-| `Ctrl+K Ctrl+[` / `⌘+K ⌘+[` | Fold Recursively | Fold the current region recursively |
-| `Ctrl+K Ctrl+]` / `⌘+K ⌘+]` | Unfold Recursively | Unfold the current region recursively |
+| `ctww+shift+[` / `⌘+option+[` | f-fowd | fowd the cuwwent wegion |
+| `ctww+shift+]` / `⌘+option+]` | unfowd | u-unfowd the c-cuwwent wegion |
+| `ctww+k c-ctww+0` / `⌘+k ⌘+0` | f-fowd aww | fowd aww wegions |
+| `ctww+k ctww+j` / `⌘+k ⌘+j` | u-unfowd aww | unfowd aww wegions |
+| `ctww+k ctww+1` / `⌘+k ⌘+1` | fowd wevew 1 | fowd aww wegions of w-wevew 1 |
+| `ctww+k ctww+2` / `⌘+k ⌘+2` | f-fowd wevew 2 | fowd aww wegions o-of wevew 2 |
+| `ctww+k ctww+3` / `⌘+k ⌘+3` | f-fowd wevew 3 | fowd aww wegions o-of wevew 3 |
+| `ctww+k c-ctww+[` / `⌘+k ⌘+[` | f-fowd wecuwsivewy | f-fowd the cuwwent w-wegion wecuwsivewy |
+| `ctww+k ctww+]` / `⌘+k ⌘+]` | unfowd wecuwsivewy | unfowd the cuwwent wegion wecuwsivewy |
 
-## Debugger Shortcuts
+## debuggew showtcuts
 
-### Debugging Control
+### debugging c-contwow
 
-| Shortcut | Action | Description |
+| showtcut | a-action | d-descwiption |
 |----------|--------|-------------|
-| `F5` | Start/Continue | Start debugging or continue execution |
-| `Shift+F5` | Stop | Stop debugging |
-| `Ctrl+Shift+F5` / `⌘+Shift+F5` | Restart | Restart debugging |
-| `F6` | Pause | Pause execution |
-| `F9` | Toggle Breakpoint | Set or remove a breakpoint at the current line |
-| `F10` | Step Over | Execute the next line without stepping into functions |
-| `F11` | Step Into | Step into the next function call |
-| `Shift+F11` | Step Out | Step out of the current function |
-| `Ctrl+F10` / `⌘+F10` | Run to Cursor | Run to the cursor position |
-| `Ctrl+K Ctrl+I` / `⌘+K ⌘+I` | Show Hover | Show debug information for the symbol under cursor |
+| `f5` | stawt/continue | s-stawt debugging ow continue execution |
+| `shift+f5` | stop | stop d-debugging |
+| `ctww+shift+f5` / `⌘+shift+f5` | w-westawt | westawt debugging |
+| `f6` | p-pause | pause execution |
+| `f9` | toggwe b-bweakpoint | set o-ow wemove a bweakpoint at the c-cuwwent wine |
+| `f10` | s-step ovew | exekawaii~ the nyext wine without stepping into functions |
+| `f11` | s-step i-into | step into t-the nyext function c-caww |
+| `shift+f11` | s-step out | step out o-of the cuwwent function |
+| `ctww+f10` / `⌘+f10` | w-wun to cuwsow | wun to the c-cuwsow position |
+| `ctww+k c-ctww+i` / `⌘+k ⌘+i` | show hovew | s-show debug infowmation fow the symbow undew cuwsow |
 
-### Breakpoint Management
+### b-bweakpoint management
 
-| Shortcut | Action | Description |
+| s-showtcut | a-action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+Shift+F9` / `⌘+Shift+F9` | Remove All Breakpoints | Clear all breakpoints |
-| `Ctrl+F9` / `⌘+F9` | Enable/Disable Breakpoint | Toggle the enabled state of the current breakpoint |
-| `Alt+F9` / `Option+F9` | Enable All Breakpoints | Enable all breakpoints |
-| `Alt+Shift+F9` / `Option+Shift+F9` | Disable All Breakpoints | Disable all breakpoints |
-| `Ctrl+Shift+B` / `⌘+Shift+B` | Edit Breakpoint | Edit the current breakpoint properties |
-| `Ctrl+Alt+B` / `⌘+Option+B` | Add Conditional Breakpoint | Add a conditional breakpoint |
-| `Ctrl+Alt+F9` / `⌘+Option+F9` | Add Logpoint | Add a logpoint |
+| `ctww+shift+f9` / `⌘+shift+f9` | wemove aww bweakpoints | c-cweaw aww bweakpoints |
+| `ctww+f9` / `⌘+f9` | enabwe/disabwe b-bweakpoint | t-toggwe the e-enabwed state of the cuwwent bweakpoint |
+| `awt+f9` / `option+f9` | enabwe aww bweakpoints | e-enabwe aww bweakpoints |
+| `awt+shift+f9` / `option+shift+f9` | disabwe aww bweakpoints | disabwe a-aww bweakpoints |
+| `ctww+shift+b` / `⌘+shift+b` | e-edit bweakpoint | edit the c-cuwwent bweakpoint pwopewties |
+| `ctww+awt+b` / `⌘+option+b` | a-add conditionaw b-bweakpoint | add a conditionaw bweakpoint |
+| `ctww+awt+f9` / `⌘+option+f9` | a-add wogpoint | add a wogpoint |
 
-### Debug Views
+### debug views
 
-| Shortcut | Action | Description |
+| s-showtcut | a-action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+Shift+D` / `⌘+Shift+D` | Debug View | Show debug view |
-| `Ctrl+Shift+Y` / `⌘+Shift+Y` | Debug Console | Show debug console |
-| `Ctrl+Shift+V` / `⌘+Shift+V` | Variables | Show variables panel |
-| `Ctrl+Shift+W` / `⌘+Shift+W` | Watch | Show watch panel |
-| `Ctrl+Shift+A` / `⌘+Shift+A` | Call Stack | Show call stack panel |
-| `Ctrl+Shift+M` / `⌘+Shift+M` | Memory | Show memory view |
-| `Ctrl+Shift+R` / `⌘+Shift+R` | Registers | Show registers view |
-| `Ctrl+Shift+K` / `⌘+Shift+K` | Breakpoints | Show breakpoints panel |
+| `ctww+shift+d` / `⌘+shift+d` | debug view | show d-debug view |
+| `ctww+shift+y` / `⌘+shift+y` | debug consowe | s-show debug consowe |
+| `ctww+shift+v` / `⌘+shift+v` | v-vawiabwes | s-show vawiabwes panew |
+| `ctww+shift+w` / `⌘+shift+w` | watch | show watch panew |
+| `ctww+shift+a` / `⌘+shift+a` | caww stack | show caww stack panew |
+| `ctww+shift+m` / `⌘+shift+m` | memowy | show memowy view |
+| `ctww+shift+w` / `⌘+shift+w` | wegistews | show wegistews view |
+| `ctww+shift+k` / `⌘+shift+k` | bweakpoints | show bweakpoints p-panew |
 
-## Simulator Shortcuts
+## s-simuwatow showtcuts
 
-### Simulation Control
+### simuwation contwow
 
-| Shortcut | Action | Description |
+| s-showtcut | a-action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+Alt+S` / `⌘+Option+S` | Start Simulation | Start the simulation |
-| `Ctrl+Alt+X` / `⌘+Option+X` | Stop Simulation | Stop the simulation |
-| `Ctrl+Alt+P` / `⌘+Option+P` | Pause Simulation | Pause the simulation |
-| `Ctrl+Alt+C` / `⌘+Option+C` | Continue Simulation | Continue the paused simulation |
-| `Ctrl+Alt+R` / `⌘+Option+R` | Reset Simulation | Reset the simulation to initial state |
-| `Ctrl+Alt+F` / `⌘+Option+F` | Fast Forward | Increase simulation speed |
-| `Ctrl+Alt+W` / `⌘+Option+W` | Slow Down | Decrease simulation speed |
-| `Ctrl+Alt+N` / `⌘+Option+N` | Normal Speed | Reset to normal simulation speed |
+| `ctww+awt+s` / `⌘+option+s` | s-stawt simuwation | s-stawt the simuwation |
+| `ctww+awt+x` / `⌘+option+x` | stop simuwation | s-stop t-the simuwation |
+| `ctww+awt+p` / `⌘+option+p` | pause simuwation | p-pause the simuwation |
+| `ctww+awt+c` / `⌘+option+c` | continue s-simuwation | c-continue the paused simuwation |
+| `ctww+awt+w` / `⌘+option+w` | weset simuwation | w-weset t-the simuwation t-to initiaw state |
+| `ctww+awt+f` / `⌘+option+f` | f-fast fowwawd | i-incwease simuwation s-speed |
+| `ctww+awt+w` / `⌘+option+w` | s-swow down | decwease s-simuwation s-speed |
+| `ctww+awt+n` / `⌘+option+n` | nyowmaw s-speed | weset t-to nyowmaw simuwation s-speed |
 
-### Simulation Views
+### simuwation v-views
 
-| Shortcut | Action | Description |
+| showtcut | action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+Alt+G` / `⌘+Option+G` | Gas Analysis | Show gas usage analysis |
-| `Ctrl+Alt+M` / `⌘+Option+M` | Memory View | Show memory state during simulation |
-| `Ctrl+Alt+T` / `⌘+Option+T` | Stack View | Show stack state during simulation |
-| `Ctrl+Alt+L` / `⌘+Option+L` | Log View | Show simulation logs |
-| `Ctrl+Alt+V` / `⌘+Option+V` | Variables View | Show variable values during simulation |
-| `Ctrl+Alt+H` / `⌘+Option+H` | Performance Heatmap | Show performance heatmap |
+| `ctww+awt+g` / `⌘+option+g` | gas anawysis | s-show gas usage anawysis |
+| `ctww+awt+m` / `⌘+option+m` | memowy v-view | show memowy s-state duwing s-simuwation |
+| `ctww+awt+t` / `⌘+option+t` | stack view | show s-stack state duwing simuwation |
+| `ctww+awt+w` / `⌘+option+w` | w-wog view | show simuwation w-wogs |
+| `ctww+awt+v` / `⌘+option+v` | vawiabwes v-view | show vawiabwe vawues duwing simuwation |
+| `ctww+awt+h` / `⌘+option+h` | pewfowmance heatmap | show p-pewfowmance heatmap |
 
-## Deployment Shortcuts
+## depwoyment s-showtcuts
 
-### Deployment Control
+### d-depwoyment contwow
 
-| Shortcut | Action | Description |
+| showtcut | action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+Shift+D` / `⌘+Shift+D` | Deploy | Deploy the current program |
-| `Ctrl+Alt+D` / `⌘+Option+D` | Deployment Settings | Open deployment settings |
-| `Ctrl+Shift+U` / `⌘+Shift+U` | Upgrade | Upgrade the deployed program |
-| `Ctrl+Alt+V` / `⌘+Option+V` | Verify Deployment | Verify the deployed program |
-| `Ctrl+Alt+N` / `⌘+Option+N` | Network Selection | Select deployment network |
-| `Ctrl+Alt+K` / `⌘+Option+K` | Key Management | Open key management |
-| `Ctrl+Alt+T` / `⌘+Option+T` | Transaction Builder | Open transaction builder |
-| `Ctrl+Alt+L` / `⌘+Option+L` | Deployment Logs | Show deployment logs |
+| `ctww+shift+d` / `⌘+shift+d` | depwoy | depwoy t-the cuwwent pwogwam |
+| `ctww+awt+d` / `⌘+option+d` | d-depwoyment s-settings | o-open depwoyment settings |
+| `ctww+shift+u` / `⌘+shift+u` | upgwade | upgwade t-the depwoyed pwogwam |
+| `ctww+awt+v` / `⌘+option+v` | v-vewify depwoyment | vewify t-the depwoyed pwogwam |
+| `ctww+awt+n` / `⌘+option+n` | nyetwowk sewection | s-sewect depwoyment nyetwowk |
+| `ctww+awt+k` / `⌘+option+k` | k-key management | o-open key management |
+| `ctww+awt+t` / `⌘+option+t` | t-twansaction buiwdew | o-open twansaction b-buiwdew |
+| `ctww+awt+w` / `⌘+option+w` | depwoyment w-wogs | s-show depwoyment wogs |
 
-### Network Management
+### nyetwowk m-management
 
-| Shortcut | Action | Description |
+| s-showtcut | action | d-descwiption |
 |----------|--------|-------------|
-| `Ctrl+Alt+1` / `⌘+Option+1` | Local Network | Switch to local network |
-| `Ctrl+Alt+2` / `⌘+Option+2` | Devnet | Switch to devnet |
-| `Ctrl+Alt+3` / `⌘+Option+3` | Testnet | Switch to testnet |
-| `Ctrl+Alt+4` / `⌘+Option+4` | Mainnet | Switch to mainnet |
-| `Ctrl+Alt+C` / `⌘+Option+C` | Connection Status | Show connection status |
-| `Ctrl+Alt+R` / `⌘+Option+R` | RPC Settings | Configure RPC settings |
+| `ctww+awt+1` / `⌘+option+1` | w-wocaw n-nyetwowk | switch t-to wocaw nyetwowk |
+| `ctww+awt+2` / `⌘+option+2` | d-devnet | s-switch to devnet |
+| `ctww+awt+3` / `⌘+option+3` | testnet | s-switch to testnet |
+| `ctww+awt+4` / `⌘+option+4` | mainnet | s-switch to mainnet |
+| `ctww+awt+c` / `⌘+option+c` | connection s-status | show c-connection status |
+| `ctww+awt+w` / `⌘+option+w` | w-wpc settings | configuwe wpc settings |
 
-## AI Assistant Shortcuts
+## ai assistant s-showtcuts
 
-### Assistant Interaction
+### assistant i-intewaction
 
-| Shortcut | Action | Description |
+| s-showtcut | action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+Space` / `⌘+Space` | Trigger Suggestions | Show AI code suggestions |
-| `Alt+/` / `Option+/` | Ask Assistant | Focus the AI assistant input |
-| `Ctrl+Shift+A` / `⌘+Shift+A` | Assistant Panel | Toggle AI assistant panel |
-| `Ctrl+Alt+E` / `⌘+Option+E` | Explain Code | Ask AI to explain selected code |
-| `Ctrl+Alt+O` / `⌘+Option+O` | Optimize Code | Ask AI for optimization suggestions |
-| `Ctrl+Alt+F` / `⌘+Option+F` | Fix Error | Ask AI to help fix the current error |
-| `Ctrl+Alt+D` / `⌘+Option+D` | Document Code | Ask AI to generate documentation |
-| `Ctrl+Alt+G` / `⌘+Option+G` | Generate Test | Ask AI to generate tests |
-| `Ctrl+Alt+I` / `⌘+Option+I` | Implementation Suggestion | Ask AI for implementation suggestions |
+| `ctww+space` / `⌘+space` | twiggew suggestions | s-show ai code s-suggestions |
+| `awt+/` / `option+/` | ask assistant | f-focus the a-ai assistant input |
+| `ctww+shift+a` / `⌘+shift+a` | assistant panew | toggwe ai assistant panew |
+| `ctww+awt+e` / `⌘+option+e` | e-expwain c-code | ask ai to e-expwain sewected c-code |
+| `ctww+awt+o` / `⌘+option+o` | optimize code | ask a-ai fow optimization s-suggestions |
+| `ctww+awt+f` / `⌘+option+f` | fix ewwow | ask ai to hewp fix t-the cuwwent ewwow |
+| `ctww+awt+d` / `⌘+option+d` | document code | ask ai t-to genewate documentation |
+| `ctww+awt+g` / `⌘+option+g` | genewate t-test | ask a-ai to genewate tests |
+| `ctww+awt+i` / `⌘+option+i` | i-impwementation s-suggestion | ask ai fow i-impwementation suggestions |
 
-### Learning Resources
+### w-weawning wesouwces
 
-| Shortcut | Action | Description |
+| s-showtcut | a-action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+Alt+L` / `⌘+Option+L` | Learn Concept | Ask AI to explain a concept |
-| `Ctrl+Alt+T` / `⌘+Option+T` | Tutorial | Ask AI for a tutorial |
-| `Ctrl+Alt+B` / `⌘+Option+B` | Best Practices | Ask AI for best practices |
-| `Ctrl+Alt+P` / `⌘+Option+P` | Pattern Suggestion | Ask AI for design pattern suggestions |
-| `Ctrl+Alt+S` / `⌘+Option+S` | Security Check | Ask AI to check for security issues |
+| `ctww+awt+w` / `⌘+option+w` | w-weawn concept | ask ai to expwain a-a concept |
+| `ctww+awt+t` / `⌘+option+t` | t-tutowiaw | ask a-ai fow a tutowiaw |
+| `ctww+awt+b` / `⌘+option+b` | best pwactices | a-ask ai fow best pwactices |
+| `ctww+awt+p` / `⌘+option+p` | pattewn suggestion | a-ask ai f-fow design pattewn s-suggestions |
+| `ctww+awt+s` / `⌘+option+s` | secuwity check | ask ai to check fow secuwity issues |
 
-## Navigation Shortcuts
+## n-nyavigation showtcuts
 
-### File Navigation
+### fiwe n-nyavigation
 
-| Shortcut | Action | Description |
+| showtcut | a-action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+P` / `⌘+P` | Quick Open | Quickly open files |
-| `Ctrl+Tab` / `⌘+Tab` | Next Tab | Switch to the next tab |
-| `Ctrl+Shift+Tab` / `⌘+Shift+Tab` | Previous Tab | Switch to the previous tab |
-| `Ctrl+PageDown` / `⌘+Option+Right` | Next Editor | Switch to the next editor |
-| `Ctrl+PageUp` / `⌘+Option+Left` | Previous Editor | Switch to the previous editor |
-| `Alt+Left` / `⌘+[` | Back | Navigate back |
-| `Alt+Right` / `⌘+]` | Forward | Navigate forward |
-| `Ctrl+G` / `⌘+G` | Go to Line | Go to a specific line |
-| `Ctrl+T` / `⌘+T` | Go to Symbol | Go to a symbol in the current file |
-| `Ctrl+Shift+O` / `⌘+Shift+O` | Go to Symbol in File | Go to a symbol in the current file |
-| `Ctrl+Shift+M` / `⌘+Shift+M` | Problems Panel | Show problems panel |
+| `ctww+p` / `⌘+p` | quick o-open | quickwy open fiwes |
+| `ctww+tab` / `⌘+tab` | n-nyext tab | s-switch to the n-nyext tab |
+| `ctww+shift+tab` / `⌘+shift+tab` | p-pwevious tab | s-switch to the pwevious tab |
+| `ctww+pagedown` / `⌘+option+wight` | nyext editow | switch to the nyext editow |
+| `ctww+pageup` / `⌘+option+weft` | p-pwevious editow | switch t-to the pwevious editow |
+| `awt+weft` / `⌘+[` | back | nyavigate back |
+| `awt+wight` / `⌘+]` | f-fowwawd | nyavigate fowwawd |
+| `ctww+g` / `⌘+g` | go to wine | go to a specific wine |
+| `ctww+t` / `⌘+t` | go to s-symbow | go to a-a symbow in the cuwwent fiwe |
+| `ctww+shift+o` / `⌘+shift+o` | g-go to symbow in fiwe | go to a symbow in the cuwwent f-fiwe |
+| `ctww+shift+m` / `⌘+shift+m` | p-pwobwems panew | show pwobwems p-panew |
 
-### Workspace Navigation
+### wowkspace nyavigation
 
-| Shortcut | Action | Description |
+| s-showtcut | action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+0` / `⌘+0` | Focus Side Bar | Focus the side bar |
-| `Ctrl+1` / `⌘+1` | Focus First Editor Group | Focus the first editor group |
-| `Ctrl+2` / `⌘+2` | Focus Second Editor Group | Focus the second editor group |
-| `Ctrl+3` / `⌘+3` | Focus Third Editor Group | Focus the third editor group |
-| `Ctrl+Shift+E` / `⌘+Shift+E` | Explorer | Show explorer |
-| `Ctrl+Shift+F` / `⌘+Shift+F` | Search | Show search |
-| `Ctrl+Shift+G` / `⌘+Shift+G` | Source Control | Show source control |
-| `Ctrl+Shift+D` / `⌘+Shift+D` | Debug | Show debug |
-| `Ctrl+Shift+X` / `⌘+Shift+X` | Extensions | Show extensions |
-| `Ctrl+Shift+Y` / `⌘+Shift+Y` | Debug Console | Show debug console |
-| `Ctrl+Shift+U` / `⌘+Shift+U` | Output | Show output |
-| `Ctrl+Shift+V` / `⌘+Shift+V` | Markdown Preview | Toggle Markdown preview |
+| `ctww+0` / `⌘+0` | focus side baw | focus the side b-baw |
+| `ctww+1` / `⌘+1` | focus fiwst editow gwoup | focus t-the fiwst editow g-gwoup |
+| `ctww+2` / `⌘+2` | f-focus second editow gwoup | focus the second editow g-gwoup |
+| `ctww+3` / `⌘+3` | focus thiwd editow gwoup | focus the thiwd editow gwoup |
+| `ctww+shift+e` / `⌘+shift+e` | e-expwowew | show e-expwowew |
+| `ctww+shift+f` / `⌘+shift+f` | seawch | s-show seawch |
+| `ctww+shift+g` / `⌘+shift+g` | s-souwce contwow | show souwce contwow |
+| `ctww+shift+d` / `⌘+shift+d` | d-debug | show d-debug |
+| `ctww+shift+x` / `⌘+shift+x` | extensions | show extensions |
+| `ctww+shift+y` / `⌘+shift+y` | d-debug consowe | show debug consowe |
+| `ctww+shift+u` / `⌘+shift+u` | o-output | show output |
+| `ctww+shift+v` / `⌘+shift+v` | mawkdown pweview | t-toggwe mawkdown p-pweview |
 
-## Panel Management Shortcuts
+## panew management s-showtcuts
 
-### Panel Control
+### p-panew contwow
 
-| Shortcut | Action | Description |
+| s-showtcut | action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+J` / `⌘+J` | Toggle Panel | Toggle the visibility of the bottom panel |
-| `Ctrl+B` / `⌘+B` | Toggle Sidebar | Toggle the visibility of the side bar |
-| `Ctrl+Shift+B` / `⌘+Shift+B` | Toggle Activity Bar | Toggle the visibility of the activity bar |
-| `Ctrl+\` / `⌘+\` | Split Editor | Split the editor |
-| `Ctrl+K Ctrl+\` / `⌘+K ⌘+\` | Split Editor Orthogonal | Split the editor orthogonally |
-| `Ctrl+W` / `⌘+W` | Close Editor | Close the current editor |
-| `Ctrl+K W` / `⌘+K W` | Close All Editors | Close all editors |
-| `Ctrl+K Ctrl+W` / `⌘+K ⌘+W` | Close All Editors | Close all editors |
-| `Ctrl+K F` / `⌘+K F` | Close Folder | Close the current folder |
-| `Ctrl+K M` / `⌘+K M` | Change Language Mode | Change the language mode of the current file |
+| `ctww+j` / `⌘+j` | toggwe p-panew | toggwe the visibiwity of the bottom p-panew |
+| `ctww+b` / `⌘+b` | toggwe sidebaw | toggwe the visibiwity of the side b-baw |
+| `ctww+shift+b` / `⌘+shift+b` | t-toggwe a-activity baw | t-toggwe the visibiwity o-of the activity baw |
+| `ctww+\` / `⌘+\` | s-spwit editow | spwit the editow |
+| `ctww+k ctww+\` / `⌘+k ⌘+\` | s-spwit editow owthogonaw | s-spwit the editow owthogonawwy |
+| `ctww+w` / `⌘+w` | cwose e-editow | cwose t-the cuwwent editow |
+| `ctww+k w` / `⌘+k w` | c-cwose aww editows | cwose aww editows |
+| `ctww+k c-ctww+w` / `⌘+k ⌘+w` | c-cwose aww editows | c-cwose aww editows |
+| `ctww+k f` / `⌘+k f-f` | cwose fowdew | cwose t-the cuwwent fowdew |
+| `ctww+k m` / `⌘+k m` | change wanguage m-mode | change the wanguage m-mode of the cuwwent fiwe |
 
-### Layout Management
+### wayout management
 
-| Shortcut | Action | Description |
+| s-showtcut | a-action | descwiption |
 |----------|--------|-------------|
-| `Ctrl+K Ctrl+Up` / `⌘+K ⌘+Up` | Focus Above Group | Focus the editor group above |
-| `Ctrl+K Ctrl+Down` / `⌘+K ⌘+Down` | Focus Below Group | Focus the editor group below |
-| `Ctrl+K Ctrl+Left` / `⌘+K ⌘+Left` | Focus Left Group | Focus the editor group to the left |
-| `Ctrl+K Ctrl+Right` / `⌘+K ⌘+Right` | Focus Right Group | Focus the editor group to the right |
-| `Ctrl+K Shift+Left` / `⌘+K Shift+Left` | Move Editor Left | Move the current editor to the left |
-| `Ctrl+K Shift+Right` / `⌘+K Shift+Right` | Move Editor Right | Move the current editor to the right |
-| `Ctrl+K Shift+Up` / `⌘+K Shift+Up` | Move Editor Up | Move the current editor up |
-| `Ctrl+K Shift+Down` / `⌘+K Shift+Down` | Move Editor Down | Move the current editor down |
-| `Ctrl+K Left` / `⌘+K Left` | Move Active Group Left | Move the active editor group left |
-| `Ctrl+K Right` / `⌘+K Right` | Move Active Group Right | Move the active editor group right |
-| `Ctrl+K Up` / `⌘+K Up` | Move Active Group Up | Move the active editor group up |
-| `Ctrl+K Down` / `⌘+K Down` | Move Active Group Down | Move the active editor group down |
+| `ctww+k c-ctww+up` / `⌘+k ⌘+up` | focus above gwoup | f-focus the editow g-gwoup above |
+| `ctww+k ctww+down` / `⌘+k ⌘+down` | f-focus bewow gwoup | f-focus the editow gwoup bewow |
+| `ctww+k c-ctww+weft` / `⌘+k ⌘+weft` | f-focus weft gwoup | focus the editow gwoup to the weft |
+| `ctww+k ctww+wight` / `⌘+k ⌘+wight` | focus w-wight gwoup | f-focus the editow gwoup to the wight |
+| `ctww+k shift+weft` / `⌘+k s-shift+weft` | move editow w-weft | move the c-cuwwent editow to the weft |
+| `ctww+k shift+wight` / `⌘+k shift+wight` | move editow wight | m-move the cuwwent editow to the wight |
+| `ctww+k s-shift+up` / `⌘+k shift+up` | m-move editow up | m-move the cuwwent editow up |
+| `ctww+k s-shift+down` / `⌘+k shift+down` | m-move e-editow down | m-move the cuwwent e-editow down |
+| `ctww+k w-weft` / `⌘+k weft` | move active gwoup weft | move the active editow gwoup weft |
+| `ctww+k w-wight` / `⌘+k w-wight` | m-move active gwoup w-wight | move the a-active editow g-gwoup wight |
+| `ctww+k up` / `⌘+k up` | move active gwoup up | move the active e-editow gwoup u-up |
+| `ctww+k down` / `⌘+k down` | move active gwoup down | move t-the active editow g-gwoup down |
 
-## Custom Shortcuts
+## c-custom showtcuts
 
-IDELess allows you to customize keyboard shortcuts to match your preferences. To customize shortcuts:
+idewess awwows you to customize k-keyboawd showtcuts to match youw pwefewences. 😳😳😳 t-to customize s-showtcuts:
 
-1. Open Settings (`Ctrl+,` / `⌘+,`)
-2. Navigate to "Keyboard Shortcuts"
-3. Search for the command you want to customize
-4. Click on the pencil icon to edit the shortcut
-5. Press the desired key combination
-6. Press Enter to save
+1. nyaa~~ open settings (`ctww+,` / `⌘+,`)
+2. (⑅˘꒳˘) nyavigate t-to "keyboawd showtcuts"
+3. :3 seawch f-fow the command y-you want to customize
+4. ʘwʘ cwick o-on the penciw i-icon to edit the s-showtcut
+5. rawr x3 pwess t-the desiwed k-key combination
+6. (///ˬ///✿) p-pwess entew to save
 
-### Common Custom Shortcut Patterns
+### common c-custom showtcut p-pattewns
 
-| Task | Suggested Shortcut | Description |
+| task | suggested s-showtcut | descwiption |
 |------|-------------------|-------------|
-| Quick Build and Run | `Ctrl+R` / `⌘+R` | Build and run the current program |
-| Format Document | `Alt+Shift+F` / `Option+Shift+F` | Format the current document |
-| Toggle Terminal | `Ctrl+`` / `⌘+`` | Show/hide the terminal |
-| Focus Editor | `Escape` | Focus the editor from any panel |
-| Save All | `Ctrl+Alt+S` / `⌘+Option+S` | Save all open files |
-| Close All But Current | `Ctrl+Alt+W` / `⌘+Option+W` | Close all editors except the current one |
+| quick buiwd and wun | `ctww+w` / `⌘+w` | b-buiwd and wun the cuwwent pwogwam |
+| f-fowmat document | `awt+shift+f` / `option+shift+f` | fowmat t-the cuwwent d-document |
+| toggwe tewminaw | `ctww+`` / `⌘+`` | show/hide the t-tewminaw |
+| focus editow | `escape` | focus the e-editow fwom any p-panew |
+| save aww | `ctww+awt+s` / `⌘+option+s` | save aww o-open fiwes |
+| c-cwose aww but cuwwent | `ctww+awt+w` / `⌘+option+w` | cwose aww e-editows except the cuwwent one |
 
-## Platform-Specific Differences
+## pwatfowm-specific d-diffewences
 
-### Windows/Linux vs. macOS
+### w-windows/winux vs. 😳😳😳 macos
 
-| Action | Windows/Linux | macOS |
+| a-action | windows/winux | m-macos |
 |--------|--------------|-------|
-| Copy | `Ctrl+C` | `⌘+C` |
-| Paste | `Ctrl+V` | `⌘+V` |
-| Cut | `Ctrl+X` | `⌘+X` |
-| Undo | `Ctrl+Z` | `⌘+Z` |
-| Redo | `Ctrl+Y` | `⌘+Shift+Z` |
-| Save | `Ctrl+S` | `⌘+S` |
-| Find | `Ctrl+F` | `⌘+F` |
-| Replace | `Ctrl+H` | `⌘+Option+F` |
-| Select All | `Ctrl+A` | `⌘+A` |
-| New File | `Ctrl+N` | `⌘+N` |
-| Open File | `Ctrl+O` | `⌘+O` |
-| Close Tab | `Ctrl+W` | `⌘+W` |
-| Settings | `Ctrl+,` | `⌘+,` |
-| Command Palette | `Ctrl+Shift+P` | `⌘+Shift+P` |
+| copy | `ctww+c` | `⌘+c` |
+| paste | `ctww+v` | `⌘+v` |
+| c-cut | `ctww+x` | `⌘+x` |
+| u-undo | `ctww+z` | `⌘+z` |
+| w-wedo | `ctww+y` | `⌘+shift+z` |
+| s-save | `ctww+s` | `⌘+s` |
+| find | `ctww+f` | `⌘+f` |
+| wepwace | `ctww+h` | `⌘+option+f` |
+| sewect aww | `ctww+a` | `⌘+a` |
+| nyew fiwe | `ctww+n` | `⌘+n` |
+| o-open fiwe | `ctww+o` | `⌘+o` |
+| c-cwose tab | `ctww+w` | `⌘+w` |
+| s-settings | `ctww+,` | `⌘+,` |
+| c-command p-pawette | `ctww+shift+p` | `⌘+shift+p` |
 
-### Key Symbol Legend
+### k-key symbow wegend
 
-| Symbol | Key (Windows/Linux) | Key (macOS) |
+| symbow | key (windows/winux) | k-key (macos) |
 |--------|---------------------|-------------|
-| `Ctrl` | Control key | N/A |
-| `Alt` | Alt key | N/A |
-| `Shift` | Shift key | Shift key |
-| `⌘` | N/A | Command key |
-| `Option` | N/A | Option/Alt key |
-| `⌃` | N/A | Control key |
+| `ctww` | c-contwow key | ny/a |
+| `awt` | a-awt k-key | ny/a |
+| `shift` | shift key | shift key |
+| `⌘` | n-ny/a | command key |
+| `option` | ny/a | o-option/awt key |
+| `⌃` | ny/a | contwow key |
 
-## Tips for Efficient Keyboard Usage
+## t-tips fow e-efficient keyboawd usage
 
-1. **Learn incrementally**: Focus on a few shortcuts at a time until they become muscle memory.
-2. **Use the Command Palette**: When you don't remember a shortcut, use `Ctrl+Shift+P` / `⌘+Shift+P` to search for commands.
-3. **Customize for comfort**: Modify shortcuts to match your existing habits from other tools.
-4. **Print a cheat sheet**: Keep a printed reference of your most-used shortcuts nearby.
-5. **Practice deliberately**: Set aside time to practice using shortcuts instead of mouse actions.
-6. **Use keyboard for navigation**: Try to navigate between files and panels using only the keyboard.
-7. **Learn editor-specific shortcuts**: Pay special attention to code editing shortcuts for maximum productivity.
-8. **Use multi-cursor editing**: Master the multi-cursor shortcuts for powerful text manipulation.
-9. **Combine shortcuts**: Many powerful operations come from combining shortcuts in sequence.
-10. **Observe experts**: Watch experienced users and note which shortcuts they use frequently.
+1. XD **weawn i-incwementawwy**: f-focus on a-a few showtcuts at a time untiw t-they become muscwe m-memowy. >_<
+2. **use the command p-pawette**: when you don't wemembew a-a showtcut, >w< use `ctww+shift+p` / `⌘+shift+p` t-to seawch fow c-commands. /(^•ω•^)
+3. **customize fow comfowt**: m-modify showtcuts to match youw existing h-habits fwom othew toows. :3
+4. ʘwʘ **pwint a cheat sheet**: keep a pwinted wefewence of youw most-used showtcuts nyeawby. (˘ω˘)
+5. **pwactice d-dewibewatewy**: set aside time to pwactice using showtcuts instead of mouse actions. (ꈍᴗꈍ)
+6. ^^ **use keyboawd fow nyavigation**: twy to n-nyavigate between fiwes and panews using onwy t-the keyboawd. ^^
+7. **weawn editow-specific s-showtcuts**: pay speciaw attention to code e-editing showtcuts fow maximum p-pwoductivity. ( ͡o ω ͡o )
+8. **use muwti-cuwsow e-editing**: m-mastew the muwti-cuwsow showtcuts fow powewfuw t-text manipuwation. -.-
+9. **combine showtcuts**: many powewfuw opewations come fwom c-combining showtcuts in sequence. ^^;;
+10. **obsewve expewts**: w-watch expewienced usews a-and nyote which showtcuts they u-use fwequentwy. ^•ﻌ•^

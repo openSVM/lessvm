@@ -1,442 +1,442 @@
-I'll implement these programs in lessVM assembly. Note that these are simplified versions that demonstrate the core functionality.
+i'ww impwement these pwogwams in w-wessvm assembwy. 🥺 n-nyote that these a-awe simpwified v-vewsions that demonstwate t-the cowe f-functionawity. ^^
 
-1. **On-Chain Vault**:
+1. ^•ﻌ•^ **on-chain v-vauwt**:
 ```nasm
-; On-Chain Vault
-; Accounts required:
-; 0: Program account
-; 1: Vault account
-; 2: User account
-; 3: Token account (if SPL)
+; o-on-chain vauwt
+; accounts wequiwed:
+; 0: pwogwam account
+; 1: vauwt account
+; 2: u-usew account
+; 3: token account (if spw)
 
-; Initialize vault
-init_vault:
-    PUSH1 0x01       ; Vault account index
-    PUSH1 0x00       ; Load initialization flag
-    LOAD            ; Load flag from memory
-    JUMPI end       ; If already initialized, end
+; i-initiawize vauwt
+init_vauwt:
+    p-push1 0x01       ; vauwt account index
+    push1 0x00       ; woad initiawization f-fwag
+    woad            ; woad fwag fwom memowy
+    j-jumpi e-end       ; if awweady initiawized, end
     
-    PUSH1 0x01      ; Set initialization flag
-    PUSH1 0x00      ; Store location
-    STORE           ; Store flag
+    push1 0x01      ; set initiawization f-fwag
+    push1 0x00      ; stowe wocation
+    stowe           ; stowe fwag
 
 deposit:
-    PUSH1 0x02      ; User account index
-    PUSH1 0x01      ; Vault account index
-    DUP2            ; Amount from stack
-    TRANSFER        ; Transfer to vault
-    PUSH1 0x08      ; Deposit record offset
-    LOAD            ; Load current deposits
-    ADD             ; Add new deposit
-    PUSH1 0x08      ; Store location
-    STORE           ; Update total deposits
+    push1 0x02      ; u-usew account index
+    push1 0x01      ; v-vauwt a-account index
+    d-dup2            ; a-amount fwom stack
+    twansfew        ; twansfew t-to vauwt
+    push1 0x08      ; deposit wecowd o-offset
+    woad            ; woad cuwwent deposits
+    add             ; add new deposit
+    push1 0x08      ; s-stowe wocation
+    stowe           ; u-update totaw d-deposits
 
-withdraw:
-    PUSH1 0x02      ; User account index
-    PUSH1 0x08      ; Load deposit record
-    LOAD            ; Get amount
-    PUSH1 0x01      ; Vault account
-    TRANSFER        ; Transfer back to user
+withdwaw:
+    p-push1 0x02      ; usew account index
+    push1 0x08      ; w-woad deposit w-wecowd
+    woad            ; get amount
+    p-push1 0x01      ; v-vauwt account
+    twansfew        ; t-twansfew back to usew
 
 end:
-    HALT
+    h-hawt
 ```
 
-2. **On-Chain Registry**:
+2. /(^•ω•^) **on-chain wegistwy**:
 ```nasm
-; On-Chain Registry
-; Supports registration and lookup of program IDs
+; on-chain wegistwy
+; s-suppowts wegistwation and w-wookup of pwogwam ids
 
-; Memory layout:
-; 0x00: Entry count
-; 0x08: Registry start
-; Each entry: 32 bytes key + 32 bytes value
+; memowy w-wayout:
+; 0x00: e-entwy count
+; 0x08: wegistwy stawt
+; each entwy: 32 bytes key + 32 bytes vawue
 
-register:
-    ; Stack: [value, key]
-    PUSH1 0x00      ; Load entry count
-    LOAD
-    DUP1            ; Duplicate for increment
-    PUSH1 0x01
-    ADD             ; Increment count
-    PUSH1 0x00
-    STORE           ; Store new count
+wegistew:
+    ; stack: [vawue, ^^ k-key]
+    push1 0x00      ; w-woad entwy count
+    w-woad
+    dup1            ; d-dupwicate f-fow incwement
+    push1 0x01
+    add             ; incwement c-count
+    push1 0x00
+    stowe           ; stowe nyew count
     
-    PUSH1 0x40      ; Size of each entry
-    MUL             ; Calculate offset
-    PUSH1 0x08      ; Add base offset
-    ADD             ; Final position
+    push1 0x40      ; s-size of each entwy
+    m-muw             ; c-cawcuwate offset
+    p-push1 0x08      ; add base o-offset
+    add             ; f-finaw position
     
-    DUP1            ; Duplicate position
-    STORE           ; Store key
-    PUSH1 0x20      ; Offset for value
-    ADD             ; Value position
-    STORE           ; Store value
+    d-dup1            ; d-dupwicate position
+    stowe           ; s-stowe key
+    p-push1 0x20      ; o-offset fow vawue
+    a-add             ; v-vawue position
+    stowe           ; stowe vawue
 
-lookup:
-    ; Stack: [key]
-    PUSH1 0x00
-    LOAD            ; Load entry count
+wookup:
+    ; stack: [key]
+    p-push1 0x00
+    woad            ; woad entwy count
     
-lookup_loop:
-    DUP1            ; Copy current index
-    PUSH1 0x40      ; Entry size
-    MUL
-    PUSH1 0x08      ; Base offset
-    ADD
-    LOAD            ; Load key at current position
-    DUP3            ; Get search key
-    SUB             ; Compare
-    JUMPI found
+wookup_woop:
+    dup1            ; c-copy cuwwent index
+    push1 0x40      ; entwy size
+    muw
+    p-push1 0x08      ; b-base offset
+    a-add
+    woad            ; woad key at cuwwent p-position
+    dup3            ; g-get seawch key
+    s-sub             ; compawe
+    jumpi found
     
-    PUSH1 0x01
-    SWAP1
-    SUB             ; Decrement counter
-    DUP1
-    JUMPI lookup_loop
+    push1 0x01
+    swap1
+    sub             ; d-decwement countew
+    dup1
+    j-jumpi wookup_woop
     
 found:
-    PUSH1 0x20
-    ADD
-    LOAD            ; Load value
+    p-push1 0x20
+    a-add
+    woad            ; woad vawue
     
 end:
-    HALT
+    hawt
 ```
 
-3. **On-Chain Oracle**:
+3. 🥺 **on-chain o-owacwe**:
 ```nasm
-; On-Chain Oracle
-; Supports price feeds with multiple data providers
+; o-on-chain owacwe
+; suppowts pwice f-feeds with m-muwtipwe data pwovidews
 
-; Memory layout:
-; 0x00: Provider count
-; 0x08: Last update timestamp
-; 0x10: Price data start
-; Each price: 8 bytes price + 8 bytes timestamp + 8 bytes provider
+; memowy wayout:
+; 0x00: pwovidew count
+; 0x08: wast update t-timestamp
+; 0x10: p-pwice data s-stawt
+; each pwice: 8 bytes pwice + 8 b-bytes timestamp + 8 b-bytes pwovidew
 
-update_price:
-    ; Stack: [price, provider_id]
-    PUSH1 0x00      ; Load provider count
-    LOAD
-    DUP1            ; Copy count
-    PUSH1 0x20      ; Size per entry
-    MUL             ; Calculate offset
-    PUSH1 0x10      ; Base offset
-    ADD             ; Final position
+update_pwice:
+    ; s-stack: [pwice, (U ᵕ U❁) pwovidew_id]
+    push1 0x00      ; woad pwovidew count
+    woad
+    dup1            ; c-copy count
+    p-push1 0x20      ; size pew entwy
+    muw             ; c-cawcuwate o-offset
+    push1 0x10      ; base offset
+    add             ; f-finaw position
     
-    DUP1            ; Store price
-    STORE
+    dup1            ; stowe pwice
+    stowe
     
-    PUSH1 0x08      ; Timestamp offset
-    ADD
-    NOW             ; Get current timestamp
-    STORE           ; Store timestamp
+    push1 0x08      ; timestamp o-offset
+    add
+    nyow             ; get cuwwent timestamp
+    s-stowe           ; s-stowe timestamp
     
-    PUSH1 0x08      ; Provider offset
-    ADD
-    STORE           ; Store provider ID
+    push1 0x08      ; pwovidew offset
+    a-add
+    s-stowe           ; stowe pwovidew id
 
-get_price:
-    PUSH1 0x00      ; Load provider count
-    LOAD
-    PUSH1 0x00      ; Initialize sum
-    PUSH1 0x00      ; Initialize count
+get_pwice:
+    push1 0x00      ; w-woad pwovidew count
+    w-woad
+    push1 0x00      ; initiawize sum
+    push1 0x00      ; initiawize count
 
-aggregate_loop:
-    DUP1            ; Copy current index
-    PUSH1 0x20      ; Entry size
-    MUL
-    PUSH1 0x10      ; Base offset
-    ADD
-    LOAD            ; Load price
-    ADD             ; Add to sum
+a-aggwegate_woop:
+    dup1            ; c-copy cuwwent i-index
+    push1 0x20      ; entwy size
+    m-muw
+    push1 0x10      ; base offset
+    a-add
+    w-woad            ; w-woad pwice
+    add             ; a-add to sum
     
-    SWAP1
-    PUSH1 0x01
-    ADD             ; Increment count
-    SWAP1
+    s-swap1
+    push1 0x01
+    add             ; i-incwement count
+    s-swap1
     
-    DUP3            ; Check if done
-    DUP2
-    SUB
-    JUMPI aggregate_loop
+    d-dup3            ; check if done
+    dup2
+    s-sub
+    jumpi aggwegate_woop
     
-    SWAP1           ; Get sum
-    SWAP2           ; Get count
-    DIV             ; Calculate average
+    s-swap1           ; g-get sum
+    swap2           ; get count
+    div             ; c-cawcuwate a-avewage
 
 end:
-    HALT
+    h-hawt
 ```
 
-4. **On-Chain Raydium/Meteora Arbitrage**:
+4. 😳😳😳 **on-chain w-waydium/meteowa awbitwage**:
 ```nasm
-; On-Chain AMM Arbitrage
-; Requires price feeds and pool interfaces
+; o-on-chain amm awbitwage
+; wequiwes pwice feeds and poow intewfaces
 
-start_arb:
-    ; Load pool states
-    PUSH1 0x01      ; Pool 1 index
-    PUSH1 0x02      ; Pool 2 index
+stawt_awb:
+    ; woad poow s-states
+    push1 0x01      ; poow 1 index
+    p-push1 0x02      ; poow 2 index
     
-    ; Get prices
-    DUP1
-    CALL get_pool_price
-    DUP2
-    CALL get_pool_price
+    ; g-get pwices
+    dup1
+    c-caww get_poow_pwice
+    dup2
+    c-caww get_poow_pwice
     
-    ; Calculate arbitrage opportunity
-    DUP2
-    DUP2
-    DIV             ; Price ratio
-    PUSH8 0x3F847AE147AE147B  ; 0.01 threshold
-    SUB
-    JUMPI execute_arb
-    HALT
+    ; c-cawcuwate awbitwage o-oppowtunity
+    d-dup2
+    d-dup2
+    div             ; pwice watio
+    push8 0x3f847ae147ae147b  ; 0.01 thweshowd
+    sub
+    jumpi exekawaii~_awb
+    hawt
 
-execute_arb:
-    ; Execute trades
-    DUP2            ; Pool with lower price
-    CALL buy_token
+e-exekawaii~_awb:
+    ; e-exekawaii~ t-twades
+    dup2            ; poow with wowew pwice
+    c-caww buy_token
     
-    DUP1            ; Pool with higher price
-    CALL sell_token
+    dup1            ; poow with highew pwice
+    caww s-seww_token
     
-    ; Calculate profit
-    CALL calculate_profit
-    PUSH1 0x00      ; Profit threshold
-    GT              ; Check if profitable
-    JUMPI commit_trade
-    HALT
+    ; c-cawcuwate pwofit
+    caww c-cawcuwate_pwofit
+    push1 0x00      ; pwofit t-thweshowd
+    gt              ; c-check if pwofitabwe
+    jumpi commit_twade
+    h-hawt
 
-commit_trade:
-    ; Execute actual trades
-    CALL execute_buy
-    CALL execute_sell
-    HALT
+commit_twade:
+    ; e-exekawaii~ actuaw twades
+    caww exekawaii~_buy
+    caww exekawaii~_seww
+    hawt
 
-get_pool_price:
-    ; Stack: [pool_index]
-    PUSH1 0x20      ; Offset for price
-    MUL
-    LOAD
-    RET
+get_poow_pwice:
+    ; s-stack: [poow_index]
+    p-push1 0x20      ; o-offset f-fow pwice
+    m-muw
+    woad
+    wet
 
-calculate_profit:
-    ; Stack: [sell_amount, buy_amount]
-    SUB
-    RET
+cawcuwate_pwofit:
+    ; s-stack: [seww_amount, nyaa~~ b-buy_amount]
+    sub
+    wet
 ```
 
-5. **On-Chain AMM with Dynamic Fees**:
+5. (˘ω˘) **on-chain a-amm with dynamic f-fees**:
 ```nasm
-; AMM with dynamic fees and rewards
-; Memory layout:
-; 0x00: Total volume
-; 0x08: Trader count
-; 0x10: Fee accumulator
-; 0x18: Trader data start
+; amm with d-dynamic fees and wewawds
+; memowy wayout:
+; 0x00: t-totaw vowume
+; 0x08: twadew count
+; 0x10: f-fee a-accumuwatow
+; 0x18: twadew data s-stawt
 
-init_pool:
-    PUSH1 0x00      ; Initialize total volume
-    PUSH1 0x00
-    STORE
-    PUSH1 0x00      ; Initialize trader count
-    PUSH1 0x08
-    STORE
-    HALT
+init_poow:
+    push1 0x00      ; initiawize t-totaw vowume
+    p-push1 0x00
+    s-stowe
+    push1 0x00      ; initiawize twadew count
+    push1 0x08
+    stowe
+    h-hawt
 
-trade:
-    ; Update volumes
-    DUP1            ; Trade amount
-    PUSH1 0x00
-    LOAD            ; Load total volume
-    ADD             ; Add new volume
-    PUSH1 0x00
-    STORE           ; Store new total
+twade:
+    ; update vowumes
+    dup1            ; t-twade a-amount
+    push1 0x00
+    woad            ; woad t-totaw vowume
+    add             ; a-add nyew v-vowume
+    push1 0x00
+    stowe           ; stowe n-nyew totaw
 
-    ; Update trader stats
-    PUSH1 0x08      ; Load trader count
-    LOAD
-    DUP1            ; Find trader index
-    CALL find_trader
+    ; update twadew stats
+    push1 0x08      ; w-woad t-twadew count
+    woad
+    dup1            ; find t-twadew index
+    caww find_twadew
     
-    ; Update trader's volume and PnL
-    DUP1
-    CALL update_trader_stats
+    ; u-update twadew's v-vowume and pnw
+    d-dup1
+    caww update_twadew_stats
     
-    ; Calculate and distribute fees
-    CALL distribute_fees
-    HALT
+    ; cawcuwate and distwibute fees
+    caww distwibute_fees
+    hawt
 
-distribute_fees:
-    ; Get top 3 traders by volume (70%)
-    CALL sort_by_volume
-    PUSH1 0x03      ; Top 3
-    CALL distribute_top
+distwibute_fees:
+    ; get top 3 twadews by vowume (70%)
+    caww sowt_by_vowume
+    push1 0x03      ; top 3
+    caww distwibute_top
     
-    ; Get bottom 3 traders by PnL (30%)
-    CALL sort_by_pnl
-    PUSH1 0x03      ; Bottom 3
-    CALL distribute_bottom
-    RET
+    ; g-get bottom 3 twadews b-by pnw (30%)
+    caww sowt_by_pnw
+    push1 0x03      ; bottom 3
+    c-caww d-distwibute_bottom
+    w-wet
 
-update_trader_stats:
-    ; Update individual trader statistics
-    ; Stack: [trader_index, amount, price]
-    RET
+update_twadew_stats:
+    ; update individuaw t-twadew statistics
+    ; s-stack: [twadew_index, >_< a-amount, pwice]
+    wet
 ```
 
-6. **On-Chain 3 Asset Pool**:
+6. XD **on-chain 3 a-asset poow**:
 ```nasm
-; 3 Asset Pool with custom curve
-; Supports SPL20, SPL22, and Metaplex NFT
+; 3 asset p-poow with custom c-cuwve
+; suppowts spw20, spw22, rawr x3 and metapwex n-nyft
 
-init_pool:
-    ; Initialize asset balances
-    PUSH1 0x00      ; SPL20 balance
-    PUSH1 0x00
-    STORE
-    PUSH1 0x08      ; SPL22 balance
-    PUSH1 0x00
-    STORE
-    PUSH1 0x10      ; NFT count
-    PUSH1 0x00
-    STORE
-    HALT
+init_poow:
+    ; i-initiawize a-asset bawances
+    p-push1 0x00      ; s-spw20 bawance
+    p-push1 0x00
+    s-stowe
+    p-push1 0x08      ; s-spw22 bawance
+    push1 0x00
+    s-stowe
+    push1 0x10      ; n-nyft count
+    p-push1 0x00
+    stowe
+    hawt
 
-calculate_price:
-    ; Custom curve implementation
-    ; P = (A * x * y) + (B * y * z) + (C * x * z)
-    PUSH1 0x00
-    LOAD            ; x balance
-    PUSH1 0x08
-    LOAD            ; y balance
-    MUL
-    PUSH8 0x3F50624DD2F1A9FC  ; Constant A
-    MUL
+cawcuwate_pwice:
+    ; c-custom cuwve impwementation
+    ; p = (a * x-x * y) + (b * y * z) + (c * x * z-z)
+    push1 0x00
+    w-woad            ; x-x bawance
+    push1 0x08
+    w-woad            ; y bawance
+    m-muw
+    push8 0x3f50624dd2f1a9fc  ; constant a-a
+    muw
     
-    PUSH1 0x08
-    LOAD            ; y balance
-    PUSH1 0x10
-    LOAD            ; z balance
-    MUL
-    PUSH8 0x3F847AE147AE147B  ; Constant B
-    MUL
-    ADD
+    push1 0x08
+    w-woad            ; y bawance
+    push1 0x10
+    woad            ; z bawance
+    m-muw
+    push8 0x3f847ae147ae147b  ; constant b-b
+    muw
+    add
     
-    ; Continue curve calculation...
-    HALT
+    ; c-continue cuwve cawcuwation...
+    hawt
 
 swap:
-    ; Verify token types
-    CALL verify_token_type
+    ; vewify token types
+    c-caww vewify_token_type
     
-    ; Calculate exchange rate
-    CALL calculate_price
+    ; cawcuwate e-exchange wate
+    c-caww cawcuwate_pwice
     
-    ; Execute swap
-    CALL execute_swap
-    HALT
+    ; e-exekawaii~ swap
+    caww exekawaii~_swap
+    h-hawt
 
-verify_token_type:
-    ; Check if token is SPL20, SPL22, or NFT
-    DUP1
-    PUSH1 0x01      ; SPL20 type
-    SUB
-    JUMPI valid_spl20
+vewify_token_type:
+    ; c-check if token is spw20, ( ͡o ω ͡o ) spw22, :3 o-ow nft
+    dup1
+    push1 0x01      ; spw20 type
+    s-sub
+    jumpi vawid_spw20
     
-    DUP1
-    PUSH1 0x02      ; SPL22 type
-    SUB
-    JUMPI valid_spl22
+    d-dup1
+    p-push1 0x02      ; s-spw22 type
+    sub
+    jumpi v-vawid_spw22
     
-    DUP1
-    PUSH1 0x03      ; NFT type
-    SUB
-    JUMPI valid_nft
+    d-dup1
+    p-push1 0x03      ; n-nyft type
+    sub
+    jumpi vawid_nft
     
-    PUSH1 0x00      ; Invalid token type
-    HALT
+    p-push1 0x00      ; i-invawid token t-type
+    hawt
 ```
 
-7. **On-Chain 2 Asset Pool**:
+7. **on-chain 2 a-asset poow**:
 ```nasm
-; 2 Asset Pool with custom curve
-; Supports SPL20, SPL22, and Metaplex NFT
+; 2 asset p-poow with custom c-cuwve
+; suppowts s-spw20, mya spw22, σωσ a-and metapwex nyft
 
-init_pool:
-    ; Initialize balances
-    PUSH1 0x00      ; First asset
-    PUSH1 0x00
-    STORE
-    PUSH1 0x08      ; Second asset
-    PUSH1 0x00
-    STORE
-    HALT
+init_poow:
+    ; i-initiawize bawances
+    p-push1 0x00      ; fiwst asset
+    p-push1 0x00
+    s-stowe
+    push1 0x08      ; s-second asset
+    push1 0x00
+    stowe
+    hawt
 
-calculate_price:
-    ; Custom curve: P = (x^2 * y) / (x + y^2)
-    PUSH1 0x00
-    LOAD            ; x balance
-    DUP1
-    MUL             ; x^2
+cawcuwate_pwice:
+    ; c-custom cuwve: p-p = (x^2 * y) / (x + y-y^2)
+    push1 0x00
+    woad            ; x bawance
+    d-dup1
+    muw             ; x-x^2
     
-    PUSH1 0x08
-    LOAD            ; y balance
-    MUL             ; x^2 * y
+    push1 0x08
+    w-woad            ; y-y bawance
+    muw             ; x^2 * y
     
-    PUSH1 0x00
-    LOAD            ; x balance
+    push1 0x00
+    w-woad            ; x-x bawance
     
-    PUSH1 0x08
-    LOAD            ; y balance
-    DUP1
-    MUL             ; y^2
+    p-push1 0x08
+    w-woad            ; y bawance
+    dup1
+    muw             ; y-y^2
     
-    ADD             ; x + y^2
+    a-add             ; x + y^2
     
-    DIV             ; Final price
-    HALT
+    div             ; f-finaw pwice
+    hawt
 
 swap:
-    ; Check token compatibility
-    CALL verify_token_type
+    ; check t-token compatibiwity
+    caww vewify_token_type
     
-    ; Calculate swap amount
-    CALL calculate_price
+    ; c-cawcuwate s-swap amount
+    caww cawcuwate_pwice
     
-    ; Execute swap
-    CALL execute_swap
+    ; e-exekawaii~ s-swap
+    caww exekawaii~_swap
     
-    ; Update balances
-    CALL update_balances
-    HALT
+    ; update b-bawances
+    caww update_bawances
+    h-hawt
 
-provide_liquidity:
-    ; Add liquidity to pool
-    CALL verify_ratio
-    CALL add_liquidity
-    CALL mint_lp_tokens
-    HALT
+pwovide_wiquidity:
+    ; a-add wiquidity t-to poow
+    c-caww vewify_watio
+    caww add_wiquidity
+    c-caww m-mint_wp_tokens
+    h-hawt
 
-remove_liquidity:
-    ; Remove liquidity from pool
-    CALL verify_lp_tokens
-    CALL burn_lp_tokens
-    CALL return_assets
-    HALT
+wemove_wiquidity:
+    ; wemove wiquidity f-fwom poow
+    caww vewify_wp_tokens
+    caww b-buwn_wp_tokens
+    c-caww wetuwn_assets
+    h-hawt
 ```
 
-These assembly programs demonstrate the basic structure and logic of each system. Each would need to be expanded with proper error handling, security checks, and additional features for production use. The actual implementation would also need to handle:
+these assembwy pwogwams demonstwate the basic stwuctuwe and w-wogic of each system. (ꈍᴗꈍ) each wouwd n-nyeed to be expanded w-with pwopew ewwow handwing, OwO secuwity checks, o.O a-and additionaw featuwes fow p-pwoduction use. 😳😳😳 t-the actuaw impwementation w-wouwd a-awso nyeed to handwe:
 
-1. Account validation
-2. Proper decimal handling
-3. Slippage protection
-4. Oracle integration
-5. Emergency stops
-6. Access control
-7. Gas optimization
+1. /(^•ω•^) a-account vawidation
+2. OwO pwopew decimaw handwing
+3. ^^ swippage pwotection
+4. (///ˬ///✿) o-owacwe integwation
+5. (///ˬ///✿) emewgency s-stops
+6. (///ˬ///✿) access contwow
+7. ʘwʘ gas optimization
 
-Would you like me to expand on any particular aspect or add more detailed implementations for specific features?
+wouwd you wike me t-to expand on any pawticuwaw aspect ow add mowe detaiwed impwementations fow specific f-featuwes?

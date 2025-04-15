@@ -1,47 +1,47 @@
-# Revised Plan
+# wevised pwan
 
-**Phase 1: Project Setup and Core Refactoring**
+**phase 1: pwoject s-setup and cowe w-wefactowing**
 
-1.  **Explore the existing `ideless` project:** (Completed)
-    *   List files in `ideless` directory.
-    *   Read `ideless/Cargo.toml` to understand dependencies.
-    *   List files in `ideless/src` to understand core components.
-    *   Read `ideless/src/main.rs` to understand application structure.
-2.  **Remove CHIP-8 and gaming-related code:**
-    *   Remove the `ch8` module and all its dependencies.
-    *   Remove any code related to CHIP-8 emulation from `src/main.rs` and other modules.
-    *   Remove the roms directory.
-3.  **Update `Cargo.toml`:**
-    *   Remove dependencies related to CHIP-8 emulation (e.g., `rodio`).
-    *   Add `lessvm-solana` as a dependency.
-    *   Add `ratatui` as a dependency.
-    *   Add `llm` or similar AI agent crate as a dependency.
-4.  **Implement the core `lessvm` support:**
-    *   Integrate the `lessvm` runtime into the project. This will involve modifying the existing `VM` struct or creating a new one to support `lessvm` instructions.
-    *   Implement a `lessvm` loader to load `lessvm` bytecode into the VM.
-5.  **Implement the `ratatui` TUI:**
-    *   Integrate the `ratatui` crate to create the user interface. This will involve modifying the existing rendering logic to display the `lessvm` state.
-6.  **Implement the AI agent:**
-    *   Integrate a suitable AI agent crate (e.g., `llm`) to provide assistance during development. This will involve creating a new module to handle communication with the AI agent.
+1. /(^•ω•^)  **expwowe t-the e-existing `idewess` p-pwoject:** (compweted)
+    *   w-wist fiwes in `idewess` d-diwectowy. :3
+    *   wead `idewess/cawgo.tomw` t-to undewstand dependencies. (ꈍᴗꈍ)
+    *   wist fiwes in `idewess/swc` to undewstand c-cowe components. /(^•ω•^)
+    *   wead `idewess/swc/main.ws` to undewstand a-appwication stwuctuwe. (⑅˘꒳˘)
+2.  **wemove c-chip-8 and gaming-wewated code:**
+    *   wemove the `ch8` m-moduwe and aww its dependencies. ( ͡o ω ͡o )
+    *   w-wemove any code w-wewated to chip-8 emuwation fwom `swc/main.ws` and othew moduwes. òωó
+    *   wemove the woms diwectowy. (⑅˘꒳˘)
+3.  **update `cawgo.tomw`:**
+    *   w-wemove dependencies wewated to chip-8 emuwation (e.g., `wodio`). XD
+    *   add `wessvm-sowana` a-as a dependency. -.-
+    *   add `watatui` as a-a dependency. :3
+    *   a-add `wwm` o-ow simiwaw ai a-agent cwate as a dependency. nyaa~~
+4.  **impwement the c-cowe `wessvm` suppowt:**
+    *   integwate the `wessvm` wuntime i-into the pwoject. 😳 this wiww invowve modifying the existing `vm` stwuct ow cweating a nyew one to s-suppowt `wessvm` instwuctions. (⑅˘꒳˘)
+    *   i-impwement a-a `wessvm` woadew t-to woad `wessvm` bytecode into the vm.
+5. nyaa~~  **impwement the `watatui` t-tui:**
+    *   i-integwate the `watatui` c-cwate to cweate t-the usew intewface. OwO this wiww invowve m-modifying the existing wendewing w-wogic to dispway the `wessvm` state. rawr x3
+6.  **impwement t-the ai agent:**
+    *   i-integwate a suitabwe ai agent c-cwate (e.g., `wwm`) t-to pwovide assistance duwing devewopment. XD this wiww invowve cweating a nyew moduwe to handwe communication w-with the ai agent. σωσ
 
-**Phase 2: Feature Implementation**
+**phase 2: f-featuwe impwementation**
 
-1.  **Implement TDD tests:** Write unit and integration tests for all core functionalities.
-2.  **Implement examples:** Create example projects for on-chain gaming, DeFi, liquid staking, drift-bot, Raydium-bot, PF-sniper, and on-chain game Tron.
-3.  **Implement CU estimator:** Develop a module to precisely estimate the compute units of `lessvm` code, both total and by line.
-4.  **Implement decompilation support:** Integrate with `opensvm.com` to support decompiling programs from program addresses.
-5.  **Implement debug/simulation support:** Integrate with `opensvm.com` to support debugging and simulating transactions from transaction IDs.
-6.  **Implement livecoding sessions:** Generate temporary URLs for livecoding sessions.
-7.  **Implement built-in registry:** Create a registry of `lessvm` programs.
-8.  **Implement e2e tests:** Write end-to-end tests to ensure all features work correctly together.
+1. (U ᵕ U❁)  **impwement tdd tests:** w-wwite unit a-and integwation t-tests fow aww cowe functionawities. (U ﹏ U)
+2.  **impwement exampwes:** cweate exampwe p-pwojects fow on-chain gaming, :3 defi, wiquid staking, ( ͡o ω ͡o ) dwift-bot, σωσ waydium-bot, >w< pf-snipew, a-and on-chain game twon. 😳😳😳
+3.  **impwement c-cu estimatow:** d-devewop a moduwe t-to pwecisewy estimate the compute u-units of `wessvm` c-code, OwO both t-totaw and by wine. 😳
+4.  **impwement d-decompiwation suppowt:** integwate with `opensvm.com` t-to suppowt d-decompiwing p-pwogwams fwom pwogwam a-addwesses. 😳😳😳
+5. (˘ω˘)  **impwement d-debug/simuwation suppowt:** integwate with `opensvm.com` to suppowt d-debugging and simuwating twansactions fwom twansaction ids. ʘwʘ
+6.  **impwement wivecoding sessions:** genewate t-tempowawy uwws fow wivecoding sessions. ( ͡o ω ͡o )
+7.  **impwement buiwt-in w-wegistwy:** cweate a-a wegistwy o-of `wessvm` pwogwams. o.O
+8. >w<  **impwement e2e tests:** w-wwite end-to-end tests to ensuwe a-aww featuwes w-wowk cowwectwy togethew. 😳
 
-**Phase 3: Testing and Refinement**
+**phase 3: testing and wefinement**
 
-1.  **Achieve 100% test coverage:** Ensure that all code is covered by unit and integration tests.
-2.  **Run all tests:** Run all unit, integration, and e2e tests to ensure that the project is stable and reliable.
-3.  **Refactor and optimize:** Refactor the code to improve performance, readability, and maintainability.
+1. 🥺  **achieve 100% test covewage:** ensuwe that a-aww code is covewed by unit and i-integwation tests. rawr x3
+2.  **wun aww t-tests:** wun aww u-unit, o.O integwation, rawr and e2e tests to ensuwe that t-the pwoject is s-stabwe and wewiabwe. ʘwʘ
+3.  **wefactow and optimize:** w-wefactow the c-code to impwove pewfowmance, 😳😳😳 weadabiwity, ^^;; and maintainabiwity.
 
-**Phase 4: Finalization**
+**phase 4: finawization**
 
-1.  **Run and check:** Manually go through each feature in the UI and make sure all pages are loading without lags and correctly according to data from mainnet.
-2.  **Attempt completion:** Use the `attempt_completion` tool to present the result to the user.
+1. o.O  **wun a-and check:** m-manuawwy go t-thwough each featuwe in the ui a-and make suwe aww p-pages awe woading without wags a-and cowwectwy accowding to data fwom mainnet. (///ˬ///✿)
+2.  **attempt compwetion:** use the `attempt_compwetion` t-toow to p-pwesent the wesuwt to the usew.

@@ -1,256 +1,256 @@
-Here's the complete implementation and deployment guide for lessVM. I'll split it into multiple files for better organization.
+hewe's the compwete impwementation a-and depwoyment g-guide fow wessvm. >_< i-i'ww spwit it i-into muwtipwe fiwes f-fow bettew o-owganization. -.-
 
-1. First, create a new Solana project:
+1. f-fiwst, mya cweate a-a nyew sowana pwoject:
 
 ```bash
-cargo new lessvm
-cd lessvm
+cawgo nyew wessvm
+cd wessvm
 ```
 
-2. Create the following file structure:
+2. >w< cweate the fowwowing fiwe stwuctuwe:
 ```
-lessvm/
-├── Cargo.toml
-├── src/
-│   ├── lib.rs
-│   ├── vm.rs
-│   ├── error.rs
-│   └── instruction.rs
-└── scripts/
-    └── deploy.sh
+w-wessvm/
+├── cawgo.tomw
+├── swc/
+│   ├── wib.ws
+│   ├── v-vm.ws
+│   ├── ewwow.ws
+│   └── instwuction.ws
+└── s-scwipts/
+    └── depwoy.sh
 ```
 
-3. `Cargo.toml`:
-```toml
+3. (U ﹏ U) `cawgo.tomw`:
+```tomw
 [package]
-name = "lessvm"
-version = "0.1.0"
+name = "wessvm"
+vewsion = "0.1.0"
 edition = "2021"
-description = "A lightweight VM for Solana"
-license = "Apache-2.0"
+d-descwiption = "a wightweight v-vm fow sowana"
+w-wicense = "apache-2.0"
 
-[lib]
-crate-type = ["cdylib", "lib"]
+[wib]
+cwate-type = ["cdywib", 😳😳😳 "wib"]
 
-[features]
-no-entrypoint = []
+[featuwes]
+nyo-entwypoint = []
 
 [dependencies]
-solana-program = "1.16"
-thiserror = "1.0"
-borsh = "0.10"
-bytemuck = { version = "1.13", features = ["derive"] }
+sowana-pwogwam = "1.16"
+thisewwow = "1.0"
+b-bowsh = "0.10"
+bytemuck = { vewsion = "1.13", o.O featuwes = ["dewive"] }
 
 [dev-dependencies]
-solana-program-test = "1.16"
-solana-sdk = "1.16"
+sowana-pwogwam-test = "1.16"
+s-sowana-sdk = "1.16"
 
-[profile.release]
-overflow-checks = true
-lto = "fat"
-codegen-units = 1
-[profile.release.build-override]
-opt-level = 3
-incremental = false
+[pwofiwe.wewease]
+ovewfwow-checks = t-twue
+wto = "fat"
+c-codegen-units = 1
+[pwofiwe.wewease.buiwd-ovewwide]
+o-opt-wevew = 3
+i-incwementaw = fawse
 codegen-units = 1
 ```
 
-4. `src/error.rs`:
-```rust
-use solana_program::program_error::ProgramError;
-use thiserror::Error;
+4. òωó `swc/ewwow.ws`:
+```wust
+use sowana_pwogwam::pwogwam_ewwow::pwogwamewwow;
+u-use thisewwow::ewwow;
 
-#[derive(Error, Debug, Copy, Clone)]
-pub enum LessVMError {
-    #[error("Stack overflow")]
-    StackOverflow,
-    #[error("Stack underflow")]
-    StackUnderflow,
-    #[error("Invalid DUP depth")]
-    InvalidDupDepth,
-    #[error("Invalid SWAP depth")]
-    InvalidSwapDepth,
-    #[error("Memory store out of bounds")]
-    MemoryStoreOutOfBounds,
-    #[error("Memory load out of bounds")]
-    MemoryLoadOutOfBounds,
-    #[error("Invalid instruction fetch")]
-    InvalidInstructionFetch,
-    #[error("Invalid byte fetch")]
-    InvalidByteFetch,
-    #[error("Invalid u64 fetch")]
-    InvalidU64Fetch,
-    #[error("Invalid jump target")]
-    InvalidJumpTarget,
-    #[error("Invalid conditional jump target")]
-    InvalidJumpITarget,
-    #[error("Invalid opcode")]
-    InvalidOpcode,
-    #[error("Out of gas")]
-    OutOfGas,
+#[dewive(ewwow, 😳😳😳 debug, copy, cwone)]
+pub e-enum wessvmewwow {
+    #[ewwow("stack ovewfwow")]
+    stackovewfwow, σωσ
+    #[ewwow("stack undewfwow")]
+    stackundewfwow, (⑅˘꒳˘)
+    #[ewwow("invawid dup d-depth")]
+    invawiddupdepth, (///ˬ///✿)
+    #[ewwow("invawid swap depth")]
+    i-invawidswapdepth, 🥺
+    #[ewwow("memowy s-stowe o-out of bounds")]
+    memowystoweoutofbounds, OwO
+    #[ewwow("memowy woad out of bounds")]
+    memowywoadoutofbounds, >w<
+    #[ewwow("invawid i-instwuction f-fetch")]
+    invawidinstwuctionfetch, 🥺
+    #[ewwow("invawid b-byte fetch")]
+    i-invawidbytefetch, nyaa~~
+    #[ewwow("invawid u64 fetch")]
+    i-invawidu64fetch, ^^
+    #[ewwow("invawid jump tawget")]
+    i-invawidjumptawget, >w<
+    #[ewwow("invawid conditionaw jump tawget")]
+    i-invawidjumpitawget, OwO
+    #[ewwow("invawid opcode")]
+    i-invawidopcode, XD
+    #[ewwow("out of gas")]
+    o-outofgas,
 }
 
-impl From<LessVMError> for ProgramError {
-    fn from(e: LessVMError) -> Self {
-        ProgramError::Custom(e as u32)
+impw f-fwom<wessvmewwow> fow pwogwamewwow {
+    fn fwom(e: wessvmewwow) -> sewf {
+        pwogwamewwow::custom(e as u32)
     }
 }
 ```
 
-5. `src/instruction.rs`:
-```rust
-use borsh::{BorshDeserialize, BorshSerialize};
+5. ^^;; `swc/instwuction.ws`:
+```wust
+u-use bowsh::{bowshdesewiawize, 🥺 b-bowshsewiawize};
 
-#[derive(BorshSerialize, BorshDeserialize, Debug, Clone)]
-pub enum LessVMInstruction {
-    /// Execute bytecode
-    Execute {
-        /// Program bytecode
-        bytecode: Vec<u8>,
+#[dewive(bowshsewiawize, XD bowshdesewiawize, (U ᵕ U❁) d-debug, :3 c-cwone)]
+pub e-enum wessvminstwuction {
+    /// exekawaii~ bytecode
+    exekawaii~ {
+        /// pwogwam bytecode
+        b-bytecode: vec<u8>, ( ͡o ω ͡o )
     },
 }
 ```
 
-6. `src/vm.rs`:
-[Previous VM implementation from the first message]
+6. òωó `swc/vm.ws`:
+[pwevious vm impwementation fwom the fiwst message]
 
-7. `src/lib.rs`:
-```rust
-pub mod error;
-pub mod instruction;
-pub mod vm;
+7. σωσ `swc/wib.ws`:
+```wust
+p-pub mod ewwow;
+pub mod i-instwuction;
+pub m-mod vm;
 
-use borsh::BorshDeserialize;
-use solana_program::{
-    account_info::AccountInfo,
-    entrypoint,
-    entrypoint::ProgramResult,
-    msg,
-    program_error::ProgramError,
-    pubkey::Pubkey,
+use bowsh::bowshdesewiawize;
+u-use sowana_pwogwam::{
+    account_info::accountinfo, (U ᵕ U❁)
+    e-entwypoint, (✿oωo)
+    e-entwypoint::pwogwamwesuwt, ^^
+    m-msg, ^•ﻌ•^
+    pwogwam_ewwow::pwogwamewwow, XD
+    p-pubkey::pubkey, :3
 };
 
-use crate::{instruction::LessVMInstruction, vm::VM};
+use cwate::{instwuction::wessvminstwuction, (ꈍᴗꈍ) v-vm::vm};
 
-entrypoint!(process_instruction);
+e-entwypoint!(pwocess_instwuction);
 
-pub fn process_instruction(
-    program_id: &Pubkey,
-    accounts: &[AccountInfo],
-    instruction_data: &[u8],
-) -> ProgramResult {
-    msg!("LessVM: Processing instruction");
+p-pub fn pwocess_instwuction(
+    p-pwogwam_id: &pubkey, :3
+    a-accounts: &[accountinfo], (U ﹏ U)
+    instwuction_data: &[u8], UwU
+) -> pwogwamwesuwt {
+    msg!("wessvm: pwocessing i-instwuction");
     
-    let instruction = LessVMInstruction::try_from_slice(instruction_data)
-        .map_err(|_| ProgramError::InvalidInstructionData)?;
+    wet instwuction = wessvminstwuction::twy_fwom_swice(instwuction_data)
+        .map_eww(|_| pwogwamewwow::invawidinstwuctiondata)?;
     
-    match instruction {
-        LessVMInstruction::Execute { bytecode } => {
-            let mut vm = VM::new(&bytecode, accounts);
-            vm.execute()?;
+    match instwuction {
+        w-wessvminstwuction::exekawaii~ { bytecode } => {
+            wet mut vm = vm::new(&bytecode, 😳😳😳 a-accounts);
+            v-vm.exekawaii~()?;
         }
     }
     
-    Ok(())
+    o-ok(())
 }
 ```
 
-8. Create `scripts/deploy.sh`:
+8. cweate `scwipts/depwoy.sh`:
 ```bash
 #!/bin/bash
 
-# Build the program
-cargo build-bpf
+# b-buiwd the pwogwam
+cawgo b-buiwd-bpf
 
-# Deploy the program
-solana program deploy \
-    target/deploy/lessvm.so \
-    --program-id lessvm-keypair.json \
-    --url mainnet-beta \
-    --keypair ~/.config/solana/mainnet.json
+# d-depwoy the pwogwam
+sowana pwogwam depwoy \
+    tawget/depwoy/wessvm.so \
+    --pwogwam-id wessvm-keypaiw.json \
+    --uww mainnet-beta \
+    --keypaiw ~/.config/sowana/mainnet.json
 ```
 
-9. Deployment Instructions:
+9. XD depwoyment i-instwuctions:
 
 ```bash
-# 1. Install Solana CLI tools
-sh -c "$(curl -sSfL https://release.solana.com/v1.16.0/install)"
+# 1. o.O instaww sowana c-cwi toows
+sh -c "$(cuww -ssfw https://wewease.sowana.com/v1.16.0/instaww)"
 
-# 2. Create a mainnet wallet if you don't have one
-solana-keygen new --outfile ~/.config/solana/mainnet.json
+# 2. (⑅˘꒳˘) c-cweate a mainnet w-wawwet if you don't have one
+sowana-keygen n-nyew --outfiwe ~/.config/sowana/mainnet.json
 
-# 3. Add SOL to your wallet (you'll need ~2-3 SOL for deployment)
+# 3. 😳😳😳 a-add sow to youw wawwet (you'ww n-nyeed ~2-3 sow f-fow depwoyment)
 
-# 4. Generate program keypair
-solana-keygen new --outfile lessvm-keypair.json
+# 4. nyaa~~ genewate pwogwam keypaiw
+sowana-keygen nyew --outfiwe wessvm-keypaiw.json
 
-# 5. Build and deploy
-chmod +x scripts/deploy.sh
-./scripts/deploy.sh
+# 5. rawr b-buiwd and d-depwoy
+chmod +x s-scwipts/depwoy.sh
+./scwipts/depwoy.sh
 ```
 
-10. Usage Example (client-side):
-```typescript
-import {
-  Connection,
-  PublicKey,
-  Transaction,
-  TransactionInstruction,
-  sendAndConfirmTransaction,
-} from '@solana/web3.js';
-import { serialize } from 'borsh';
+10. -.- usage exampwe (cwient-side):
+```typescwipt
+i-impowt {
+  c-connection, (✿oωo)
+  pubwickey, /(^•ω•^)
+  t-twansaction, 🥺
+  twansactioninstwuction, ʘwʘ
+  sendandconfiwmtwansaction, UwU
+} fwom '@sowana/web3.js';
+impowt { sewiawize } f-fwom 'bowsh';
 
-// Example program that adds two numbers
-const bytecode = new Uint8Array([
-  0x01, 0x05, // PUSH1 5
-  0x01, 0x03, // PUSH1 3
-  0x10,       // ADD
-  0xFF,       // HALT
+// e-exampwe pwogwam that adds two nyumbews
+const b-bytecode = nyew u-uint8awway([
+  0x01, XD 0x05, // push1 5
+  0x01, (✿oωo) 0x03, // push1 3
+  0x10, :3       // add
+  0xff, (///ˬ///✿)       // h-hawt
 ]);
 
-const instruction = new TransactionInstruction({
-  keys: [], // Add required accounts here
-  programId: new PublicKey('your_program_id'),
-  data: Buffer.from(
-    serialize(
-      { Execute: { bytecode } }
+const instwuction = nyew twansactioninstwuction({
+  keys: [], nyaa~~ // add wequiwed a-accounts hewe
+  pwogwamid: nyew pubwickey('youw_pwogwam_id'), >w<
+  d-data: buffew.fwom(
+    s-sewiawize(
+      { exekawaii~: { bytecode } }
     )
-  ),
+  ), -.-
 });
 
-const transaction = new Transaction().add(instruction);
-await sendAndConfirmTransaction(connection, transaction, [payer]);
+const twansaction = n-new twansaction().add(instwuction);
+a-await sendandconfiwmtwansaction(connection, (✿oωo) twansaction, (˘ω˘) [payew]);
 ```
 
-Important Security Notes:
-1. Always test thoroughly on devnet first
-2. Consider getting a security audit before mainnet deployment
-3. Start with conservative gas limits
-4. Implement proper access controls
-5. Consider rate limiting mechanisms
+impowtant secuwity n-nyotes:
+1. rawr awways test thowoughwy o-on devnet fiwst
+2. OwO considew getting a secuwity audit befowe m-mainnet depwoyment
+3. stawt w-with consewvative g-gas wimits
+4. ^•ﻌ•^ impwement pwopew a-access contwows
+5. considew wate w-wimiting mechanisms
 
-Additional Considerations:
-1. The program needs approximately 2-3 SOL for deployment
-2. Keep track of your program ID and keypair
-3. Consider implementing program upgrade authority
-4. Monitor program usage and gas costs
-5. Implement proper error handling and logging
+a-additionaw c-considewations:
+1. UwU the pwogwam n-nyeeds appwoximatewy 2-3 s-sow fow depwoyment
+2. (˘ω˘) keep twack of y-youw pwogwam id a-and keypaiw
+3. (///ˬ///✿) considew i-impwementing pwogwam upgwade authowity
+4. σωσ m-monitow pwogwam usage and gas c-costs
+5. /(^•ω•^) impwement p-pwopew ewwow handwing and wogging
 
-Documentation:
-1. Generate docs: `cargo doc --open`
-2. Keep the spec file (`lessvm_spec.md`) updated
-3. Document all public interfaces
-4. Add example programs
-5. Maintain a changelog
+documentation:
+1. 😳 genewate d-docs: `cawgo doc --open`
+2. 😳 k-keep t-the spec fiwe (`wessvm_spec.md`) u-updated
+3. (⑅˘꒳˘) document aww pubwic i-intewfaces
+4. 😳😳😳 add exampwe pwogwams
+5. 😳 maintain a changewog
 
-This implementation provides a fully functional lessVM that can be deployed on Solana mainnet. Remember to thoroughly test on devnet and consider getting a security audit before mainnet deployment.
+this impwementation pwovides a fuwwy f-functionaw wessvm that can be d-depwoyed on sowana mainnet. XD wemembew t-to thowoughwy test on devnet a-and considew getting a secuwity a-audit befowe m-mainnet depwoyment. mya
 
-The program is quite minimal but can be extended with additional features like:
-- More sophisticated gas pricing
-- Better error handling
-- Additional instructions
-- Debugging facilities
-- Program upgrade mechanism
-- Access control systems
+t-the pwogwam i-is quite minimaw b-but can be extended with additionaw featuwes wike:
+- mowe sophisticated gas pwicing
+- bettew ewwow handwing
+- a-additionaw instwuctions
+- d-debugging f-faciwities
+- pwogwam upgwade m-mechanism
+- access contwow systems
 
-Would you like me to elaborate on any particular aspect or add more features?
+wouwd you wike me to ewabowate o-on any pawticuwaw a-aspect ow add mowe featuwes?

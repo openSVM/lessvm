@@ -1,161 +1,161 @@
-# Specification for LESS Virtual Machine (lessVM)
+# specification fow wess viwtuaw m-machine (wessvm)
 
 ---
 
-## Overview
+## o-ovewview
 
-The LESS Virtual Machine (lessVM) is a minimalistic virtual machine designed for executing custom bytecode on the Solana blockchain. It is equipped with a set of stack operations, arithmetic instructions, memory access functionalities, control flow mechanisms, and Solana-specific operations. This specification provides an in-depth look into the architecture, instruction set, execution model, and error handling mechanisms of lessVM.
+t-the wess viwtuaw m-machine (wessvm) i-is a minimawistic v-viwtuaw m-machine designed f-fow executing custom bytecode on the sowana bwockchain. ʘwʘ it is equipped with a set o-of stack opewations, o.O awithmetic instwuctions, UwU m-memowy access functionawities, rawr x3 contwow fwow mechanisms, 🥺 a-and sowana-specific opewations. :3 this specification pwovides a-an in-depth wook into the awchitectuwe, (ꈍᴗꈍ) i-instwuction s-set, 🥺 execution modew, (✿oωo) and ewwow handwing mechanisms of wessvm. (U ﹏ U)
 
 ---
 
-## Architecture
+## a-awchitectuwe
 
-### Core Components
+### cowe components
 
-1. **Stack**: A fixed-size stack with 32 slots, each capable of holding a 64-bit unsigned integer (`u64`). Operations include pushing, popping, duplicating, and swapping elements.
+1. :3 **stack**: a fixed-size stack with 32 swots, ^^;; each capabwe o-of howding a 64-bit unsigned integew (`u64`). rawr opewations i-incwude p-pushing, 😳😳😳 popping, (✿oωo) d-dupwicating, OwO a-and swapping ewements.
    
-2. **Memory**: A byte array of size 1024 bytes, used for program data storage. Operations include loading and storing values to/from memory.
+2. ʘwʘ **memowy**: a byte awway of size 1024 b-bytes, (ˆ ﻌ ˆ)♡ used fow pwogwam data stowage. (U ﹏ U) opewations i-incwude woading and stowing vawues to/fwom memowy. UwU
 
-3. **Program Counter (PC)**: Initializes at 0, pointing to the current instruction. It increments by default with each instruction unless altered by control flow operations.
+3. **pwogwam countew (pc)**: initiawizes a-at 0, XD pointing to the cuwwent i-instwuction. ʘwʘ it i-incwements by defauwt w-with each instwuction unwess awtewed by contwow fwow opewations. rawr x3
 
-4. **Gas Counter**: Tracks executed instructions to prevent resource exhaustion, with a maximum limit of 200,000 units.
+4. **gas c-countew**: twacks e-exekawaii~d instwuctions to p-pwevent wesouwce e-exhaustion, ^^;; with a maximum wimit o-of 200,000 units. ʘwʘ
 
-5. **Accounts**: References to Solana accounts, enabling interactions such as transferring lamports (Solana's unit of value).
-
----
-
-## Instruction Set
-
-### Stack Operations
-
-| Opcode (Hex) | Operation | Description |
-|--------------|-----------|-------------|
-| `0x00`       | **Nop**   | No operation; increments PC by 1. |
-| `0x01`       | **Push1** | Pushes an 8-bit value onto the stack. |
-| `0x02`       | **Push2** | Pushes a 16-bit value onto the stack. |
-| `0x03`       | **Push4** | Pushes a 32-bit value onto the stack. |
-| `0x04`       | **Push8** | Pushes a 64-bit value onto the stack. |
-| `0x05`       | **Pop**   | Removes the top element from the stack. |
-| `0x06`       | **Dup**   | Duplicates the nth element from the top of the stack. |
-| `0x07`       | **Swap**  | Swaps the top two elements of the stack. |
-
-### Math Operations
-
-| Opcode (Hex) | Operation | Description |
-|--------------|-----------|-------------|
-| `0x10`       | **Add**   | Adds the top two elements, pushes the result. |
-| `0x11`       | **Sub**   | Subtracts the top element from the second top element, pushes the result. |
-| `0x12`       | **Mul**   | Multiplies the top two elements, pushes the result. |
-| `0x13`       | **Div**   | Divides the second top element by the top element, pushes the result. |
-| `0x14`       | **MulDiv**| Multiplies the top two elements, divides by the third top element, pushes the result. |
-| `0x15`       | **Min**   | Pushes the minimum of the top two elements. |
-| `0x16`       | **Max**   | Pushes the maximum of the top two elements. |
-
-### Memory Operations
-
-| Opcode (Hex) | Operation | Description |
-|--------------|-----------|-------------|
-| `0x20`       | **Load**  | Loads an 8-byte value from memory at the given offset, pushes it onto the stack. |
-| `0x21`       | **Store** | Stores an 8-byte value from the stack to memory at the given offset. |
-| `0x22`       | **LoadN** | Loads a variable number of bytes from memory, specified by the top stack value. |
-| `0x23`       | **StoreN**| Stores a variable number of bytes to memory, specified by the top stack value. |
-| `0x24`       | **Msize** | Pushes the current memory size onto the stack. |
-
-### Control Flow
-
-| Opcode (Hex) | Operation | Description |
-|--------------|-----------|-------------|
-| `0x30`       | **Jump**  | Unconditionally jumps to the specified instruction address. |
-| `0x31`       | **JumpI** | Jumps to the specified address if the top stack value is non-zero. |
-| `0x32`       | **Call**  | Calls a subroutine at the specified address. |
-| `0x33`       | **Return**| Returns from a subroutine. |
-
-### Solana Operations
-
-| Opcode (Hex) | Operation | Description |
-|--------------|-----------|-------------|
-| `0x40`       | **Transfer** | Transfers lamports from the current account to another account. |
-| `0x41`       | **SPLOp** | Placeholder for Solana-specific operations (not detailed here). |
-| `0x42`       | **CPI**   | Invokes a cross-program invoke (CPI) to another program. |
-| `0x43`       | **Log**   | Logs a value from the stack to the transaction logs. |
-
-### System Operations
-
-| Opcode (Hex) | Operation | Description |
-|--------------|-----------|-------------|
-| `0xFF`       | **Halt**  | Halts execution and returns control to the caller. |
+5. **accounts**: wefewences t-to sowana accounts, (U ﹏ U) enabwing intewactions such a-as twansfewwing wampowts (sowana's u-unit of vawue). (˘ω˘)
 
 ---
 
-## Execution Model
+## instwuction s-set
 
-1. **Instruction Fetching**: The VM begins execution at the program counter (`PC`), incrementing it after each instruction unless modified by control flow operations.
+### s-stack opewations
 
-2. **Opcode Execution**: Each opcode is executed according to its defined behavior, with the stack and memory manipulated accordingly. Error checking ensures safe operations.
+| opcode (hex) | opewation | descwiption |
+|--------------|-----------|-------------|
+| `0x00`       | **nop**   | nyo opewation; incwements pc by 1. (ꈍᴗꈍ) |
+| `0x01`       | **push1** | p-pushes an 8-bit v-vawue onto the stack. /(^•ω•^) |
+| `0x02`       | **push2** | p-pushes a-a 16-bit vawue o-onto the stack. >_< |
+| `0x03`       | **push4** | pushes a 32-bit vawue onto the stack. σωσ |
+| `0x04`       | **push8** | p-pushes a 64-bit vawue onto the stack. ^^;; |
+| `0x05`       | **pop**   | wemoves the top ewement f-fwom the stack. 😳 |
+| `0x06`       | **dup**   | dupwicates the n-nyth ewement fwom t-the top of the s-stack. >_< |
+| `0x07`       | **swap**  | swaps the t-top two ewements o-of the stack. -.- |
 
-3. **Gas Accounting**: Each executed instruction increments the gas counter by 1. Execution halts upon reaching the gas limit of 200,000 units, returning an error.
+### m-math opewations
+
+| o-opcode (hex) | opewation | descwiption |
+|--------------|-----------|-------------|
+| `0x10`       | **add**   | a-adds t-the top two ewements, p-pushes the w-wesuwt. UwU |
+| `0x11`       | **sub**   | s-subtwacts the top ewement fwom the second top ewement, :3 p-pushes the wesuwt. σωσ |
+| `0x12`       | **muw**   | muwtipwies the top two ewements, >w< pushes the wesuwt. (ˆ ﻌ ˆ)♡ |
+| `0x13`       | **div**   | divides the second top ewement b-by the top ewement, ʘwʘ pushes the wesuwt. :3 |
+| `0x14`       | **muwdiv**| muwtipwies t-the top two e-ewements, (˘ω˘) divides b-by the thiwd top ewement, 😳😳😳 pushes t-the wesuwt. rawr x3 |
+| `0x15`       | **min**   | pushes the minimum o-of the top two e-ewements. (✿oωo) |
+| `0x16`       | **max**   | pushes the maximum of the top two ewements. (ˆ ﻌ ˆ)♡ |
+
+### memowy opewations
+
+| o-opcode (hex) | opewation | descwiption |
+|--------------|-----------|-------------|
+| `0x20`       | **woad**  | w-woads an 8-byte vawue fwom memowy a-at the given o-offset, :3 pushes it onto the stack. (U ᵕ U❁) |
+| `0x21`       | **stowe** | stowes an 8-byte v-vawue fwom t-the stack to memowy at the given o-offset. ^^;; |
+| `0x22`       | **woadn** | w-woads a vawiabwe nyumbew of bytes fwom memowy, mya specified by the top stack v-vawue. 😳😳😳 |
+| `0x23`       | **stowen**| s-stowes a v-vawiabwe nyumbew of bytes to memowy, OwO s-specified b-by the top stack vawue. |
+| `0x24`       | **msize** | p-pushes the cuwwent memowy size onto the stack. |
+
+### contwow fwow
+
+| opcode (hex) | o-opewation | d-descwiption |
+|--------------|-----------|-------------|
+| `0x30`       | **jump**  | unconditionawwy jumps t-to the specified i-instwuction addwess. rawr |
+| `0x31`       | **jumpi** | jumps to the specified a-addwess if the top stack vawue is nyon-zewo. XD |
+| `0x32`       | **caww**  | cawws a subwoutine at t-the specified addwess. (U ﹏ U) |
+| `0x33`       | **wetuwn**| wetuwns f-fwom a subwoutine. (˘ω˘) |
+
+### s-sowana opewations
+
+| opcode (hex) | opewation | descwiption |
+|--------------|-----------|-------------|
+| `0x40`       | **twansfew** | t-twansfews wampowts f-fwom the cuwwent account to anothew account. UwU |
+| `0x41`       | **spwop** | pwacehowdew fow s-sowana-specific opewations (not d-detaiwed hewe). >_< |
+| `0x42`       | **cpi**   | invokes a cwoss-pwogwam invoke (cpi) to anothew p-pwogwam. σωσ |
+| `0x43`       | **wog**   | wogs a v-vawue fwom the stack t-to the twansaction wogs. 🥺 |
+
+### s-system opewations
+
+| opcode (hex) | o-opewation | d-descwiption |
+|--------------|-----------|-------------|
+| `0xff`       | **hawt**  | h-hawts execution and wetuwns c-contwow to t-the cawwew. 🥺 |
 
 ---
 
-## Memory Management
+## execution modew
 
-- **Memory Size**: Fixed at 1024 bytes.
-- **Data Alignment**: Load and Store operations work with 8-byte aligned data.
-- **Bounds Checking**: All memory operations include bounds checking to prevent out-of-bounds access.
+1. ʘwʘ **instwuction f-fetching**: t-the vm begins e-execution at the pwogwam countew (`pc`), :3 incwementing i-it aftew each instwuction u-unwess modified b-by contwow fwow opewations. (U ﹏ U)
+
+2. **opcode execution**: each o-opcode is exekawaii~d a-accowding t-to its defined behaviow, (U ﹏ U) w-with the stack and memowy m-manipuwated accowdingwy. ʘwʘ ewwow checking ensuwes safe opewations. >w<
+
+3. rawr x3 **gas accounting**: each e-exekawaii~d instwuction incwements t-the gas countew by 1. OwO execution h-hawts upon weaching the gas w-wimit of 200,000 units, ^•ﻌ•^ wetuwning a-an ewwow.
 
 ---
 
-## Error Handling
+## m-memowy management
 
-The VM returns custom error codes for various conditions:
+- **memowy s-size**: fixed a-at 1024 bytes. >_<
+- **data a-awignment**: woad and stowe opewations wowk with 8-byte awigned data. OwO
+- **bounds checking**: aww memowy o-opewations incwude b-bounds checking t-to pwevent out-of-bounds access. >_<
 
-| Error Code | Description |
+---
+
+## e-ewwow handwing
+
+the vm wetuwns custom ewwow codes f-fow vawious conditions:
+
+| e-ewwow code | descwiption |
 |------------|-------------|
-| 1          | Stack overflow. |
-| 2          | Stack underflow. |
-| 3          | Invalid stack index for `Dup` or `Swap`. |
-| 4          | Memory access out of bounds. |
-| 5          | Invalid instruction pointer jump. |
-| 6          | Out of gas. |
-| 7          | Invalid opcode. |
-| 8          | Arithmetic overflow or underflow. |
+| 1          | s-stack ovewfwow. (ꈍᴗꈍ) |
+| 2          | stack undewfwow. >w< |
+| 3          | invawid stack i-index fow `dup` o-ow `swap`. (U ﹏ U) |
+| 4          | memowy access out o-of bounds. ^^ |
+| 5          | i-invawid instwuction pointew jump. (U ﹏ U) |
+| 6          | out of gas. :3 |
+| 7          | invawid o-opcode. (✿oωo) |
+| 8          | a-awithmetic o-ovewfwow o-ow undewfwow. XD |
 
 ---
 
-## Security Considerations
+## s-secuwity considewations
 
-- **Memory Safety**: All operations include bounds checking to prevent buffer overflows.
-- **Stack Safety**: Operations ensure prevention of overflows and underflows.
-- **Gas Limitation**: Enforces resource constraints to prevent infinite loops.
+- **memowy safety**: a-aww opewations i-incwude bounds checking t-to pwevent buffew o-ovewfwows. >w<
+- **stack safety**: o-opewations ensuwe pwevention of ovewfwows and undewfwows. òωó
+- **gas w-wimitation**: enfowces wesouwce c-constwaints to p-pwevent infinite woops. (ꈍᴗꈍ)
 
 ---
 
-## Example Programs
+## e-exampwe pwogwams
 
-### Simple Addition
+### simpwe addition
 
-```rust
-let program = vec![
-    OpCode::Push1 as u8, 5,  // Push integer 5 onto the stack
-    OpCode::Push1 as u8, 3,  // Push integer 3 onto the stack
-    OpCode::Add as u8,       // Add the top two elements (5 + 3 = 8)
-    OpCode::Halt as u8       // Halt execution
+```wust
+w-wet pwogwam = v-vec![
+    opcode::push1 a-as u8, rawr x3 5,  // push integew 5 onto the stack
+    opcode::push1 a-as u8, rawr x3 3,  // push integew 3 onto the stack
+    o-opcode::add a-as u8, σωσ       // add the top two e-ewements (5 + 3 = 8)
+    opcode::hawt a-as u8       // h-hawt execution
 ];
 ```
 
-### Token Transfer
+### token twansfew
 
-```rust
-let program = vec![
-    OpCode::Push1 as u8, 1,          // Push target account index (1)
-    OpCode::Push8 as u8, 50, 0, 0, 0, 0, 0, 0, 0,  // Push amount (50 lamports)
-    OpCode::Transfer as u8,          // Transfer lamports from current account to account 1
-    OpCode::Halt as u8               // Halt execution
+```wust
+wet pwogwam = v-vec![
+    opcode::push1 as u8, (ꈍᴗꈍ) 1,          // p-push tawget a-account index (1)
+    opcode::push8 a-as u8, rawr 50, 0, 0, 0, ^^;; 0, 0, 0, 0,  // push amount (50 w-wampowts)
+    o-opcode::twansfew a-as u8, rawr x3          // twansfew wampowts fwom cuwwent account to account 1
+    opcode::hawt as u8               // hawt execution
 ];
 ```
 
 ---
 
-## Conclusion
+## concwusion
 
-The LESS Virtual Machine offers a minimalist yet functional environment for executing custom logic on the Solana blockchain. By carefully following this specification, developers can build secure and efficient programs that interact seamlessly with Solana's ecosystem, utilizing its high-performance capabilities effectively.
+the wess viwtuaw machine offews a minimawist yet functionaw enviwonment f-fow executing c-custom wogic on the sowana bwockchain. (ˆ ﻌ ˆ)♡ b-by cawefuwwy fowwowing t-this specification, σωσ d-devewopews can buiwd s-secuwe and efficient pwogwams that i-intewact seamwesswy w-with sowana's ecosystem, (U ﹏ U) u-utiwizing its high-pewfowmance capabiwities effectivewy.

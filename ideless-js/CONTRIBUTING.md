@@ -1,361 +1,361 @@
-# Contributing to LessVM IDELess
+# contwibuting to wessvm idewess
 
-Thank you for your interest in contributing to the LessVM IDELess project! This document provides guidelines and instructions for contributing to the development of IDELess.
+t-thank you fow youw i-intewest in c-contwibuting to t-the wessvm idewess p-pwoject! ( ͡o ω ͡o ) this d-document pwovides g-guidewines and i-instwuctions fow contwibuting to the devewopment of idewess. (˘ω˘)
 
-## Table of Contents
+## tabwe of contents
 
-- [Code of Conduct](#code-of-conduct)
-- [Getting Started](#getting-started)
-- [Development Environment](#development-environment)
-- [Project Structure](#project-structure)
-- [Contribution Workflow](#contribution-workflow)
-- [Coding Standards](#coding-standards)
-- [Testing Guidelines](#testing-guidelines)
-- [Documentation](#documentation)
-- [Issue Reporting](#issue-reporting)
-- [Pull Requests](#pull-requests)
-- [Review Process](#review-process)
-- [Community](#community)
+- [code o-of conduct](#code-of-conduct)
+- [getting stawted](#getting-stawted)
+- [devewopment e-enviwonment](#devewopment-enviwonment)
+- [pwoject stwuctuwe](#pwoject-stwuctuwe)
+- [contwibution w-wowkfwow](#contwibution-wowkfwow)
+- [coding standawds](#coding-standawds)
+- [testing guidewines](#testing-guidewines)
+- [documentation](#documentation)
+- [issue wepowting](#issue-wepowting)
+- [puww w-wequests](#puww-wequests)
+- [weview pwocess](#weview-pwocess)
+- [community](#community)
 
-## Code of Conduct
+## c-code of conduct
 
-By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md). Please read it before contributing.
+b-by pawticipating in this pwoject, 😳 you agwee to abide by ouw [code of conduct](code_of_conduct.md). OwO p-pwease wead it befowe contwibuting. (˘ω˘)
 
-## Getting Started
+## getting stawted
 
-### Prerequisites
+### pwewequisites
 
-Before you begin, ensure you have the following installed:
+befowe you begin, òωó e-ensuwe you have the fowwowing i-instawwed:
 
-- Node.js (v16.x or higher)
-- npm (v8.x or higher)
-- Git
+- n-nyode.js (v16.x o-ow highew)
+- nypm (v8.x o-ow highew)
+- git
 
-### Fork and Clone
+### fowk and cwone
 
-1. Fork the repository on GitHub
-2. Clone your fork locally:
+1. ( ͡o ω ͡o ) f-fowk the wepositowy on github
+2. UwU cwone youw fowk w-wocawwy:
    ```
-   git clone https://github.com/YOUR-USERNAME/ideless.git
-   cd ideless
+   git cwone https://github.com/youw-usewname/idewess.git
+   cd idewess
    ```
-3. Add the original repository as an upstream remote:
+3. /(^•ω•^) add the owiginaw wepositowy a-as an upstweam wemote:
    ```
-   git remote add upstream https://github.com/lessvm/ideless.git
-   ```
-
-## Development Environment
-
-### Setup
-
-1. Install dependencies:
-   ```
-   npm install
+   g-git wemote add u-upstweam https://github.com/wessvm/idewess.git
    ```
 
-2. Start the development server:
+## d-devewopment enviwonment
+
+### setup
+
+1. (ꈍᴗꈍ) instaww dependencies:
    ```
-   npm run dev
+   n-nypm instaww
    ```
 
-3. Build for production:
+2. 😳 s-stawt the devewopment s-sewvew:
    ```
-   npm run build
+   n-nypm wun dev
    ```
 
-### Available Scripts
+3. mya buiwd f-fow pwoduction:
+   ```
+   nypm w-wun buiwd
+   ```
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run test` - Run tests
-- `npm run lint` - Run linter
-- `npm run format` - Format code with Prettier
-- `npm run storybook` - Start Storybook for component development
+### avaiwabwe scwipts
 
-## Project Structure
+- `npm w-wun dev` - stawt devewopment sewvew
+- `npm w-wun buiwd` - buiwd fow p-pwoduction
+- `npm w-wun test` - wun tests
+- `npm wun wint` - wun wintew
+- `npm wun fowmat` - fowmat code with pwettiew
+- `npm wun s-stowybook` - stawt s-stowybook fow component devewopment
 
-The IDELess project follows this structure:
+## p-pwoject s-stwuctuwe
+
+t-the idewess pwoject fowwows this stwuctuwe:
 
 ```
-ideless/
-├── public/             # Static assets
-├── src/                # Source code
-│   ├── components/     # React components
-│   │   ├── ai/         # AI Assistant components
-│   │   ├── common/     # Common UI components
-│   │   ├── debugger/   # Debugger components
-│   │   ├── editor/     # Code editor components
-│   │   ├── layout/     # Layout components
-│   │   └── simulator/  # Simulator components
-│   ├── hooks/          # Custom React hooks
-│   ├── layouts/        # Page layouts
-│   ├── pages/          # Page components
-│   ├── services/       # Service modules
-│   ├── store/          # Redux store
-│   │   ├── slices/     # Redux slices
-│   │   └── index.ts    # Store configuration
-│   ├── styles/         # Global styles
-│   ├── types/          # TypeScript type definitions
-│   ├── utils/          # Utility functions
-│   ├── App.tsx         # Main App component
-│   ├── index.css       # Global CSS
-│   └── main.tsx        # Entry point
-├── tests/              # Test files
-├── .eslintrc.js        # ESLint configuration
-├── .prettierrc         # Prettier configuration
-├── index.html          # HTML template
-├── package.json        # Project dependencies
-├── tsconfig.json       # TypeScript configuration
-└── vite.config.ts      # Vite configuration
+idewess/
+├── p-pubwic/             # static assets
+├── swc/                # souwce code
+│   ├── c-components/     # weact components
+│   │   ├── a-ai/         # a-ai assistant c-components
+│   │   ├── common/     # c-common ui c-components
+│   │   ├── d-debuggew/   # d-debuggew components
+│   │   ├── editow/     # code editow c-components
+│   │   ├── w-wayout/     # w-wayout components
+│   │   └── s-simuwatow/  # s-simuwatow components
+│   ├── hooks/          # custom weact hooks
+│   ├── w-wayouts/        # page wayouts
+│   ├── pages/          # page components
+│   ├── sewvices/       # sewvice moduwes
+│   ├── s-stowe/          # wedux stowe
+│   │   ├── swices/     # wedux swices
+│   │   └── i-index.ts    # s-stowe configuwation
+│   ├── s-stywes/         # gwobaw stywes
+│   ├── t-types/          # typescwipt type definitions
+│   ├── u-utiws/          # u-utiwity functions
+│   ├── app.tsx         # main app component
+│   ├── index.css       # gwobaw css
+│   └── main.tsx        # e-entwy point
+├── tests/              # test f-fiwes
+├── .eswintwc.js        # eswint c-configuwation
+├── .pwettiewwc         # pwettiew c-configuwation
+├── index.htmw          # htmw tempwate
+├── p-package.json        # p-pwoject dependencies
+├── tsconfig.json       # t-typescwipt c-configuwation
+└── vite.config.ts      # vite configuwation
 ```
 
-## Contribution Workflow
+## contwibution wowkfwow
 
-### Branching Strategy
+### b-bwanching s-stwategy
 
-We use a feature branch workflow:
+we use a-a featuwe bwanch wowkfwow:
 
-1. Ensure your fork is up to date:
+1. mya e-ensuwe youw fowk i-is up to date:
    ```
-   git fetch upstream
+   git f-fetch upstweam
    git checkout main
-   git merge upstream/main
+   git mewge upstweam/main
    ```
 
-2. Create a new branch for your feature or bugfix:
+2. /(^•ω•^) cweate a-a nyew bwanch fow y-youw featuwe ow bugfix:
    ```
-   git checkout -b feature/your-feature-name
+   git checkout -b f-featuwe/youw-featuwe-name
    ```
-   or
+   o-ow
    ```
-   git checkout -b fix/issue-you-are-fixing
-   ```
-
-3. Make your changes, commit them, and push to your fork:
-   ```
-   git add .
-   git commit -m "Your descriptive commit message"
-   git push origin feature/your-feature-name
+   git checkout -b fix/issue-you-awe-fixing
    ```
 
-4. Create a pull request from your branch to the main repository.
+3. ^^;; make youw c-changes, 🥺 commit them, and push to youw fowk:
+   ```
+   git add . ^^
+   git commit -m "youw d-descwiptive commit message"
+   git push o-owigin featuwe/youw-featuwe-name
+   ```
 
-### Commit Messages
+4. ^•ﻌ•^ c-cweate a puww wequest fwom youw bwanch to the main wepositowy. /(^•ω•^)
 
-Follow these guidelines for commit messages:
+### c-commit messages
 
-- Use the present tense ("Add feature" not "Added feature")
-- Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-- Limit the first line to 72 characters or less
-- Reference issues and pull requests liberally after the first line
-- Consider starting the commit message with an applicable emoji:
-  - ✨ `:sparkles:` for new features
-  - 🐛 `:bug:` for bug fixes
-  - 📚 `:books:` for documentation changes
-  - ♻️ `:recycle:` for refactoring code
-  - 🧪 `:test_tube:` for adding tests
-  - 🎨 `:art:` for improving structure/format of the code
-  - ⚡ `:zap:` for performance improvements
+f-fowwow these guidewines fow commit messages:
 
-## Coding Standards
+- use the pwesent t-tense ("add featuwe" nyot "added f-featuwe")
+- use the impewative mood ("move cuwsow to..." nyot "moves c-cuwsow to...")
+- wimit t-the fiwst wine t-to 72 chawactews ow wess
+- wefewence i-issues and puww wequests wibewawwy a-aftew the f-fiwst wine
+- c-considew stawting the commit message w-with an appwicabwe e-emoji:
+  - ✨ `:spawkwes:` fow nyew featuwes
+  - 🐛 `:bug:` fow bug fixes
+  - 📚 `:books:` f-fow documentation c-changes
+  - ♻️ `:wecycwe:` f-fow wefactowing code
+  - 🧪 `:test_tube:` fow adding t-tests
+  - 🎨 `:awt:` fow impwoving s-stwuctuwe/fowmat o-of the code
+  - ⚡ `:zap:` fow pewfowmance impwovements
 
-### TypeScript
+## coding standawds
 
-- Use TypeScript for all new code
-- Define explicit types (avoid `any` when possible)
-- Use interfaces for object shapes
-- Use proper type imports/exports
+### t-typescwipt
 
-### React
+- u-use typescwipt f-fow aww nyew c-code
+- define expwicit types (avoid `any` w-when possibwe)
+- use intewfaces fow object shapes
+- use pwopew type impowts/expowts
 
-- Use functional components with hooks
-- Use React.memo for performance optimization when appropriate
-- Follow the React component file structure:
+### w-weact
+
+- use functionaw components w-with hooks
+- use weact.memo f-fow pewfowmance optimization w-when appwopwiate
+- fowwow the w-weact component f-fiwe stwuctuwe:
   ```tsx
-  // Imports
-  import React from 'react';
-  import './ComponentName.css';
+  // i-impowts
+  i-impowt weact f-fwom 'weact';
+  impowt './componentname.css';
   
-  // Types
-  interface ComponentNameProps {
-    // props definition
+  // types
+  intewface componentnamepwops {
+    // pwops definition
   }
   
-  // Component
-  export const ComponentName: React.FC<ComponentNameProps> = ({ prop1, prop2 }) => {
-    // hooks
+  // component
+  expowt const componentname: w-weact.fc<componentnamepwops> = ({ p-pwop1, ^^ pwop2 }) => {
+    // h-hooks
     
-    // handlers
+    // handwews
     
-    // render
-    return (
-      <div className="component-name">
-        {/* JSX content */}
+    // w-wendew
+    wetuwn (
+      <div cwassname="component-name">
+        {/* jsx content */}
       </div>
     );
   };
   ```
 
-### CSS/Styling
+### css/stywing
 
-- Use Tailwind CSS for styling
-- Follow BEM naming convention for custom CSS classes
-- Keep component-specific styles in the same directory as the component
+- u-use t-taiwwind css fow stywing
+- fowwow b-bem nyaming convention fow custom css cwasses
+- k-keep component-specific s-stywes in the same diwectowy a-as the component
 
-### State Management
+### s-state management
 
-- Use Redux with Redux Toolkit for global state
-- Use React's Context API for component-specific state
-- Use local state (useState) for UI-only state
+- use wedux with wedux toowkit fow gwobaw state
+- u-use weact's context a-api fow component-specific s-state
+- use wocaw s-state (usestate) f-fow ui-onwy state
 
-## Testing Guidelines
+## testing g-guidewines
 
-### Test Structure
+### t-test stwuctuwe
 
-- Place tests in the `tests` directory
-- Name test files with `.test.ts` or `.test.tsx` extension
-- Group related tests with `describe` blocks
-- Use clear test descriptions with `it` or `test`
+- pwace tests i-in the `tests` diwectowy
+- n-nyame test fiwes with `.test.ts` o-ow `.test.tsx` extension
+- gwoup wewated t-tests with `descwibe` bwocks
+- u-use cweaw test d-descwiptions with `it` ow `test`
 
-### Testing Requirements
+### t-testing wequiwements
 
-- Write unit tests for all new features
-- Ensure tests are deterministic (no random failures)
-- Mock external dependencies
-- Aim for high test coverage, especially for critical paths
+- wwite unit tests f-fow aww nyew featuwes
+- e-ensuwe t-tests awe detewministic (no wandom faiwuwes)
+- mock extewnaw dependencies
+- a-aim fow high test covewage, 🥺 especiawwy f-fow cwiticaw p-paths
 
-### Running Tests
-
-```
-npm run test
-```
-
-To run tests in watch mode:
+### wunning tests
 
 ```
-npm run test:watch
+nypm w-wun test
 ```
 
-## Documentation
-
-### Code Documentation
-
-- Document all public functions, classes, and interfaces
-- Use JSDoc format for documentation
-- Explain complex algorithms or business logic
-- Include examples for non-obvious usage
-
-### Component Documentation
-
-- Use Storybook for component documentation
-- Include examples of different component states
-- Document props and their purpose
-- Provide usage guidelines
-
-### Running Storybook
+to wun tests in w-watch mode:
 
 ```
-npm run storybook
+n-nypm wun test:watch
 ```
 
-## Issue Reporting
+## documentation
 
-### Before Submitting an Issue
+### code documentation
 
-- Check if the issue already exists
-- Determine if it's a bug, feature request, or question
-- Gather relevant information about your environment
+- document a-aww pubwic functions, (U ᵕ U❁) cwasses, 😳😳😳 and intewfaces
+- u-use jsdoc fowmat f-fow documentation
+- expwain compwex a-awgowithms ow business wogic
+- i-incwude exampwes f-fow nyon-obvious u-usage
 
-### Issue Template
+### component documentation
 
-When submitting an issue, please include:
+- use stowybook fow component documentation
+- incwude exampwes of diffewent component states
+- document pwops and theiw puwpose
+- pwovide usage guidewines
 
-1. **Type**: Bug, feature request, or question
-2. **Description**: Clear description of the issue
-3. **Steps to Reproduce** (for bugs): Detailed steps to reproduce the issue
-4. **Expected Behavior**: What you expected to happen
-5. **Actual Behavior**: What actually happened
-6. **Environment**: Browser, OS, Node.js version, etc.
-7. **Screenshots/Logs**: If applicable
-8. **Possible Solution**: If you have suggestions
+### wunning s-stowybook
 
-## Pull Requests
+```
+n-nypm wun stowybook
+```
 
-### PR Template
+## issue wepowting
 
-When submitting a pull request, please include:
+### b-befowe submitting a-an issue
 
-1. **Description**: What the PR accomplishes
-2. **Related Issue**: Link to the issue this PR addresses
-3. **Type of Change**: New feature, bug fix, documentation, etc.
-4. **Testing**: How you tested the changes
-5. **Screenshots**: If applicable
-6. **Checklist**:
-   - [ ] Code follows the style guidelines
-   - [ ] Tests for the changes have been added
-   - [ ] Documentation has been updated
-   - [ ] Changes generate no new warnings
+- c-check if the issue awweady exists
+- d-detewmine if it's a bug, nyaa~~ featuwe w-wequest, (˘ω˘) ow q-question
+- gathew wewevant infowmation a-about youw enviwonment
 
-### PR Size
+### i-issue tempwate
 
-- Keep PRs focused on a single change
-- Split large changes into multiple PRs
-- Aim for PRs that can be reviewed in under 30 minutes
+w-when submitting an issue, >_< pwease incwude:
 
-## Review Process
+1. XD **type**: b-bug, rawr x3 f-featuwe wequest, ( ͡o ω ͡o ) o-ow question
+2. :3 **descwiption**: c-cweaw descwiption o-of the issue
+3. mya **steps t-to wepwoduce** (fow b-bugs): detaiwed s-steps to wepwoduce t-the issue
+4. σωσ **expected behaviow**: n-nyani you e-expected to happen
+5. (ꈍᴗꈍ) **actuaw b-behaviow**: nyani actuawwy happened
+6. OwO **enviwonment**: b-bwowsew, o.O os, 😳😳😳 nyode.js vewsion, /(^•ω•^) etc.
+7. **scweenshots/wogs**: i-if appwicabwe
+8. OwO **possibwe sowution**: if y-you have suggestions
 
-### Code Review Guidelines
+## p-puww wequests
 
-- Be respectful and constructive
-- Focus on the code, not the person
-- Explain your reasoning
-- Suggest alternatives when rejecting a change
+### p-pw tempwate
 
-### Approval Process
+when submitting a-a puww wequest, ^^ pwease i-incwude:
 
-1. All PRs require at least one approval from a maintainer
-2. CI checks must pass
-3. All review comments must be resolved
-4. Documentation must be updated if necessary
+1. (///ˬ///✿) **descwiption**: nyani t-the pw accompwishes
+2. (///ˬ///✿) **wewated issue**: wink t-to the issue this pw addwesses
+3. (///ˬ///✿) **type of change**: nyew featuwe, ʘwʘ bug fix, d-documentation, ^•ﻌ•^ etc. OwO
+4. **testing**: how you tested t-the changes
+5. (U ﹏ U) **scweenshots**: i-if appwicabwe
+6. (ˆ ﻌ ˆ)♡ **checkwist**:
+   - [ ] code fowwows the stywe guidewines
+   - [ ] t-tests fow the changes have b-been added
+   - [ ] d-documentation h-has been updated
+   - [ ] changes genewate nyo n-nyew wawnings
 
-## Community
+### p-pw size
 
-### Communication Channels
+- keep pws focused o-on a singwe change
+- spwit wawge changes into m-muwtipwe pws
+- aim fow pws that c-can be weviewed i-in undew 30 minutes
 
-- **GitHub Issues**: For bug reports and feature requests
-- **Discord**: For real-time discussion and community support
-- **Weekly Meetings**: For project planning and discussion
+## w-weview pwocess
 
-### Recognition
+### code w-weview guidewines
 
-Contributors will be recognized in the following ways:
+- b-be wespectfuw a-and constwuctive
+- f-focus on the code, (⑅˘꒳˘) nyot the p-pewson
+- expwain y-youw weasoning
+- s-suggest awtewnatives w-when wejecting a-a change
 
-- Listed in the CONTRIBUTORS.md file
-- Mentioned in release notes for significant contributions
-- Invited to become maintainers after consistent contributions
+### a-appwovaw p-pwocess
 
-## Special Considerations for LessVM Development
+1. (U ﹏ U) aww p-pws wequiwe at weast one appwovaw f-fwom a maintainew
+2. o.O ci checks m-must pass
+3. mya aww weview comments m-must be wesowved
+4. XD d-documentation m-must be updated if nyecessawy
 
-### OpenSVM RPC Servers
+## community
 
-- Always use OpenSVM RPC servers as the default for all Solana blockchain interactions
-- Never change this default to any other RPC provider
-- Document any RPC-specific code clearly
+### communication c-channews
 
-### Performance Considerations
+- **github i-issues**: f-fow bug wepowts and featuwe wequests
+- **discowd**: fow weaw-time discussion and c-community suppowt
+- **weekwy m-meetings**: fow pwoject pwanning a-and discussion
 
-- Be mindful of performance implications, especially for large files
-- Optimize rendering to prevent UI lag
-- Consider the impact on memory usage
-- Test with realistic workloads
+### w-wecognition
 
-### Accessibility
+contwibutows wiww be wecognized in the fowwowing w-ways:
 
-- Ensure all UI components are accessible
-- Follow WCAG AA standards at minimum
-- Test with screen readers
-- Support keyboard navigation
+- wisted i-in the contwibutows.md f-fiwe
+- m-mentioned in wewease nyotes fow significant contwibutions
+- i-invited t-to become maintainews aftew consistent contwibutions
 
-## Thank You!
+## s-speciaw considewations fow wessvm d-devewopment
 
-Your contributions help make IDELess better for everyone. We appreciate your time and effort!
+### opensvm wpc sewvews
+
+- a-awways use o-opensvm wpc sewvews as the defauwt f-fow aww sowana b-bwockchain intewactions
+- nyevew c-change this defauwt to any o-othew wpc pwovidew
+- d-document any w-wpc-specific c-code cweawwy
+
+### pewfowmance considewations
+
+- b-be mindfuw of pewfowmance i-impwications, òωó e-especiawwy fow wawge fiwes
+- o-optimize wendewing to pwevent ui wag
+- considew t-the impact o-on memowy usage
+- t-test with weawistic wowkwoads
+
+### accessibiwity
+
+- ensuwe aww ui components awe a-accessibwe
+- fowwow wcag aa standawds a-at minimum
+- t-test with scween weadews
+- suppowt keyboawd n-nyavigation
+
+## thank you! (˘ω˘)
+
+youw c-contwibutions h-hewp make idewess b-bettew fow evewyone. w-we appweciate y-youw time and effowt!

@@ -1,94 +1,94 @@
-# lessVM [![Release](https://github.com/openSVM/lessvm/actions/workflows/release.yml/badge.svg)](https://github.com/openSVM/lessvm/actions/workflows/release.yml)
+# wessvm [![wewease](https://github.com/opensvm/wessvm/actions/wowkfwows/wewease.ymw/badge.svg)](https://github.com/opensvm/wessvm/actions/wowkfwows/wewease.ymw)
 
-A lightweight virtual machine implementation for Solana blockchain.
+a wightweight v-viwtuaw machine i-impwementation fow s-sowana bwockchain. -.-
 
-## Installation
+## i-instawwation
 
-### CLI Tool
+### c-cwi t-toow
 
-The LessVM CLI tool provides a convenient way to create, build, and deploy LessVM applications.
+the wessvm c-cwi toow pwovides a-a convenient way to cweate, 🥺 buiwd, (U ﹏ U) and depwoy wessvm appwications. >w<
 
-#### One-Line Installation
+#### one-wine i-instawwation
 
-**macOS and Linux:**
+**macos and winux:**
 ```bash
-curl -sSL https://raw.githubusercontent.com/openSVM/lessvm/main/cli/.goreleaser.install.sh | bash
+cuww -ssw https://waw.githubusewcontent.com/opensvm/wessvm/main/cwi/.goweweasew.instaww.sh | b-bash
 ```
 
-**Windows (PowerShell):**
-```powershell
-iwr -useb https://raw.githubusercontent.com/openSVM/lessvm/main/cli/.goreleaser.install.ps1 | iex
+**windows (powewsheww):**
+```powewsheww
+iww -useb https://waw.githubusewcontent.com/opensvm/wessvm/main/cwi/.goweweasew.instaww.ps1 | i-iex
 ```
 
-#### Using Homebrew (macOS and Linux)
-
-```bash
-brew tap openSVM/tap
-brew install lessvm
-```
-
-#### For more installation options, see [CLI README](cli/README.md)
-
-## Project Structure
-
-- `lessvm-solana/` - Core VM implementation in Rust
-  - `src/` - Source code
-    - `vm/` - Virtual machine core implementation
-    - `solana/` - Solana-specific integration code
-  - `deployless/` - Deployment utilities
-  - `scripts/` - Build and deployment scripts
-
-- `cli/` - Command-line interface for managing LessVM applications
-  - Provides tools for creating, building, and deploying LessVM applications
-  - Cross-platform support (macOS, Linux, Windows)
-
-- `website/` - Documentation website
-  - `docs/` - Documentation pages
-  - `index.html` - Main landing page
-  - `styles.css` - Styling
-
-- `lessvm-lore/` - Specification and design documents
-  - Contains detailed specs for VM implementation
-  - Architecture and design decisions
-
-## Development
-
-The project consists of two main parts:
-
-1. **VM Implementation** - Written in Rust, located in `lessvm-solana/`
-2. **Documentation Website** - Static HTML/CSS website in `website/`
-
-## Building
-
-### VM Implementation
-```bash
-cd lessvm-solana
-cargo build
-```
-
-### Website
-The documentation website is built using static HTML and CSS. No build step required.
-
-## Testing
+#### using homebwew (macos and winux)
 
 ```bash
-cd lessvm-solana
-cargo test
+b-bwew tap opensvm/tap
+bwew instaww w-wessvm
 ```
 
-For local Solana validator testing:
+#### f-fow mowe instawwation options, mya see [cwi weadme](cwi/weadme.md)
+
+## pwoject s-stwuctuwe
+
+- `wessvm-sowana/` - cowe vm impwementation in wust
+  - `swc/` - souwce code
+    - `vm/` - viwtuaw m-machine cowe impwementation
+    - `sowana/` - sowana-specific integwation code
+  - `depwoywess/` - d-depwoyment utiwities
+  - `scwipts/` - b-buiwd a-and depwoyment scwipts
+
+- `cwi/` - c-command-wine intewface fow managing wessvm appwications
+  - pwovides t-toows fow cweating, >w< buiwding, and depwoying w-wessvm appwications
+  - cwoss-pwatfowm suppowt (macos, nyaa~~ winux, windows)
+
+- `website/` - documentation w-website
+  - `docs/` - documentation pages
+  - `index.htmw` - m-main wanding p-page
+  - `stywes.css` - s-stywing
+
+- `wessvm-wowe/` - specification and design documents
+  - contains d-detaiwed s-specs fow vm impwementation
+  - awchitectuwe and d-design decisions
+
+## d-devewopment
+
+the pwoject consists o-of two main pawts:
+
+1. (✿oωo) **vm i-impwementation** - wwitten in wust, ʘwʘ wocated i-in `wessvm-sowana/`
+2. (ˆ ﻌ ˆ)♡ **documentation website** - s-static htmw/css website in `website/`
+
+## b-buiwding
+
+### v-vm impwementation
 ```bash
-./start_local_validator.sh
+cd wessvm-sowana
+cawgo buiwd
 ```
 
-## Documentation
+### website
+the documentation website is buiwt using static h-htmw and css. 😳😳😳 n-nyo buiwd step wequiwed. :3
 
-Visit the documentation website for:
-- [Architecture Overview](website/docs/architecture.html)
-- [Examples](website/docs/examples.html)
-- [Instructions Set](website/docs/instructions.html)
-- [Solana Integration](website/docs/solana.html)
+## testing
 
-## License
+```bash
+cd w-wessvm-sowana
+c-cawgo test
+```
 
-[Add license information]
+f-fow wocaw sowana vawidatow testing:
+```bash
+./stawt_wocaw_vawidatow.sh
+```
+
+## documentation
+
+visit the documentation w-website fow:
+- [awchitectuwe ovewview](website/docs/awchitectuwe.htmw)
+- [exampwes](website/docs/exampwes.htmw)
+- [instwuctions set](website/docs/instwuctions.htmw)
+- [sowana integwation](website/docs/sowana.htmw)
+
+## wicense
+
+[add wicense i-infowmation]

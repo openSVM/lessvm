@@ -1,138 +1,138 @@
-Certainly! Below is the Markdown (`.md`) file content for the `lessVM` specification:
+cewtainwy! ( ͡o ω ͡o ) bewow is the mawkdown (`.md`) f-fiwe content f-fow the `wessvm` s-specification:
 
-```markdown
-# lessVM Specification
+```mawkdown
+# w-wessvm specification
 
-## 1. Purpose
-The `lessVM` is a minimal virtual machine designed to execute a custom bytecode-based instruction set on the Solana blockchain. It provides basic stack-based operations, arithmetic, memory management, control flow, and Solana-specific operations like token transfers. The VM is limited in size, gas consumption, and memory usage to ensure lightweight and efficient execution within the Solana runtime.
-
----
-
-## 2. Components
-The `lessVM` consists of the following components:
-
-- **Program Counter (`pc`)**: Tracks the current instruction index in the program.
-- **Gas Counter (`gas`)**: Tracks the computational cost of executing instructions.
-- **Stack**: A last-in-first-out (LIFO) stack used for intermediate computation. Supports operations like `push`, `pop`, `dup`, and `swap`.
-- **Memory**: A byte array used for storing and loading data. Supports `store` and `load` operations.
-- **Code**: The bytecode program being executed.
-- **Accounts**: A reference to Solana accounts, used for blockchain-specific operations like token transfers.
-- **Current Account**: Tracks the currently active account for Solana operations.
+## 1. mya p-puwpose
+the `wessvm` i-is a minimaw v-viwtuaw machine d-designed to exekawaii~ a custom bytecode-based instwuction set on the sowana bwockchain. o.O i-it pwovides basic stack-based opewations, (✿oωo) a-awithmetic, :3 memowy management, 😳 c-contwow fwow, (U ﹏ U) and sowana-specific opewations wike token twansfews. mya t-the vm is wimited in size, (U ᵕ U❁) g-gas consumption, :3 a-and memowy usage to ensuwe wightweight and efficient execution within the sowana w-wuntime. mya
 
 ---
 
-## 3. Opcodes
-The `lessVM` supports the following opcodes:
+## 2. OwO components
+the `wessvm` consists of the fowwowing components:
 
-### **Stack Operations**
-- `Nop`: No operation.
-- `Push1`, `Push2`, `Push4`, `Push8`: Push constants of varying sizes (1, 2, 4, or 8 bytes) onto the stack.
-- `Pop`: Remove the top value from the stack.
-- `Dup(n)`: Duplicate the `n`th value from the top of the stack to the top.
-- `Swap(n)`: Swap the top value with the `n`th value from the top.
-
-### **Math Operations**
-- `Add`: Pop two values, add them, and push the result.
-- `Sub`: Pop two values, subtract them, and push the result.
-- `Mul`: Pop two values, multiply them, and push the result.
-- `Div`: Pop two values, divide them, and push the result.
-- `MulDiv`: Pop three values `a`, `b`, `c`, compute `(a * b) / c`, and push the result.
-- `Min`, `Max`: Pop two values and push the minimum or maximum.
-
-### **Memory Operations**
-- `Load`: Load a value from memory and push it onto the stack.
-- `Store`: Pop a value from the stack and store it in memory.
-- `LoadN`, `StoreN`: Load/store multiple bytes.
-- `Msize`: Push the current memory size onto the stack.
-
-### **Control Flow**
-- `Jump`: Jump to a specified program counter.
-- `JumpI`: Conditional jump (jumps if the top of the stack is non-zero).
-- `Call`: Call a subroutine (not yet implemented).
-- `Return`: Return from a subroutine (not yet implemented).
-
-### **Solana Operations**
-- `Transfer`: Transfer lamports between Solana accounts.
-- `SPLOp`: Execute a Solana Program Library (SPL) operation (not implemented).
-- `CPI`: Execute a cross-program invocation (not implemented).
-- `Log`: Log a value to the Solana runtime.
-
-### **System Operations**
-- `Halt`: Halt execution.
+- **pwogwam c-countew (`pc`)**: twacks the c-cuwwent instwuction i-index in the p-pwogwam. (ˆ ﻌ ˆ)♡
+- **gas c-countew (`gas`)**: twacks the computationaw cost o-of executing instwuctions. ʘwʘ
+- **stack**: a wast-in-fiwst-out (wifo) s-stack used fow intewmediate computation. o.O suppowts opewations wike `push`, UwU `pop`, rawr x3 `dup`, and `swap`. 🥺
+- **memowy**: a byte a-awway used fow stowing and woading d-data. :3 suppowts `stowe` a-and `woad` o-opewations. (ꈍᴗꈍ)
+- **code**: the bytecode pwogwam being exekawaii~d. 🥺
+- **accounts**: a-a wefewence t-to sowana accounts, (✿oωo) used fow bwockchain-specific o-opewations wike t-token twansfews. (U ﹏ U)
+- **cuwwent account**: twacks t-the cuwwentwy active account fow s-sowana opewations. :3
 
 ---
 
-## 4. State Management
-The `lessVM` manages its state as follows:
+## 3. ^^;; opcodes
+the `wessvm` suppowts the f-fowwowing opcodes:
 
-- **Program Counter (`pc`)**: Incremented after each operation. Modified by control flow instructions like `Jump` and `JumpI`.
-- **Gas**: Incremented for each instruction executed. If gas exceeds the limit (200,000), execution halts with an error.
-- **Stack**: Operations like `Push` and `Pop` modify the stack. Stack overflow/underflow results in an error.
-- **Memory**: Memory is a fixed-size array (1024 bytes). Out-of-bounds accesses result in errors.
-- **Current Account**: Tracks the active account for Solana operations like `Transfer`.
+### **stack opewations**
+- `nop`: n-nyo opewation. rawr
+- `push1`, 😳😳😳 `push2`, `push4`, (✿oωo) `push8`: push c-constants of v-vawying sizes (1, OwO 2, 4, ow 8 bytes) onto the stack. ʘwʘ
+- `pop`: wemove the top vawue fwom the stack. (ˆ ﻌ ˆ)♡
+- `dup(n)`: dupwicate t-the `n`th v-vawue fwom the top of the stack t-to the top. (U ﹏ U)
+- `swap(n)`: s-swap t-the top vawue with the `n`th vawue fwom the top. UwU
 
----
+### **math opewations**
+- `add`: p-pop two vawues, XD add them, ʘwʘ and push the wesuwt. rawr x3
+- `sub`: pop two vawues, ^^;; subtwact t-them, and push the wesuwt. ʘwʘ
+- `muw`: p-pop two v-vawues, (U ﹏ U) muwtipwy t-them, (˘ω˘) and push the wesuwt. (ꈍᴗꈍ)
+- `div`: p-pop two vawues, /(^•ω•^) d-divide them, >_< a-and push the wesuwt. σωσ
+- `muwdiv`: p-pop thwee vawues `a`, ^^;; `b`, 😳 `c`, compute `(a * b) / c`, >_< and push t-the wesuwt. -.-
+- `min`, `max`: pop t-two vawues and p-push the minimum o-ow maximum. UwU
 
-## 5. Execution Model
-The `lessVM` executes instructions in a loop:
-1. Fetch the opcode at the current program counter (`pc`).
-2. Decode and execute the opcode.
-3. Update the program counter (`pc`) for the next instruction.
-4. Perform gas accounting.
-5. Repeat until a `Halt` instruction is encountered or an error occurs.
+### **memowy o-opewations**
+- `woad`: woad a vawue fwom memowy and push it onto the s-stack. :3
+- `stowe`: pop a vawue fwom the stack and stowe it in memowy. σωσ
+- `woadn`, >w< `stowen`: woad/stowe muwtipwe b-bytes. (ˆ ﻌ ˆ)♡
+- `msize`: push the cuwwent memowy size onto the stack. ʘwʘ
 
----
+### **contwow f-fwow**
+- `jump`: jump t-to a specified p-pwogwam countew. :3
+- `jumpi`: conditionaw jump (jumps i-if the top of the stack is n-nyon-zewo). (˘ω˘)
+- `caww`: c-caww a subwoutine (not yet impwemented). 😳😳😳
+- `wetuwn`: wetuwn fwom a subwoutine (not yet impwemented). rawr x3
 
-## 6. Gas Accounting
-Each instruction consumes 1 unit of gas. If the total gas exceeds 200,000, execution halts with an "out of gas" error.
+### **sowana opewations**
+- `twansfew`: t-twansfew wampowts between s-sowana accounts. (✿oωo)
+- `spwop`: exekawaii~ a-a sowana p-pwogwam wibwawy (spw) opewation (not impwemented). (ˆ ﻌ ˆ)♡
+- `cpi`: e-exekawaii~ a-a cwoss-pwogwam invocation (not i-impwemented). :3
+- `wog`: w-wog a vawue to the sowana wuntime. (U ᵕ U❁)
 
----
-
-## 7. Error Handling
-The `lessVM` handles errors as follows:
-- **Stack Overflow**: Attempting to push more than 32 values onto the stack.
-- **Stack Underflow**: Attempting to pop or access a value from an empty stack.
-- **Invalid Opcode**: Encountering an unsupported opcode.
-- **Memory Access Violation**: Out-of-bounds memory access.
-- **Invalid Jump Target**: Jumping to an invalid program counter.
-- **Out of Gas**: Exceeding the gas limit.
-- **Solana Operation Error**: Errors during Solana-specific operations (e.g., invalid account index).
-
----
-
-## 8. Accounts and Solana Integration
-The `lessVM` interacts with Solana accounts:
-- The `accounts` array provides access to Solana accounts.
-- The `Transfer` opcode transfers lamports between accounts, modifying their `lamports` balance.
-- Each account is referenced by its index in the `accounts` array.
+### **system opewations**
+- `hawt`: hawt execution. ^^;;
 
 ---
 
-## 9. Security Considerations
-- **Gas Limit**: Prevents infinite loops and excessive resource usage.
-- **Stack and Memory Bounds**: Prevents out-of-bounds access and ensures memory safety.
-- **Account Validation**: Ensures valid account indices and proper ownership checks before modifying accounts.
-- **Error Propagation**: Errors are propagated as `ProgramError` to the Solana runtime.
+## 4. state management
+t-the `wessvm` m-manages its state a-as fowwows:
+
+- **pwogwam countew (`pc`)**: i-incwemented a-aftew each opewation. mya modified b-by contwow fwow instwuctions wike `jump` and `jumpi`. 😳😳😳
+- **gas**: incwemented f-fow each instwuction e-exekawaii~d. OwO if gas exceeds the wimit (200,000), rawr e-execution h-hawts with an ewwow. XD
+- **stack**: opewations wike `push` and `pop` m-modify the stack. (U ﹏ U) stack ovewfwow/undewfwow wesuwts in an ewwow. (˘ω˘)
+- **memowy**: m-memowy is a fixed-size awway (1024 bytes). UwU o-out-of-bounds accesses w-wesuwt in ewwows. >_<
+- **cuwwent account**: twacks the active a-account fow sowana o-opewations wike `twansfew`.
 
 ---
 
-## Example Program
-A simple program to add two numbers and log the result:
+## 5. σωσ execution modew
+the `wessvm` e-exekawaii~s instwuctions i-in a woop:
+1. 🥺 fetch the opcode at the cuwwent pwogwam countew (`pc`). 🥺
+2. d-decode and exekawaii~ t-the opcode. ʘwʘ
+3. u-update the pwogwam countew (`pc`) f-fow the nyext instwuction. :3
+4. p-pewfowm gas accounting. (U ﹏ U)
+5. w-wepeat u-untiw a `hawt` instwuction is e-encountewed ow a-an ewwow occuws. (U ﹏ U)
 
-```rust
-let program = vec![
-    OpCode::Push1 as u8, 5,   // Push 5 onto the stack
-    OpCode::Push1 as u8, 3,   // Push 3 onto the stack
-    OpCode::Add as u8,        // Add the top two values
-    OpCode::Log as u8,        // Log the result
-    OpCode::Halt as u8,       // Halt execution
+---
+
+## 6. ʘwʘ gas accounting
+each i-instwuction consumes 1 u-unit of g-gas. if the totaw gas exceeds 200,000, >w< execution h-hawts with an "out of gas" ewwow.
+
+---
+
+## 7. rawr x3 e-ewwow handwing
+the `wessvm` h-handwes ewwows as fowwows:
+- **stack ovewfwow**: attempting to push m-mowe than 32 vawues o-onto the stack. OwO
+- **stack u-undewfwow**: a-attempting to pop ow a-access a vawue fwom an empty stack. ^•ﻌ•^
+- **invawid opcode**: encountewing an unsuppowted opcode. >_<
+- **memowy access v-viowation**: out-of-bounds memowy a-access. OwO
+- **invawid jump tawget**: j-jumping to an invawid pwogwam c-countew. >_<
+- **out of gas**: exceeding t-the gas w-wimit. (ꈍᴗꈍ)
+- **sowana o-opewation ewwow**: e-ewwows duwing s-sowana-specific opewations (e.g., >w< invawid account index). (U ﹏ U)
+
+---
+
+## 8. ^^ accounts and sowana integwation
+the `wessvm` i-intewacts w-with sowana accounts:
+- t-the `accounts` awway pwovides a-access to sowana accounts. (U ﹏ U)
+- the `twansfew` opcode twansfews w-wampowts between a-accounts, :3 modifying theiw `wampowts` b-bawance. (✿oωo)
+- each account is wefewenced by i-its index in the `accounts` a-awway. XD
+
+---
+
+## 9. secuwity considewations
+- **gas w-wimit**: pwevents i-infinite woops and excessive wesouwce usage. >w<
+- **stack and memowy bounds**: pwevents o-out-of-bounds a-access and e-ensuwes memowy s-safety. òωó
+- **account v-vawidation**: ensuwes vawid a-account indices a-and pwopew ownewship checks befowe m-modifying accounts. (ꈍᴗꈍ)
+- **ewwow p-pwopagation**: ewwows awe pwopagated a-as `pwogwamewwow` to the sowana wuntime. rawr x3
+
+---
+
+## e-exampwe pwogwam
+a simpwe p-pwogwam to add t-two nyumbews and wog the wesuwt:
+
+```wust
+w-wet pwogwam = vec![
+    opcode::push1 a-as u8, rawr x3 5,   // push 5 o-onto the stack
+    o-opcode::push1 as u8, σωσ 3,   // push 3 onto the stack
+    o-opcode::add as u8, (ꈍᴗꈍ)        // add the top two vawues
+    o-opcode::wog a-as u8, rawr        // wog the wesuwt
+    o-opcode::hawt as u8, ^^;;       // h-hawt execution
 ];
 ```
 
 ---
 
-## Conclusion
-The `lessVM` is a lightweight, stack-based virtual machine tailored for Solana. Its simplicity and constraints ensure efficient execution while maintaining flexibility for common operations like arithmetic, memory management, and token transfers. This spec provides a foundation for understanding and extending the `lessVM`.
+## c-concwusion
+the `wessvm` is a wightweight, rawr x3 stack-based v-viwtuaw machine taiwowed fow sowana. (ˆ ﻌ ˆ)♡ its s-simpwicity and c-constwaints ensuwe efficient execution w-whiwe maintaining fwexibiwity f-fow common o-opewations wike a-awithmetic, σωσ memowy management, (U ﹏ U) and token twansfews. >w< this spec pwovides a foundation fow undewstanding and extending the `wessvm`. σωσ
 ```
 
-You can copy this content into a `.md` file (e.g., `lessVM_spec.md`) and save it for documentation purposes.
+you can copy this content into a `.md` fiwe (e.g., `wessvm_spec.md`) and s-save it fow documentation p-puwposes.

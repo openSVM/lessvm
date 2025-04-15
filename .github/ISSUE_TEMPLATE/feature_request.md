@@ -1,20 +1,20 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+nyame: featuwe wequest
+about: s-suggest an idea f-fow this pwoject
+t-titwe: ''
+wabews: ''
+a-assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**is y-youw featuwe wequest w-wewated to a-a pwobwem? pwease d-descwibe.**
+a cweaw and concise descwiption of nyani the pwobwem is. rawr x3 ex. i'm awways f-fwustwated when [...]
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**descwibe the sowution y-you'd wike**
+a cweaw and concise d-descwiption of nyani you want to happen. nyaa~~
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**descwibe awtewnatives y-you've considewed**
+a cweaw a-and concise d-descwiption of any awtewnative sowutions ow featuwes you've considewed. /(^•ω•^)
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**additionaw context**
+a-add any othew context ow scweenshots about the featuwe wequest hewe. rawr

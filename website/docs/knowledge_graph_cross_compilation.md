@@ -1,64 +1,64 @@
-# Cross-Compilation Knowledge Graph
+# cwoss-compiwation knowwedge gwaph
 
-## Cross-Compilation for aarch64-unknown-linux-gnu
+## c-cwoss-compiwation f-fow aawch64-unknown-winux-gnu
 
-### Problem
-When cross-compiling the LessVM CLI for aarch64-unknown-linux-gnu, OpenSSL cannot be found via pkg-config because pkg-config is not configured for cross-compilation.
+### p-pwobwem
+w-when cwoss-compiwing t-the wessvm c-cwi fow aawch64-unknown-winux-gnu, nyaa~~ o-openssw cannot b-be found via pkg-config because pkg-config is nyot configuwed fow cwoss-compiwation. :3
 
-### Solution
-1. Use the vendored OpenSSL feature in reqwest to avoid the need for pkg-config during cross-compilation.
-2. Set up the cross-compilation environment with appropriate environment variables.
+### s-sowution
+1. ( ͡o ω ͡o ) use the vendowed openssw featuwe in w-weqwest to avoid the nyeed fow pkg-config d-duwing cwoss-compiwation. mya
+2. set up the cwoss-compiwation e-enviwonment with appwopwiate e-enviwonment vawiabwes. (///ˬ///✿)
 
-### Implementation Details
+### i-impwementation detaiws
 
-#### 1. Modified Dependencies
-Added the `native-tls-vendored` feature to reqwest in cli/Cargo.toml:
-```toml
-reqwest = { version = "0.11", features = ["json", "native-tls-vendored"] }
+#### 1. (˘ω˘) modified dependencies
+added the `native-tws-vendowed` f-featuwe to weqwest in cwi/cawgo.tomw:
+```tomw
+weqwest = { vewsion = "0.11", ^^;; featuwes = ["json", (✿oωo) "native-tws-vendowed"] }
 ```
 
-This feature makes reqwest use a vendored version of OpenSSL, eliminating the need for pkg-config to find a system-installed version.
+this featuwe makes weqwest use a-a vendowed vewsion of openssw, (U ﹏ U) ewiminating t-the nyeed f-fow pkg-config t-to find a system-instawwed vewsion. -.-
 
-#### 2. Environment Setup Script
-Created a script (`cross-compile-setup.sh`) that sets up the necessary environment variables for cross-compilation:
+#### 2. ^•ﻌ•^ e-enviwonment setup scwipt
+cweated a scwipt (`cwoss-compiwe-setup.sh`) t-that sets up the nyecessawy enviwonment vawiabwes f-fow cwoss-compiwation:
 
-- For macOS:
-  - Installs required packages: pkg-config, openssl@3
-  - Installs cross-compilation toolchain for aarch64-unknown-linux-gnu
-  - Sets up environment variables: CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER, CC_aarch64_unknown_linux_gnu, etc.
-  - Configures pkg-config for cross-compilation: PKG_CONFIG_ALLOW_CROSS, PKG_CONFIG_PATH
+- fow macos:
+  - instawws wequiwed packages: pkg-config, rawr openssw@3
+  - instawws c-cwoss-compiwation toowchain fow a-aawch64-unknown-winux-gnu
+  - s-sets u-up enviwonment vawiabwes: cawgo_tawget_aawch64_unknown_winux_gnu_winkew, cc_aawch64_unknown_winux_gnu, (˘ω˘) etc. nyaa~~
+  - c-configuwes pkg-config f-fow cwoss-compiwation: pkg_config_awwow_cwoss, p-pkg_config_path
 
-- For Linux:
-  - Installs required packages: pkg-config, libssl-dev, gcc-aarch64-linux-gnu, g++-aarch64-linux-gnu
-  - Sets up environment variables for cross-compilation
-  - Configures pkg-config for cross-compilation
+- f-fow winux:
+  - instawws w-wequiwed packages: pkg-config, w-wibssw-dev, UwU gcc-aawch64-winux-gnu, :3 g++-aawch64-winux-gnu
+  - sets up enviwonment v-vawiabwes fow cwoss-compiwation
+  - c-configuwes pkg-config fow c-cwoss-compiwation
 
-### Usage
-1. Source the environment setup script before building:
+### u-usage
+1. (⑅˘꒳˘) souwce the enviwonment setup scwipt befowe buiwding:
    ```bash
-   source cross-compile-setup.sh
+   souwce cwoss-compiwe-setup.sh
    ```
 
-2. Build for the target platform:
+2. (///ˬ///✿) buiwd fow the tawget p-pwatfowm:
    ```bash
-   cargo build --target aarch64-unknown-linux-gnu
+   c-cawgo buiwd --tawget aawch64-unknown-winux-gnu
    ```
 
-### Technical Explanation
-The issue occurs because pkg-config is not configured to look for libraries in the sysroot for the target platform. When cross-compiling, pkg-config needs to be told where to find libraries for the target architecture.
+### t-technicaw expwanation
+t-the issue o-occuws because pkg-config is nyot configuwed to wook fow wibwawies i-in the syswoot fow the tawget pwatfowm. ^^;; when cwoss-compiwing, >_< pkg-config n-nyeeds to be towd whewe to find w-wibwawies fow the t-tawget awchitectuwe. rawr x3
 
-The vendored OpenSSL feature in reqwest is the simplest solution as it bundles OpenSSL with the build, avoiding the need for pkg-config to find it. For other dependencies that might require OpenSSL, the environment variables set in the script ensure that pkg-config can find the appropriate libraries.
+t-the vendowed openssw featuwe i-in weqwest i-is the simpwest s-sowution as it b-bundwes openssw with the buiwd, /(^•ω•^) avoiding the nyeed f-fow pkg-config t-to find it. :3 fow o-othew dependencies t-that might w-wequiwe openssw, (ꈍᴗꈍ) the enviwonment vawiabwes set in the scwipt ensuwe t-that pkg-config can find the appwopwiate wibwawies. /(^•ω•^)
 
-### Decision Making Process
-1. Identified that the issue was related to OpenSSL not being found during cross-compilation
-2. Considered two approaches:
-   - Configure pkg-config for cross-compilation
-   - Use vendored dependencies where possible
-3. Implemented both approaches for maximum compatibility:
-   - Modified reqwest to use vendored OpenSSL
-   - Created a script to set up the cross-compilation environment
+### decision making pwocess
+1. (⑅˘꒳˘) identified t-that the issue was wewated to openssw nyot being found duwing c-cwoss-compiwation
+2. ( ͡o ω ͡o ) c-considewed t-two appwoaches:
+   - configuwe p-pkg-config fow cwoss-compiwation
+   - use vendowed d-dependencies w-whewe possibwe
+3. impwemented both appwoaches fow maximum compatibiwity:
+   - modified weqwest to u-use vendowed openssw
+   - cweated a-a scwipt to set up the cwoss-compiwation e-enviwonment
 
-### References
-- [Rust Cross-Compilation Guide](https://rust-lang.github.io/rustup/cross-compilation.html)
-- [pkg-config Cross-Compilation Documentation](https://pkg-config.freedesktop.org/pkg-config-guide.html)
-- [reqwest Documentation](https://docs.rs/reqwest/latest/reqwest/)
+### w-wefewences
+- [wust cwoss-compiwation guide](https://wust-wang.github.io/wustup/cwoss-compiwation.htmw)
+- [pkg-config c-cwoss-compiwation d-documentation](https://pkg-config.fweedesktop.owg/pkg-config-guide.htmw)
+- [weqwest documentation](https://docs.ws/weqwest/watest/weqwest/)

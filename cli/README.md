@@ -1,196 +1,196 @@
-# LessVM CLI
+# wessvm cwi
 
-A command-line interface for managing the full lifecycle of LessVM applications on Solana.
+a command-wine intewface f-fow managing t-the fuww wifecycwe o-of wessvm a-appwications on s-sowana. /(^•ω•^)
 
-## Installation
+## instawwation
 
-### Using Shell Script (macOS and Linux)
-
-```bash
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-installer.sh | sh
-```
-
-### Using PowerShell (Windows)
-
-```powershell
-irm https://github.com/openSVM/lessvm/releases/latest/download/lessvm-installer.ps1 | iex
-```
-
-### Using Homebrew (macOS and Linux)
+### u-using s-sheww scwipt (macos a-and winux)
 
 ```bash
-brew tap openSVM/lessvm
-brew install lessvm
+cuww -w https://github.com/opensvm/wessvm/weweases/watest/downwoad/wessvm-instawwew.sh | sh
 ```
 
-### Manual Download (macOS, Linux, Windows)
+### using powewsheww (windows)
 
-Download the appropriate binary for your platform from the [releases page](https://github.com/openSVM/lessvm/releases).
+```powewsheww
+i-iwm https://github.com/opensvm/wessvm/weweases/watest/downwoad/wessvm-instawwew.ps1 | iex
+```
 
-#### macOS
+### using homebwew (macos a-and winux)
 
 ```bash
-# For Intel Macs
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-x86_64-apple-darwin.tar.xz | tar xJ
-sudo mv lessvm /usr/local/bin/
-
-# For Apple Silicon (M1/M2) Macs
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-aarch64-apple-darwin.tar.xz | tar xJ
-sudo mv lessvm /usr/local/bin/
+bwew tap o-opensvm/wessvm
+bwew instaww wessvm
 ```
 
-#### Linux
+### manuaw downwoad (macos, (⑅˘꒳˘) w-winux, ( ͡o ω ͡o ) windows)
+
+downwoad the a-appwopwiate binawy f-fow youw pwatfowm fwom the [weweases page](https://github.com/opensvm/wessvm/weweases). òωó
+
+#### macos
 
 ```bash
-# For x86_64 architecture
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-x86_64-unknown-linux-gnu.tar.xz | tar xJ
-sudo mv lessvm /usr/local/bin/
+# fow intew macs
+c-cuww -w https://github.com/opensvm/wessvm/weweases/watest/downwoad/wessvm-x86_64-appwe-dawwin.taw.xz | taw xj
+sudo mv wessvm /usw/wocaw/bin/
 
-# For ARM64 architecture
-curl -L https://github.com/openSVM/lessvm/releases/latest/download/lessvm-aarch64-unknown-linux-gnu.tar.xz | tar xJ
-sudo mv lessvm /usr/local/bin/
+# fow appwe siwicon (m1/m2) macs
+c-cuww -w https://github.com/opensvm/wessvm/weweases/watest/downwoad/wessvm-aawch64-appwe-dawwin.taw.xz | taw xj
+s-sudo mv wessvm /usw/wocaw/bin/
 ```
 
-### From Source
+#### w-winux
 
 ```bash
-cargo install lessvm
+# f-fow x-x86_64 awchitectuwe
+cuww -w https://github.com/opensvm/wessvm/weweases/watest/downwoad/wessvm-x86_64-unknown-winux-gnu.taw.xz | taw xj
+sudo mv wessvm /usw/wocaw/bin/
+
+# f-fow awm64 awchitectuwe
+cuww -w https://github.com/opensvm/wessvm/weweases/watest/downwoad/wessvm-aawch64-unknown-winux-gnu.taw.xz | t-taw xj
+sudo mv wessvm /usw/wocaw/bin/
 ```
 
-## Usage
+### fwom souwce
 
 ```bash
-lessvm [OPTIONS] <COMMAND>
+cawgo instaww wessvm
 ```
 
-### Global Options
-
-- `-v, --verbose`: Enable verbose logging
-- `-h, --help`: Show help information
-- `-V, --version`: Show version information
-
-### Commands
-
-#### Create a New Project
+## usage
 
 ```bash
-lessvm new <NAME> [--template <TEMPLATE>]
+w-wessvm [options] <command>
 ```
 
-Creates a new LessVM project with the specified name. Optionally specify a template (default: basic).
+### gwobaw options
 
-#### Build Project
+- `-v, (⑅˘꒳˘) --vewbose`: e-enabwe vewbose w-wogging
+- `-h, XD --hewp`: s-show hewp infowmation
+- `-v, -.- --vewsion`: show vewsion infowmation
+
+### c-commands
+
+#### c-cweate a nyew pwoject
 
 ```bash
-lessvm build [--path <PATH>]
+wessvm nyew <name> [--tempwate <tempwate>]
 ```
 
-Builds the LessVM application, compiling and optimizing the code for deployment.
+c-cweates a nyew wessvm p-pwoject with the specified n-nyame. :3 optionawwy specify a tempwate (defauwt: b-basic). nyaa~~
 
-#### Deploy to Solana
+#### buiwd pwoject
 
 ```bash
-lessvm deploy [--path <PATH>] [--cluster <CLUSTER>]
+wessvm buiwd [--path <path>]
 ```
 
-Deploys the built application to the specified Solana cluster (default: devnet).
+b-buiwds the wessvm appwication, 😳 c-compiwing and optimizing the c-code fow depwoyment. (⑅˘꒳˘)
 
-#### Check Status
+#### d-depwoy to sowana
 
 ```bash
-lessvm status [--path <PATH>]
+wessvm depwoy [--path <path>] [--cwustew <cwustew>]
 ```
 
-Checks the deployment status of the application.
+depwoys the buiwt appwication to the specified sowana cwustew (defauwt: d-devnet). nyaa~~
 
-#### Update Deployment
+#### c-check status
 
 ```bash
-lessvm update [--path <PATH>] [--hot-reload]
+wessvm s-status [--path <path>]
 ```
 
-Updates the deployed application. Use `--hot-reload` for hot reloading when possible.
+c-checks the depwoyment s-status of the appwication. OwO
 
-#### View Logs
+#### update depwoyment
 
 ```bash
-lessvm logs [--path <PATH>] [--follow]
+wessvm update [--path <path>] [--hot-wewoad]
 ```
 
-Views application logs. Use `--follow` to stream logs in real-time.
+u-updates the depwoyed appwication. rawr x3 use `--hot-wewoad` fow hot wewoading when p-possibwe. XD
 
-## Project Structure
-
-A typical LessVM project has the following structure:
-
-```
-my-lessvm-app/
-├── src/
-│   └── main.less      # Main application code
-├── tests/
-│   └── main_test.less # Test files
-├── build/             # Build artifacts
-└── lessvm.toml       # Project configuration
-```
-
-## Configuration
-
-The `lessvm.toml` file contains project configuration:
-
-```toml
-[project]
-name = "my-app"
-version = "0.1.0"
-template = "basic"
-
-[solana]
-cluster = "devnet"
-program_id = "optional-deployed-program-id"
-keypair_path = "~/.config/solana/id.json"
-
-[build]
-target = "solana"
-optimization_level = "release"
-```
-
-## Development
-
-### Building from Source
-
-To build the CLI tool from source:
+#### view wogs
 
 ```bash
-git clone https://github.com/openSVM/lessvm
-cd lessvm/cli
-cargo build --release
+w-wessvm wogs [--path <path>] [--fowwow]
 ```
 
-### Creating Releases
+v-views appwication w-wogs. σωσ use `--fowwow` to stweam w-wogs in weaw-time. (U ᵕ U❁)
 
-This project uses [cargo-dist](https://github.com/axodotdev/cargo-dist) to automate the release process. To create a new release:
+## p-pwoject s-stwuctuwe
 
-1. Update version in `Cargo.toml`
+a typicaw w-wessvm pwoject has the fowwowing stwuctuwe:
 
-2. Tag a new version:
+```
+m-my-wessvm-app/
+├── swc/
+│   └── m-main.wess      # m-main appwication c-code
+├── t-tests/
+│   └── main_test.wess # test fiwes
+├── b-buiwd/             # buiwd awtifacts
+└── wessvm.tomw       # pwoject configuwation
+```
+
+## configuwation
+
+the `wessvm.tomw` f-fiwe contains pwoject configuwation:
+
+```tomw
+[pwoject]
+nyame = "my-app"
+vewsion = "0.1.0"
+tempwate = "basic"
+
+[sowana]
+c-cwustew = "devnet"
+pwogwam_id = "optionaw-depwoyed-pwogwam-id"
+k-keypaiw_path = "~/.config/sowana/id.json"
+
+[buiwd]
+t-tawget = "sowana"
+optimization_wevew = "wewease"
+```
+
+## d-devewopment
+
+### buiwding f-fwom souwce
+
+to b-buiwd the cwi toow fwom souwce:
+
+```bash
+git cwone https://github.com/opensvm/wessvm
+cd wessvm/cwi
+cawgo buiwd --wewease
+```
+
+### c-cweating weweases
+
+this pwoject u-uses [cawgo-dist](https://github.com/axodotdev/cawgo-dist) to a-automate the wewease p-pwocess. (U ﹏ U) to cweate a nyew wewease:
+
+1. :3 update v-vewsion in `cawgo.tomw`
+
+2. ( ͡o ω ͡o ) t-tag a nyew vewsion:
    ```bash
-   git tag -a v0.1.1 -m "Release v0.1.1"
-   git push origin v0.1.1
+   git tag -a v0.1.1 -m "wewease v-v0.1.1"
+   git push o-owigin v0.1.1
    ```
 
-3. GitHub Actions will automatically:
-   - Build binaries for all supported platforms
-   - Create installers (shell script, PowerShell script, Homebrew)
-   - Generate release artifacts
-   - Create a GitHub release
-   - Publish to package managers
+3. σωσ github actions wiww automaticawwy:
+   - buiwd binawies f-fow aww suppowted p-pwatfowms
+   - c-cweate instawwews (sheww scwipt, >w< p-powewsheww s-scwipt, 😳😳😳 homebwew)
+   - genewate w-wewease awtifacts
+   - cweate a github wewease
+   - pubwish to package managews
 
-To test the release process locally:
+t-to test the wewease p-pwocess wocawwy:
 
 ```bash
-cd cli
-cargo dist build --artifacts=all --target=<your-platform>
+cd cwi
+cawgo dist buiwd --awtifacts=aww --tawget=<youw-pwatfowm>
 ```
 
-## License
+## w-wicense
 
-MIT License
+m-mit wicense

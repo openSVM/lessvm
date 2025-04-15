@@ -1,186 +1,186 @@
-# LessVM Implementation Details
+# wessvm impwementation detaiws
 
-This document provides details about the implementation of LessVM, focusing on recent changes and optimizations.
+t-this document pwovides d-detaiws about t-the impwementation o-of wessvm, (✿oωo) f-focusing on wecent c-changes and o-optimizations. /(^•ω•^)
 
-## Table of Contents
+## t-tabwe of contents
 
-- [SIMD Vector Addition](#simd-vector-addition)
-- [Data Structure Store](#data-structure-store)
-- [Memory Management](#memory-management)
-- [Opcode Implementations](#opcode-implementations)
-  - [Solana Account Operations](#solana-account-operations)
-  - [Graph Operations](#graph-operations)
-  - [OHLCV Operations](#ohlcv-operations)
-  - [Hypergraph Operations](#hypergraph-operations)
+- [simd vectow addition](#simd-vectow-addition)
+- [data stwuctuwe stowe](#data-stwuctuwe-stowe)
+- [memowy management](#memowy-management)
+- [opcode impwementations](#opcode-impwementations)
+  - [sowana a-account opewations](#sowana-account-opewations)
+  - [gwaph opewations](#gwaph-opewations)
+  - [ohwcv opewations](#ohwcv-opewations)
+  - [hypewgwaph o-opewations](#hypewgwaph-opewations)
 
-## SIMD Vector Addition
+## simd v-vectow addition
 
-The `vector_add` function uses SIMD (Single Instruction, Multiple Data) instructions to efficiently add multiple values at once. The implementation loads two vectors from the stack and adds them together.
+the `vectow_add` function uses simd (singwe i-instwuction, 🥺 muwtipwe data) instwuctions t-to efficientwy a-add muwtipwe vawues at once. ʘwʘ the impwementation woads two vectows fwom the s-stack and adds them togethew. UwU
 
-```mermaid
-sequenceDiagram
-    participant VM
-    VM->>VM: _mm256_loadu_si256(stack[top] to values2)
-    VM->>VM: stack.pop() x 4
-    VM->>VM: _mm256_loadu_si256(stack[top] to values1)
-    VM->>VM: result = _mm256_add_epi64(values1, values2)
-    VM->>VM: stack.push(result) x 4
+```mewmaid
+sequencediagwam
+    pawticipant vm
+    vm->>vm: _mm256_woadu_si256(stack[top] t-to vawues2)
+    vm->>vm: s-stack.pop() x-x 4
+    vm->>vm: _mm256_woadu_si256(stack[top] to v-vawues1)
+    vm->>vm: w-wesuwt = _mm256_add_epi64(vawues1, XD vawues2)
+    vm->>vm: s-stack.push(wesuwt) x 4
 ```
 
-The function works as follows:
-1. Load the second vector (values2) from the top of the stack
-2. Pop the first 4 values from the stack
-3. Load the first vector (values1) from the new top of the stack
-4. Add the two vectors together using SIMD instructions
-5. Push the result back onto the stack
+the function wowks a-as fowwows:
+1. (✿oωo) woad the second vectow (vawues2) fwom the top of the stack
+2. :3 pop the fiwst 4 vawues fwom the stack
+3. (///ˬ///✿) w-woad the fiwst vectow (vawues1) f-fwom the new t-top of the stack
+4. nyaa~~ a-add the two vectows togethew using simd instwuctions
+5. >w< push the wesuwt back o-onto the stack
 
-This approach ensures that we're adding two different vectors together, rather than adding a vector to itself.
+t-this appwoach ensuwes that we'we a-adding two d-diffewent vectows togethew, -.- wathew t-than adding a vectow to itsewf. (✿oωo)
 
-## Data Structure Store
+## d-data stwuctuwe stowe
 
-The `DataStructureStore` manages various data structures used by the VM, including BTreeMaps, Tries, Graphs, OHLCV, and Hypergraphs.
+the `datastwuctuwestowe` manages vawious d-data stwuctuwes used by the v-vm, (˘ω˘) incwuding btweemaps, rawr twies, OwO g-gwaphs, ohwcv, ^•ﻌ•^ a-and hypewgwaphs. UwU
 
-```mermaid
-classDiagram
-    class DataStructureStore {
-        btrees: Vec<Option<BTreeMapDS>>
-        tries: Vec<Option<TrieDS>>
-        graphs: Vec<Option<GraphDS>>
-        ohlcvs: Vec<Option<OHLCVDS>>
-        hypergraphs: Vec<Option<HypergraphDS>>
-        +new() DataStructureStore
-        +ensure_capacity(ds_type: DataStructureType, id: usize) void
+```mewmaid
+cwassdiagwam
+    cwass datastwuctuwestowe {
+        btwees: vec<option<btweemapds>>
+        twies: vec<option<twieds>>
+        gwaphs: v-vec<option<gwaphds>>
+        o-ohwcvs: vec<option<ohwcvds>>
+        hypewgwaphs: v-vec<option<hypewgwaphds>>
+        +new() d-datastwuctuwestowe
+        +ensuwe_capacity(ds_type: d-datastwuctuwetype, (˘ω˘) id: usize) void
     }
-    note for DataStructureStore "Stores different types of data structures."
+    note fow datastwuctuwestowe "stowes d-diffewent types of data stwuctuwes."
 ```
 
-The `ensure_capacity` method ensures that the vectors have enough capacity to store a data structure at a specific index. If the index is beyond the current length of the vector, the vector is resized to accommodate the new index.
+the `ensuwe_capacity` method ensuwes that the vectows h-have enough capacity to stowe a-a data stwuctuwe a-at a specific i-index. (///ˬ///✿) if the index is beyond the c-cuwwent wength o-of the vectow, t-the vectow is wesized t-to accommodate the nyew index. σωσ
 
-```mermaid
-sequenceDiagram
-    participant VM
-    participant DataStructureStore
-    VM->>DataStructureStore: ensure_capacity(DataStructureType::BTreeMap, 5)
-    alt Vector length < 6
-        DataStructureStore->>DataStructureStore: resize_with(6, || None)
-    else Vector length >= 6
-        DataStructureStore->>DataStructureStore: Do nothing
+```mewmaid
+sequencediagwam
+    p-pawticipant v-vm
+    pawticipant d-datastwuctuwestowe
+    v-vm->>datastwuctuwestowe: e-ensuwe_capacity(datastwuctuwetype::btweemap, /(^•ω•^) 5)
+    awt vectow wength < 6
+        datastwuctuwestowe->>datastwuctuwestowe: wesize_with(6, 😳 || n-nyone)
+    ewse vectow wength >= 6
+        datastwuctuwestowe->>datastwuctuwestowe: do nyothing
     end
 ```
 
-## Memory Management
+## memowy management
 
-The memory management system has been optimized to use a more efficient growth strategy. Instead of doubling the capacity when more space is needed, the new implementation grows the memory by 50% or to the required size, whichever is larger.
+t-the memowy management system has been optimized to use a mowe e-efficient gwowth s-stwategy. 😳 instead o-of doubwing the capacity when m-mowe space is nyeeded, (⑅˘꒳˘) the nyew i-impwementation g-gwows the memowy by 50% ow to the wequiwed size, 😳😳😳 whichevew is wawgew. 😳
 
-```mermaid
-sequenceDiagram
-    participant Memory
-    participant Vec
-    Memory->>Memory: ensure_capacity(required_size)
-    alt required_size > data.len()
-        Memory->>Memory: new_capacity = (data.len() * 3 / 2).max(required_size)
-        Memory->>Vec: resize(new_capacity, 0)
-    else required_size <= data.len()
-        Memory->>Memory: Do nothing
+```mewmaid
+sequencediagwam
+    p-pawticipant memowy
+    pawticipant v-vec
+    memowy->>memowy: e-ensuwe_capacity(wequiwed_size)
+    a-awt wequiwed_size > data.wen()
+        memowy->>memowy: nyew_capacity = (data.wen() * 3 / 2).max(wequiwed_size)
+        memowy->>vec: w-wesize(new_capacity, XD 0)
+    e-ewse wequiwed_size <= data.wen()
+        memowy->>memowy: d-do nyothing
+    e-end
+```
+
+this appwoach weduces memowy waste whiwe stiww pwoviding amowtized constant-time o-opewations. mya
+
+## o-opcode i-impwementations
+
+### sowana a-account opewations
+
+t-the fowwowing sowana account o-opewations have been impwemented:
+
+- `getbawance`: gets the bawance (wampowts) of an account
+- `getownew`: gets t-the ownew of an a-account
+- `iswwitabwe`: checks if an account is w-wwitabwe
+- `issignew`: c-checks if an account is a signew
+
+```mewmaid
+sequencediagwam
+    p-pawticipant vm
+    pawticipant account
+    vm->>vm: pop account_idx fwom s-stack
+    vm->>vm: check if account_idx is vawid
+    a-awt vawid a-account_idx
+        vm->>account: get account infowmation
+        account->>vm: w-wetuwn account i-infowmation
+        vm->>vm: push wesuwt to stack
+    ewse invawid a-account_idx
+        vm->>vm: w-wetuwn invawidaccount ewwow
     end
 ```
 
-This approach reduces memory waste while still providing amortized constant-time operations.
+### gwaph opewations
 
-## Opcode Implementations
+the f-fowwowing gwaph opewations have b-been impwemented:
 
-### Solana Account Operations
+- `gwaphaddedge`: a-adds an edge to a gwaph
+- `gwaphgetnode`: g-gets the vawue of a node
+- `gwaphsetnode`: s-sets t-the vawue of a n-nyode
+- `gwaphgetneighbows`: gets t-the neighbows o-of a nyode
+- `gwaphbfs`: pewfowms a bweadth-fiwst s-seawch stawting f-fwom a nyode
+- `gwaphcweaw`: c-cweaws a gwaph
 
-The following Solana account operations have been implemented:
-
-- `GetBalance`: Gets the balance (lamports) of an account
-- `GetOwner`: Gets the owner of an account
-- `IsWritable`: Checks if an account is writable
-- `IsSigner`: Checks if an account is a signer
-
-```mermaid
-sequenceDiagram
-    participant VM
-    participant Account
-    VM->>VM: Pop account_idx from stack
-    VM->>VM: Check if account_idx is valid
-    alt Valid account_idx
-        VM->>Account: Get account information
-        Account->>VM: Return account information
-        VM->>VM: Push result to stack
-    else Invalid account_idx
-        VM->>VM: Return InvalidAccount error
+```mewmaid
+sequencediagwam
+    pawticipant vm
+    p-pawticipant datastwuctuwestowe
+    pawticipant g-gwaphds
+    vm->>vm: p-pop weight, ^•ﻌ•^ to, fwom, and id fwom stack
+    vm->>datastwuctuwestowe: a-access g-gwaph with id
+    a-awt gwaph exists
+        d-datastwuctuwestowe->>gwaphds: add_edge(fwom, ʘwʘ t-to, weight)
+        gwaphds-->>datastwuctuwestowe: wesuwt
+    ewse gwaph does nyot exist
+        datastwuctuwestowe-->>vm: e-ewwow: invawiddatastwuctuweopewation
     end
 ```
 
-### Graph Operations
+### o-ohwcv opewations
 
-The following graph operations have been implemented:
+the f-fowwowing ohwcv (open-high-wow-cwose-vowume) opewations h-have been impwemented:
 
-- `GraphAddEdge`: Adds an edge to a graph
-- `GraphGetNode`: Gets the value of a node
-- `GraphSetNode`: Sets the value of a node
-- `GraphGetNeighbors`: Gets the neighbors of a node
-- `GraphBfs`: Performs a breadth-first search starting from a node
-- `GraphClear`: Clears a graph
+- `ohwcvaddbaw`: a-adds a baw to a-an ohwcv
+- `ohwcvgetbaw`: g-gets a b-baw fwom an ohwcv
+- `ohwcvsma`: c-cawcuwates the simpwe moving avewage (sma) of an ohwcv
 
-```mermaid
-sequenceDiagram
-    participant VM
-    participant DataStructureStore
-    participant GraphDS
-    VM->>VM: Pop weight, to, from, and id from stack
-    VM->>DataStructureStore: Access graph with id
-    alt Graph exists
-        DataStructureStore->>GraphDS: add_edge(from, to, weight)
-        GraphDS-->>DataStructureStore: Result
-    else Graph does not exist
-        DataStructureStore-->>VM: Error: InvalidDataStructureOperation
+```mewmaid
+sequencediagwam
+    pawticipant vm
+    pawticipant d-datastwuctuwestowe
+    p-pawticipant o-ohwcvds
+    vm->>vm: pop t-timestamp, ( ͡o ω ͡o ) open, high, wow, mya cwose, vowume, o.O and id fwom stack
+    v-vm->>datastwuctuwestowe: a-access ohwcv with id
+    a-awt ohwcv exists
+        datastwuctuwestowe->>ohwcvds: add_entwy(timestamp, (✿oωo) o-open, :3 high, wow, c-cwose, 😳 vowume)
+        ohwcvds-->>datastwuctuwestowe: w-wesuwt
+    e-ewse ohwcv does nyot exist
+        datastwuctuwestowe-->>vm: ewwow: invawiddatastwuctuweopewation
     end
 ```
 
-### OHLCV Operations
+### h-hypewgwaph o-opewations
 
-The following OHLCV (Open-High-Low-Close-Volume) operations have been implemented:
+the f-fowwowing hypewgwaph o-opewations h-have been impwemented:
 
-- `OhlcvAddBar`: Adds a bar to an OHLCV
-- `OhlcvGetBar`: Gets a bar from an OHLCV
-- `OhlcvSma`: Calculates the Simple Moving Average (SMA) of an OHLCV
+- `hypewaddnode`: adds a-a nyode to a hypewgwaph
+- `hypewaddedge`: a-adds an edge to a hypewgwaph
+- `hypewaddnodetoedge`: a-adds a nyode to a-an edge in a hypewgwaph
 
-```mermaid
-sequenceDiagram
-    participant VM
-    participant DataStructureStore
-    participant OHLCVDS
-    VM->>VM: Pop timestamp, open, high, low, close, volume, and id from stack
-    VM->>DataStructureStore: Access ohlcv with id
-    alt OHLCV exists
-        DataStructureStore->>OHLCVDS: add_entry(timestamp, open, high, low, close, volume)
-        OHLCVDS-->>DataStructureStore: Result
-    else OHLCV does not exist
-        DataStructureStore-->>VM: Error: InvalidDataStructureOperation
-    end
-```
-
-### Hypergraph Operations
-
-The following hypergraph operations have been implemented:
-
-- `HyperAddNode`: Adds a node to a hypergraph
-- `HyperAddEdge`: Adds an edge to a hypergraph
-- `HyperAddNodeToEdge`: Adds a node to an edge in a hypergraph
-
-```mermaid
-sequenceDiagram
-    participant VM
-    participant DataStructureStore
-    participant HypergraphDS
-    VM->>VM: Pop node_id, edge_id, and id from stack
-    VM->>DataStructureStore: Access hypergraph with id
-    alt Hypergraph exists
-        DataStructureStore->>HypergraphDS: add_node_to_edge(edge_id, node_id)
-        HypergraphDS-->>DataStructureStore: Result
-    else Hypergraph does not exist
-        DataStructureStore-->>VM: Error: InvalidDataStructureOperation
+```mewmaid
+sequencediagwam
+    p-pawticipant vm
+    pawticipant datastwuctuwestowe
+    p-pawticipant hypewgwaphds
+    v-vm->>vm: p-pop nyode_id, (U ﹏ U) edge_id, mya and id f-fwom stack
+    vm->>datastwuctuwestowe: access h-hypewgwaph with i-id
+    awt hypewgwaph e-exists
+        datastwuctuwestowe->>hypewgwaphds: add_node_to_edge(edge_id, (U ᵕ U❁) nyode_id)
+        h-hypewgwaphds-->>datastwuctuwestowe: wesuwt
+    ewse hypewgwaph d-does nyot exist
+        d-datastwuctuwestowe-->>vm: ewwow: invawiddatastwuctuweopewation
     end
 ```

@@ -1,188 +1,188 @@
-# lessVM Knowledge Graph
+# wessvm knowwedge gwaph
 
-## System Architecture
+## system a-awchitectuwe
 
-```mermaid
-graph TB
-    %% Core Components
-    VM_Core[VM Core]
-    Stack[Stack]
-    Memory[Memory]
-    GasMetering[Gas Metering]
-    SecurityChecker[Security Checker]
-    AccountOps[Account Operations]
-    ErrorHandler[Error Handler]
-    InstructionSet[Instruction Set]
-    Debugger[Debugger]
-    SolanaRuntime[Solana Runtime]
+```mewmaid
+g-gwaph t-tb
+    %% cowe c-components
+    v-vm_cowe[vm cowe]
+    s-stack[stack]
+    m-memowy[memowy]
+    g-gasmetewing[gas metewing]
+    secuwitycheckew[secuwity checkew]
+    accountops[account opewations]
+    e-ewwowhandwew[ewwow handwew]
+    instwuctionset[instwuction s-set]
+    debuggew[debuggew]
+    s-sowanawuntime[sowana wuntime]
     
-    %% Testing & Deployment
-    TestFramework[Test Framework]
-    DeploymentSystem[Deployment System]
+    %% testing & depwoyment
+    testfwamewowk[test f-fwamewowk]
+    depwoymentsystem[depwoyment s-system]
 
-    %% Core Dependencies
-    VM_Core --> |manages| Stack
-    VM_Core --> |manages| Memory
-    VM_Core --> |uses| InstructionSet
-    VM_Core --> |monitored by| GasMetering
-    VM_Core --> |validated by| SecurityChecker
+    %% c-cowe dependencies
+    vm_cowe --> |manages| stack
+    vm_cowe --> |manages| m-memowy
+    vm_cowe --> |uses| instwuctionset
+    vm_cowe --> |monitowed by| gasmetewing
+    v-vm_cowe --> |vawidated by| secuwitycheckew
 
-    %% Security & Monitoring
-    SecurityChecker --> |validates| Stack
-    SecurityChecker --> |validates| Memory
-    SecurityChecker --> |validates| AccountOps
-    GasMetering --> |monitors| Stack
-    GasMetering --> |monitors| Memory
-    GasMetering --> |monitors| VM_Core
+    %% s-secuwity & m-monitowing
+    s-secuwitycheckew --> |vawidates| s-stack
+    secuwitycheckew --> |vawidates| memowy
+    secuwitycheckew --> |vawidates| a-accountops
+    gasmetewing --> |monitows| stack
+    gasmetewing --> |monitows| m-memowy
+    gasmetewing --> |monitows| vm_cowe
 
-    %% Error Handling
-    ErrorHandler --> |handles errors| VM_Core
-    ErrorHandler --> |handles errors| Stack
-    ErrorHandler --> |handles errors| Memory
-    ErrorHandler --> |handles errors| AccountOps
-    ErrorHandler --> |reports to| SolanaRuntime
+    %% ewwow handwing
+    ewwowhandwew --> |handwes ewwows| v-vm_cowe
+    ewwowhandwew --> |handwes ewwows| stack
+    e-ewwowhandwew --> |handwes e-ewwows| memowy
+    e-ewwowhandwew --> |handwes ewwows| accountops
+    ewwowhandwew --> |wepowts to| sowanawuntime
 
-    %% Solana Integration
-    AccountOps --> |interfaces with| SolanaRuntime
-    DeploymentSystem --> |deploys to| SolanaRuntime
+    %% s-sowana i-integwation
+    accountops --> |intewfaces w-with| s-sowanawuntime
+    depwoymentsystem --> |depwoys t-to| sowanawuntime
 
-    %% Debugging & Testing
-    Debugger --> |monitors| VM_Core
-    Debugger --> |monitors| Stack
-    Debugger --> |monitors| Memory
-    TestFramework --> |tests| VM_Core
-    TestFramework --> |tests| Stack
-    TestFramework --> |tests| Memory
-    TestFramework --> |tests| AccountOps
+    %% debugging & t-testing
+    debuggew --> |monitows| vm_cowe
+    d-debuggew --> |monitows| stack
+    debuggew --> |monitows| m-memowy
+    testfwamewowk --> |tests| vm_cowe
+    t-testfwamewowk --> |tests| s-stack
+    testfwamewowk --> |tests| memowy
+    testfwamewowk --> |tests| accountops
 
-    %% Instruction Categories
-    subgraph Instructions
-        StackOps[Stack Operations]
-        MathOps[Math Operations]
-        MemoryOps[Memory Operations]
-        ControlFlow[Control Flow]
-        SolanaOps[Solana Operations]
-    end
+    %% instwuction categowies
+    subgwaph instwuctions
+        s-stackops[stack o-opewations]
+        mathops[math o-opewations]
+        m-memowyops[memowy o-opewations]
+        contwowfwow[contwow fwow]
+        sowanaops[sowana opewations]
+    e-end
 
-    InstructionSet --> StackOps
-    InstructionSet --> MathOps
-    InstructionSet --> MemoryOps
-    InstructionSet --> ControlFlow
-    InstructionSet --> SolanaOps
+    instwuctionset --> stackops
+    instwuctionset --> mathops
+    i-instwuctionset --> memowyops
+    i-instwuctionset --> c-contwowfwow
+    i-instwuctionset --> sowanaops
 
-    %% Component Types
-    classDef core fill:#f9f,stroke:#333,stroke-width:2px
-    classDef security fill:#ff9,stroke:#333,stroke-width:2px
-    classDef external fill:#9f9,stroke:#333,stroke-width:2px
-    classDef testing fill:#99f,stroke:#333,stroke-width:2px
-    classDef instruction fill:#f99,stroke:#333,stroke-width:2px
+    %% component t-types
+    c-cwassdef cowe f-fiww:#f9f,stwoke:#333,stwoke-width:2px
+    c-cwassdef secuwity fiww:#ff9,stwoke:#333,stwoke-width:2px
+    cwassdef e-extewnaw fiww:#9f9,stwoke:#333,stwoke-width:2px
+    c-cwassdef testing f-fiww:#99f,stwoke:#333,stwoke-width:2px
+    c-cwassdef instwuction f-fiww:#f99,stwoke:#333,stwoke-width:2px
 
-    class VM_Core,Stack,Memory core
-    class SecurityChecker,GasMetering security
-    class SolanaRuntime external
-    class TestFramework,Debugger testing
-    class StackOps,MathOps,MemoryOps,ControlFlow,SolanaOps instruction
+    cwass vm_cowe,stack,memowy cowe
+    cwass secuwitycheckew,gasmetewing s-secuwity
+    cwass sowanawuntime extewnaw
+    cwass testfwamewowk,debuggew testing
+    cwass stackops,mathops,memowyops,contwowfwow,sowanaops i-instwuction
 ```
 
-This graph visualizes the key components and relationships in the lessVM system:
+this gwaph visuawizes the key components a-and wewationships i-in the wessvm s-system:
 
-1. Core Components (Pink)
-   - VM Core as the central execution engine
-   - Stack and Memory for data management
-   - Instruction Set defining operations
+1. (///ˬ///✿) cowe components (pink)
+   - v-vm cowe as the centwaw e-execution engine
+   - s-stack and memowy fow data management
+   - instwuction set defining opewations
 
-2. Security & Monitoring (Yellow)
-   - Security Checker validating operations
-   - Gas Metering tracking resource usage
-   - Error Handler managing failures
+2. 🥺 secuwity & m-monitowing (yewwow)
+   - secuwity c-checkew vawidating opewations
+   - g-gas metewing t-twacking wesouwce usage
+   - ewwow handwew m-managing faiwuwes
 
-3. External Integration (Green)
-   - Solana Runtime interface
-   - Account Operations for blockchain interaction
+3. OwO e-extewnaw integwation (gween)
+   - sowana wuntime i-intewface
+   - a-account opewations fow bwockchain intewaction
 
-4. Testing & Development (Blue)
-   - Test Framework for validation
-   - Debugger for execution tracing
-   - Deployment System for lifecycle management
+4. >w< testing & devewopment (bwue)
+   - t-test fwamewowk f-fow vawidation
+   - d-debuggew fow execution t-twacing
+   - d-depwoyment system fow wifecycwe m-management
 
-5. Instructions (Red)
-   - Categorized by operation type
-   - Managed by Instruction Set
-   - Used by VM Core
+5. 🥺 instwuctions (wed)
+   - categowized by opewation type
+   - managed b-by instwuction s-set
+   - used by vm cowe
 
-The arrows indicate relationships:
-- Solid lines show direct dependencies
-- Labels describe the type of relationship
-- Direction indicates dependency flow
+the awwows indicate w-wewationships:
+- s-sowid wines show diwect dependencies
+- wabews descwibe the type o-of wewationship
+- diwection indicates dependency fwow
 
-This visualization helps understand:
-- Component responsibilities
-- System boundaries
-- Security validations
-- Resource monitoring
-- Error handling paths
-- Testing coverage
+this visuawization hewps u-undewstand:
+- component wesponsibiwities
+- system b-boundawies
+- s-secuwity vawidations
+- wesouwce monitowing
+- ewwow handwing paths
+- t-testing covewage
 
-## Build & Deployment
+## b-buiwd & depwoyment
 
-```mermaid
-graph TB
-    %% Build System
-    BuildSystem[Build System]
-    CrossCompilation[Cross Compilation]
-    ArtifactGeneration[Artifact Generation]
-    ReleaseWorkflow[Release Workflow]
+```mewmaid
+gwaph tb
+    %% buiwd system
+    b-buiwdsystem[buiwd system]
+    c-cwosscompiwation[cwoss compiwation]
+    awtifactgenewation[awtifact genewation]
+    weweasewowkfwow[wewease w-wowkfwow]
     
-    %% Dependencies
-    OpenSSL[OpenSSL]
-    PkgConfig[pkg-config]
-    CargoFeatures[Cargo Features]
+    %% dependencies
+    o-openssw[openssw]
+    pkgconfig[pkg-config]
+    c-cawgofeatuwes[cawgo featuwes]
     
-    %% Platforms
-    MacOS[macOS]
-    Linux[Linux]
-    ARM64[ARM64]
-    X86_64[x86_64]
+    %% p-pwatfowms
+    macos[macos]
+    w-winux[winux]
+    a-awm64[awm64]
+    x-x86_64[x86_64]
     
-    %% Relationships
-    BuildSystem --> |uses| CrossCompilation
-    BuildSystem --> |produces| ArtifactGeneration
-    BuildSystem --> |integrated with| ReleaseWorkflow
+    %% wewationships
+    buiwdsystem --> |uses| c-cwosscompiwation
+    b-buiwdsystem --> |pwoduces| awtifactgenewation
+    buiwdsystem --> |integwated with| w-weweasewowkfwow
     
-    CrossCompilation --> |depends on| OpenSSL
-    CrossCompilation --> |configured by| PkgConfig
-    CrossCompilation --> |leverages| CargoFeatures
+    c-cwosscompiwation --> |depends o-on| openssw
+    cwosscompiwation --> |configuwed by| pkgconfig
+    c-cwosscompiwation --> |wevewages| cawgofeatuwes
     
-    CrossCompilation --> |targets| MacOS
-    CrossCompilation --> |targets| Linux
-    CrossCompilation --> |targets| ARM64
-    CrossCompilation --> |targets| X86_64
+    c-cwosscompiwation --> |tawgets| m-macos
+    cwosscompiwation --> |tawgets| winux
+    cwosscompiwation --> |tawgets| awm64
+    cwosscompiwation --> |tawgets| x-x86_64
     
-    %% Component Types
-    classDef build fill:#f9f,stroke:#333,stroke-width:2px
-    classDef dependency fill:#ff9,stroke:#333,stroke-width:2px
-    classDef platform fill:#9f9,stroke:#333,stroke-width:2px
+    %% c-component types
+    c-cwassdef buiwd f-fiww:#f9f,stwoke:#333,stwoke-width:2px
+    cwassdef d-dependency fiww:#ff9,stwoke:#333,stwoke-width:2px
+    cwassdef pwatfowm fiww:#9f9,stwoke:#333,stwoke-width:2px
     
-    class BuildSystem,CrossCompilation,ArtifactGeneration,ReleaseWorkflow build
-    class OpenSSL,PkgConfig,CargoFeatures dependency
-    class MacOS,Linux,ARM64,X86_64 platform
+    cwass buiwdsystem,cwosscompiwation,awtifactgenewation,weweasewowkfwow buiwd
+    cwass o-openssw,pkgconfig,cawgofeatuwes dependency
+    c-cwass macos,winux,awm64,x86_64 pwatfowm
 ```
 
-The build system diagram shows:
+t-the buiwd system diagwam shows:
 
-1. Build Components (Pink)
-   - Build System for compiling code
-   - Cross Compilation for multi-platform support
-   - Artifact Generation for creating distributable packages
-   - Release Workflow for automating deployment
+1. nyaa~~ b-buiwd components (pink)
+   - buiwd system fow c-compiwing code
+   - c-cwoss compiwation f-fow muwti-pwatfowm s-suppowt
+   - a-awtifact genewation fow cweating distwibutabwe packages
+   - wewease wowkfwow fow automating depwoyment
 
-2. Dependencies (Yellow)
-   - OpenSSL for secure communications
-   - pkg-config for library detection
-   - Cargo Features for conditional compilation
+2. ^^ d-dependencies (yewwow)
+   - o-openssw fow secuwe c-communications
+   - pkg-config f-fow wibwawy detection
+   - cawgo featuwes fow conditionaw compiwation
 
-3. Target Platforms (Green)
-   - Support for multiple operating systems (macOS, Linux)
-   - Support for multiple architectures (ARM64, x86_64)
+3. t-tawget p-pwatfowms (gween)
+   - suppowt f-fow muwtipwe opewating systems (macos, >w< winux)
+   - s-suppowt fow m-muwtipwe awchitectuwes (awm64, OwO x86_64)
 
-For detailed information about cross-compilation for aarch64-unknown-linux-gnu, see [Cross-Compilation Knowledge Graph](knowledge_graph_cross_compilation.html).
+fow detaiwed i-infowmation a-about cwoss-compiwation fow aawch64-unknown-winux-gnu, XD see [cwoss-compiwation knowwedge gwaph](knowwedge_gwaph_cwoss_compiwation.htmw). ^^;;
